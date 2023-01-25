@@ -1,5 +1,13 @@
 <template>
   <q-page class="row items-center justify-evenly">
+    <weapon-table
+      :weapon-type="WeaponType.Bow"
+    />
+
+    <weapon-table
+      :weapon-type="WeaponType.AutoRifle"
+    />
+
     <example-component
       title="Example component"
       active
@@ -10,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { Todo, Meta, WeaponType } from 'components/models'
+import ExampleComponent from 'components/ExampleComponent.vue'
+import WeaponTable from 'src/components/WeaponTable.vue'
 
 const todos = ref<Todo[]>([
   {
@@ -35,8 +44,9 @@ const todos = ref<Todo[]>([
     id: 5,
     content: 'ct5'
   }
-]);
+])
+
 const meta = ref<Meta>({
   totalCount: 1200
-});
+})
 </script>
