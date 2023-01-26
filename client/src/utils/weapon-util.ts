@@ -19,3 +19,13 @@ export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
   if (weaponType === WeaponType.Sword) return SwordFrame
   if (weaponType === WeaponType.TraceRifle) return TraceRifleFrame
 }
+
+export const capitalizeWeaponFrame = (frame: string) => {
+  return frame.toLowerCase()
+    .split('-')
+    .map((f: string) => f.charAt(0).toUpperCase() + f.substring(1))
+    .join('-')
+    .split(' ')
+    .map((f: string) => f.charAt(0).toUpperCase() + f.substring(1))
+    .join(' ')
+}

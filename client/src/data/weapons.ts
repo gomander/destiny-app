@@ -11,6 +11,33 @@ export const weapons: Weapon[] = [
     frame: AutoRifleFrame.Precision
   },
   {
+    name: 'Come to Pass',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.AutoRifle,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: AutoRifleFrame.HighImpact
+  },
+  {
+    name: 'Sweet Sorrow',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.AutoRifle,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: AutoRifleFrame.RapidFire
+  },
+  {
+    name: 'Ammit AR2',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.AutoRifle,
+    season: 18,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: AutoRifleFrame.Precision
+  },
+  {
     name: 'Fel Taradiddle',
     damageType: DamageType.Kinetic,
     weaponType: WeaponType.Bow,

@@ -10,16 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { DamageType, WeaponType, BowFrame, Weapon } from './models'
+import { DamageType, WeaponType, Weapon } from './models'
 import { weapons } from 'src/data/weapons'
-import { getFrameTypeFromWeaponType } from 'src/utils/weapon-util'
+import { getFrameTypeFromWeaponType, capitalizeWeaponFrame } from 'src/utils/weapon-util'
 
 interface Props {
   weaponType: WeaponType
 }
 const props = defineProps<Props>()
-
-const frameType = getFrameTypeFromWeaponType(props.weaponType)
 
 const columns = [
   {
@@ -29,19 +27,23 @@ const columns = [
     sortable: false
   }
 ]
-for (const frame in frameType) {
+const frameType = getFrameTypeFromWeaponType(props.weaponType)!
+const frames = Object.keys(frameType).map((frame: string) => ({
+  key: frame.toLowerCase(),
+  displayText: capitalizeWeaponFrame((frameType as any)[frame]),
+  value: (frameType as any)[frame]
+}))
+for (const frame of frames) {
   columns.push({
-    name: frame.toLowerCase(),
-    label: frame,
-    field: frame.toLowerCase(),
+    name: frame.key,
+    label: frame.displayText,
+    field: frame.key,
     sortable: false
   })
 }
-
 const myWeapons = weapons.filter(
   weapon => weapon.weaponType === props.weaponType
 )
-
 interface WeaponsOfFrame {
   frame: string,
   weapons: Weapon[]
@@ -51,39 +53,37 @@ interface WeaponTableRow {
   frames: WeaponsOfFrame[]
 }
 const rows: WeaponTableRow[] = []
-
 for (const damageType in DamageType) {
   const row: WeaponTableRow = {
     damageType: damageType,
     frames: []
   }
-  for (const frame in frameType) {
+  for (const frame of frames) {
     row.frames.push({
-      frame: frame.toLowerCase(),
+      frame: frame.key,
       weapons: []
     })
   }
   const weaponsOfDamageType = myWeapons.filter(
     weapon => weapon.damageType === damageType.toLowerCase()
   )
-  for (const frame in frameType) {
-    const lowerFrame = frame.toLowerCase()
-    row.frames.find(frame => frame.frame === lowerFrame)?.weapons.push(
+  for (const frame of frames) {
+    row.frames.find(f => f.frame === frame.key)?.weapons.push(
       ...weaponsOfDamageType.filter(
-        weapon => weapon.frame === lowerFrame
+        weapon => weapon.frame === frame.value
       )
     )
   }
   rows.push(row)
 }
-
 const tableRows = rows.map(row => {
   const tableRow: any = {
     damageType: row.damageType
   }
-  for (const frame in frameType) {
-    const lowerFrame = frame.toLowerCase()
-    tableRow[lowerFrame] = row.frames.find(frame => frame.frame === lowerFrame)?.weapons.map(weapon => weapon.name).join(', ')
+  for (const frame of frames) {
+    tableRow[frame.key] = row.frames.find(
+      f => f.frame === frame.key
+    )?.weapons.map(weapon => weapon.name).join(', ')
   }
   return tableRow
 })
