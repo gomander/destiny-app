@@ -10,19 +10,23 @@
 </template>
 
 <script setup lang="ts">
-import { DamageType, WeaponType, Weapon } from './models'
+import { DamageType, WeaponType, Weapon, AmmoType } from './models'
 import { weapons } from 'src/data/weapons'
-import { getFrameTypeFromWeaponType, capitalizeWeaponFrame } from 'src/utils/weapon-util'
+import {
+  getFrameTypeFromWeaponType, getTableTitle, capitalizeText
+} from 'src/utils/weapon-util'
 
 interface Props {
+  label?: string
   weaponType: WeaponType
+  ammoType?: AmmoType
 }
 const props = defineProps<Props>()
 
 const columns = [
   {
     name: 'damageType',
-    label: capitalizeWeaponFrame(props.weaponType),
+    label: props.label || getTableTitle(props.weaponType, props.ammoType),
     field: 'damageType',
     sortable: false
   }
@@ -30,7 +34,7 @@ const columns = [
 const frameType = getFrameTypeFromWeaponType(props.weaponType)!
 const frames = Object.keys(frameType).map((frame: string) => ({
   key: frame.toLowerCase(),
-  displayText: capitalizeWeaponFrame((frameType as any)[frame]),
+  displayText: capitalizeText((frameType as any)[frame]),
   value: (frameType as any)[frame]
 }))
 for (const frame of frames) {
@@ -41,9 +45,11 @@ for (const frame of frames) {
     sortable: false
   })
 }
-const myWeapons = weapons.filter(
-  weapon => weapon.weaponType === props.weaponType
-)
+const myWeapons = weapons.filter(weapon => {
+  if (weapon.weaponType !== props.weaponType) return false
+  if (props.ammoType) return weapon.ammoType === props.ammoType
+  return true
+})
 interface WeaponsOfFrame {
   frame: string,
   weapons: Weapon[]

@@ -1,11 +1,11 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <weapon-table
-      :weapon-type="WeaponType.Bow"
+      :weapon-type="WeaponType.AutoRifle"
     />
 
     <weapon-table
-      :weapon-type="WeaponType.AutoRifle"
+      :weapon-type="WeaponType.Bow"
     />
 
     <weapon-table
@@ -17,7 +17,15 @@
     />
 
     <weapon-table
+      label="Special Grenade Launchers"
       :weapon-type="WeaponType.GrenadeLauncher"
+      :ammo-type="AmmoType.Special"
+    />
+
+    <weapon-table
+      label="Heavy Grenade Launchers"
+      :weapon-type="WeaponType.GrenadeLauncher"
+      :ammo-type="AmmoType.Heavy"
     />
 
     <weapon-table
@@ -39,6 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { WeaponType } from 'components/models'
+import { WeaponType, AmmoType } from 'components/models'
 import WeaponTable from 'src/components/WeaponTable.vue'
 </script>

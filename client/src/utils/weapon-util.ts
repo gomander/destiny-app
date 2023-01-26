@@ -1,4 +1,9 @@
-import { AutoRifleFrame, BowFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame, HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame, RocketLauncherFrame, ScoutRifleFrame, ShotgunFrame, SidearmFrame, SniperRifleFrame, SubmachineGunFrame, SwordFrame, TraceRifleFrame, WeaponType } from 'src/components/models'
+import {
+  AutoRifleFrame, BowFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
+  HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame,
+  RocketLauncherFrame, ScoutRifleFrame, ShotgunFrame, SidearmFrame,
+  SniperRifleFrame, SubmachineGunFrame, SwordFrame, TraceRifleFrame, WeaponType
+} from 'src/components/models'
 
 export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
   if (weaponType === WeaponType.AutoRifle) return AutoRifleFrame
@@ -20,12 +25,17 @@ export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
   if (weaponType === WeaponType.TraceRifle) return TraceRifleFrame
 }
 
-export const capitalizeWeaponFrame = (frame: string) => {
-  return frame.toLowerCase()
+export const getTableTitle = (frame: string, ammoType?: string) => {
+  const text = ammoType ? ammoType + ' ' : '' + frame
+  return capitalizeText(text) + 's'
+}
+
+export const capitalizeText = (s: string) => {
+  return s.toLowerCase()
     .split('-')
-    .map((f: string) => f.charAt(0).toUpperCase() + f.substring(1))
+    .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
     .join('-')
     .split(' ')
-    .map((f: string) => f.charAt(0).toUpperCase() + f.substring(1))
+    .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ')
 }
