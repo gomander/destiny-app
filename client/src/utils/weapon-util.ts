@@ -26,7 +26,7 @@ export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
 }
 
 export const getTableTitle = (frame: string, ammoType?: string) => {
-  const text = ammoType ? ammoType + ' ' : '' + frame
+  const text = (ammoType ? ammoType + ' ' : '') + frame
   return capitalizeText(text) + 's'
 }
 

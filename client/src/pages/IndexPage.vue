@@ -17,13 +17,11 @@
     />
 
     <weapon-table
-      label="Special Grenade Launchers"
       :weapon-type="WeaponType.GrenadeLauncher"
       :ammo-type="AmmoType.Special"
     />
 
     <weapon-table
-      label="Heavy Grenade Launchers"
       :weapon-type="WeaponType.GrenadeLauncher"
       :ammo-type="AmmoType.Heavy"
     />
