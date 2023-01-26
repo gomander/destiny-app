@@ -1,8 +1,9 @@
 import {
-  AutoRifleFrame, BowFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
-  HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame,
-  RocketLauncherFrame, ScoutRifleFrame, ShotgunFrame, SidearmFrame,
-  SniperRifleFrame, SubmachineGunFrame, SwordFrame, TraceRifleFrame, WeaponType
+  AmmoType, AutoRifleFrame, BowFrame, DamageType, FusionRifleFrame, GlaiveFrame,
+  GrenadeLauncherFrame, HandCannonFrame, LinearFusionRifleFrame,
+  MachineGunFrame, PulseRifleFrame, RocketLauncherFrame, ScoutRifleFrame,
+  ShotgunFrame, SidearmFrame, SniperRifleFrame, SubmachineGunFrame, SwordFrame,
+  TraceRifleFrame, WeaponType
 } from 'src/components/models'
 
 export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
@@ -38,4 +39,34 @@ export const capitalizeText = (s: string) => {
     .split(' ')
     .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ')
+}
+
+export const getAvailableDamageTypes = (weaponType: WeaponType, ammoType?: AmmoType) => {
+  const damageTypes = [
+    DamageType.Kinetic,
+    DamageType.Void,
+    DamageType.Arc,
+    DamageType.Solar,
+    DamageType.Stasis
+  ]
+  if (weaponCannotBeKinetic(weaponType, ammoType)) {
+    damageTypes.shift()
+  }
+  if (weaponType === WeaponType.Glaive) {
+    damageTypes.pop()
+  }
+  return damageTypes
+}
+
+const weaponCannotBeKinetic = (weaponType: WeaponType, ammoType?: AmmoType) => {
+  return (
+    weaponType === WeaponType.FusionRifle ||
+    weaponType === WeaponType.Glaive ||
+    weaponType === WeaponType.LinearFusionRifle ||
+    weaponType === WeaponType.MachineGun ||
+    weaponType === WeaponType.RocketLauncher ||
+    weaponType === WeaponType.Sword ||
+    weaponType === WeaponType.TraceRifle ||
+    ammoType === AmmoType.Heavy
+  )
 }

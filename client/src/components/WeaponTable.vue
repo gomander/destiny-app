@@ -13,7 +13,7 @@
 import { DamageType, WeaponType, Weapon, AmmoType } from './models'
 import { weapons } from 'src/data/weapons'
 import {
-  getFrameTypeFromWeaponType, getTableTitle, capitalizeText
+  getFrameTypeFromWeaponType, getTableTitle, capitalizeText, getAvailableDamageTypes
 } from 'src/utils/weapon-util'
 
 interface Props {
@@ -59,7 +59,7 @@ interface WeaponTableRow {
   frames: WeaponsOfFrame[]
 }
 const rows: WeaponTableRow[] = []
-for (const damageType in DamageType) {
+for (const damageType of getAvailableDamageTypes(props.weaponType, props.ammoType)) {
   const row: WeaponTableRow = {
     damageType: damageType,
     frames: []
