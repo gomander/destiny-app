@@ -1,9 +1,10 @@
 import {
   AmmoType, AutoRifleFrame, BowFrame, DamageType, FusionRifleFrame, GlaiveFrame,
-  GrenadeLauncherFrame, HandCannonFrame, LinearFusionRifleFrame,
-  MachineGunFrame, PulseRifleFrame, RocketLauncherFrame, ScoutRifleFrame,
-  ShotgunFrame, SidearmFrame, SniperRifleFrame, SubmachineGunFrame, SwordFrame,
-  TraceRifleFrame, WeaponType
+  GrenadeLauncherFrame, HandCannonFrame, HeavyGrenadeLauncherFrame,
+  LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame, RocketLauncherFrame,
+  ScoutRifleFrame, ShotgunFrame, SidearmFrame, SniperRifleFrame,
+  SpecialGrenadeLauncherFrame, SubmachineGunFrame, SwordFrame, TraceRifleFrame,
+  WeaponType
 } from 'src/components/models'
 
 export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
@@ -27,8 +28,7 @@ export const getFrameTypeFromWeaponType = (weaponType: WeaponType) => {
 }
 
 export const getTableTitle = (frame: string, ammoType?: string) => {
-  const text = (ammoType ? ammoType + ' ' : '') + frame
-  return capitalizeText(text) + 's'
+  return capitalizeText(frame) + 's'
 }
 
 export const capitalizeText = (s: string) => {
@@ -69,4 +69,49 @@ const weaponCannotBeKinetic = (weaponType: WeaponType, ammoType?: AmmoType) => {
     weaponType === WeaponType.TraceRifle ||
     ammoType === AmmoType.Heavy
   )
+}
+
+export const getAvailableFrames = (weaponType: WeaponType, ammoType?: AmmoType) => {
+  if (weaponType === WeaponType.GrenadeLauncher) {
+    if (ammoType === AmmoType.Special) {
+      return SpecialGrenadeLauncherFrame
+    }
+    if (ammoType === AmmoType.Heavy) {
+      return HeavyGrenadeLauncherFrame
+    }
+  }
+  return getFrameTypeFromWeaponType(weaponType)
+}
+
+export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
+  if (ammoType === AmmoType.Primary) {
+    return [
+      WeaponType.AutoRifle,
+      WeaponType.Bow,
+      WeaponType.HandCannon,
+      WeaponType.PulseRifle,
+      WeaponType.ScoutRifle,
+      WeaponType.Sidearm,
+      WeaponType.SubmachineGun
+    ]
+  }
+  if (ammoType === AmmoType.Special) {
+    return [
+      WeaponType.FusionRifle,
+      WeaponType.Glaive,
+      WeaponType.GrenadeLauncher,
+      WeaponType.Shotgun,
+      WeaponType.SniperRifle,
+      WeaponType.TraceRifle
+    ]
+  }
+  if (ammoType === AmmoType.Heavy) {
+    return [
+      WeaponType.GrenadeLauncher,
+      WeaponType.LinearFusionRifle,
+      WeaponType.MachineGun,
+      WeaponType.RocketLauncher,
+      WeaponType.Sword
+    ]
+  }
 }

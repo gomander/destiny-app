@@ -5,15 +5,16 @@
     row-key="damageType"
     separator="cell"
     hide-bottom
+    dense
   >
   </q-table>
 </template>
 
 <script setup lang="ts">
-import { DamageType, WeaponType, Weapon, AmmoType } from './models'
+import { WeaponType, Weapon, AmmoType } from './models'
 import { weapons } from 'src/data/weapons'
 import {
-  getFrameTypeFromWeaponType, getTableTitle, capitalizeText, getAvailableDamageTypes
+  getTableTitle, capitalizeText, getAvailableDamageTypes, getAvailableFrames
 } from 'src/utils/weapon-util'
 
 interface Props {
@@ -31,7 +32,7 @@ const columns = [
     sortable: false
   }
 ]
-const frameType = getFrameTypeFromWeaponType(props.weaponType)!
+const frameType = getAvailableFrames(props.weaponType, props.ammoType)!
 const frames = Object.keys(frameType).map((frame: string) => ({
   key: frame.toLowerCase(),
   displayText: capitalizeText((frameType as any)[frame]),
@@ -71,7 +72,7 @@ for (const damageType of getAvailableDamageTypes(props.weaponType, props.ammoTyp
     })
   }
   const weaponsOfDamageType = myWeapons.filter(
-    weapon => weapon.damageType === damageType.toLowerCase()
+    weapon => weapon.damageType === damageType
   )
   for (const frame of frames) {
     row.frames.find(f => f.frame === frame.key)?.weapons.push(
@@ -84,7 +85,7 @@ for (const damageType of getAvailableDamageTypes(props.weaponType, props.ammoTyp
 }
 const tableRows = rows.map(row => {
   const tableRow: any = {
-    damageType: row.damageType
+    damageType: capitalizeText(row.damageType)
   }
   for (const frame of frames) {
     tableRow[frame.key] = row.frames.find(

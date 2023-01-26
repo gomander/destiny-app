@@ -1,6 +1,8 @@
 import {
   Weapon, WeaponType, DamageType, AmmoType, WeaponSlot, BowFrame,
-  AutoRifleFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame, HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame
+  AutoRifleFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
+  HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame,
+  RocketLauncherFrame, ScoutRifleFrame, SidearmFrame
 } from 'src/components/models'
 
 export const weapons: Weapon[] = [
@@ -345,5 +347,104 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Primary,
     slot: WeaponSlot.Energy,
     frame: PulseRifleFrame.Lightweight
+  },
+  {
+    name: 'Palmyra-B',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.RocketLauncher,
+    season: 16,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: RocketLauncherFrame.Precision
+  },
+  {
+    name: 'Red Herring',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.RocketLauncher,
+    season: 16,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: RocketLauncherFrame.Adaptive
+  },
+  {
+    name: 'Bump in the Night',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.RocketLauncher,
+    season: 17,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: RocketLauncherFrame.Aggressive
+  },
+  {
+    name: 'Pointed Inquiry',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.ScoutRifle,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: ScoutRifleFrame.HighImpact
+  },
+  {
+    name: 'Tears of Contrition',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.ScoutRifle,
+    season: 17,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: ScoutRifleFrame.Precision
+  },
+  {
+    name: 'Doom of Chelchis',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.ScoutRifle,
+    season: 18,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: ScoutRifleFrame.Precision
+  },
+  {
+    name: 'Tarnished Mettle',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.ScoutRifle,
+    season: 18,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: ScoutRifleFrame.Lightweight
+  },
+  {
+    name: 'Trustee',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.ScoutRifle,
+    season: 19,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: ScoutRifleFrame.RapidFire
+  },
+  {
+    name: 'Empirical Evidence',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.Sidearm,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: SidearmFrame.AggressiveBurst
+  },
+  {
+    name: 'Drang (Baroque)',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Sidearm,
+    season: 17,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: SidearmFrame.Adaptive
+  },
+  {
+    name: 'Brigand\'s Law',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.Sidearm,
+    season: 18,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: SidearmFrame.RapidFire
   },
 ]

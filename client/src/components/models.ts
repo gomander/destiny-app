@@ -52,10 +52,11 @@ export enum WeaponSlot {
 }
 
 export type WeaponFrame = AutoRifleFrame | BowFrame | FusionRifleFrame |
-  GlaiveFrame | GrenadeLauncherFrame | HandCannonFrame |
-  LinearFusionRifleFrame | MachineGunFrame | PulseRifleFrame |
-  RocketLauncherFrame | ScoutRifleFrame | ShotgunFrame | SidearmFrame |
-  SniperRifleFrame | SubmachineGunFrame | SwordFrame | TraceRifleFrame
+  GlaiveFrame | GrenadeLauncherFrame | SpecialGrenadeLauncherFrame |
+  HeavyGrenadeLauncherFrame | HandCannonFrame | LinearFusionRifleFrame |
+  MachineGunFrame | PulseRifleFrame | RocketLauncherFrame | ScoutRifleFrame |
+  ShotgunFrame | SidearmFrame | SniperRifleFrame | SubmachineGunFrame |
+  SwordFrame | TraceRifleFrame
 
 export enum AutoRifleFrame {
   HighImpact = 'high-impact',
@@ -84,6 +85,16 @@ export enum GlaiveFrame {
 export enum GrenadeLauncherFrame {
   Wave = 'wave',
   Lightweight = 'lightweight',
+  Adaptive = 'adaptive',
+  RapidFire = 'rapid-fire'
+}
+
+export enum SpecialGrenadeLauncherFrame {
+  Wave = 'wave',
+  Lightweight = 'lightweight'
+}
+
+export enum HeavyGrenadeLauncherFrame {
   Adaptive = 'adaptive',
   RapidFire = 'rapid-fire'
 }

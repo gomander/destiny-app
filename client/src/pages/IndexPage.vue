@@ -1,50 +1,22 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <weapon-table
-      :weapon-type="WeaponType.AutoRifle"
-    />
+  <q-page class="items-center justify-evenly q-pa-md">
+    <h1>Craftable Weapons</h1>
 
-    <weapon-table
-      :weapon-type="WeaponType.Bow"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.FusionRifle"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.Glaive"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.GrenadeLauncher"
-      :ammo-type="AmmoType.Special"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.GrenadeLauncher"
-      :ammo-type="AmmoType.Heavy"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.HandCannon"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.LinearFusionRifle"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.MachineGun"
-    />
-
-    <weapon-table
-      :weapon-type="WeaponType.PulseRifle"
-    />
+    <section v-for="ammoType in AmmoType">
+      <h2>{{ capitalizeText(ammoType) }}</h2>
+      <div class="row q-gutter-md">
+        <weapon-table
+          v-for="weaponType of getWeaponTypesOfAmmoType(AmmoType.Primary)"
+          :weapon-type="weaponType"
+          :ammo-type="AmmoType.Primary"
+        />
+      </div>
+    </section>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { WeaponType, AmmoType } from 'components/models'
+import { AmmoType } from 'components/models'
 import WeaponTable from 'src/components/WeaponTable.vue'
+import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
 </script>
