@@ -1,8 +1,9 @@
 import {
-  Weapon, WeaponType, DamageType, AmmoType, WeaponSlot, BowFrame,
-  AutoRifleFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
+  Weapon, WeaponType, DamageType, AmmoType, WeaponSlot, AutoRifleFrame,
+  BowFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
   HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame,
-  RocketLauncherFrame, ScoutRifleFrame, SidearmFrame, SubmachineGunFrame
+  RocketLauncherFrame, ScoutRifleFrame, ShotgunFrame, SidearmFrame,
+  SniperRifleFrame, SubmachineGunFrame, SwordFrame, TraceRifleFrame
 } from 'src/components/models'
 
 export const weapons: Weapon[] = [
@@ -491,5 +492,167 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Primary,
     slot: WeaponSlot.Energy,
     frame: SubmachineGunFrame.Aggressive
+  },
+  {
+    name: 'Ragnhild-D',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.Shotgun,
+    season: 16,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: ShotgunFrame.Aggressive
+  },
+  {
+    name: 'Without Remorse',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Shotgun,
+    season: 17,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: ShotgunFrame.Lightweight
+  },
+  {
+    name: 'No Reprieve',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.Shotgun,
+    season: 18,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: ShotgunFrame.PinpointSlug
+  },
+  {
+    name: 'Wastelander M5',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.Shotgun,
+    season: 18,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: ShotgunFrame.Lightweight
+  },
+  {
+    name: 'IKELOS_SG_v1.0.3',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Shotgun,
+    season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: ShotgunFrame.RapidFire
+  },
+  {
+    name: 'Heritage',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.Shotgun,
+    season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: ShotgunFrame.PinpointSlug
+  },
+  {
+    name: 'Thoughtless',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.SniperRifle,
+    season: 16,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: SniperRifleFrame.Adaptive
+  },
+  {
+    name: 'Father\'s Sins',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.SniperRifle,
+    season: 16,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: SniperRifleFrame.RapidFire
+  },
+  {
+    name: 'Beloved',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.SniperRifle,
+    season: 17,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: SniperRifleFrame.Adaptive
+  },
+  {
+    name: 'Defiance of Yasmin',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.SniperRifle,
+    season: 18,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: SniperRifleFrame.Adaptive
+  },
+  {
+    name: 'IKELOS_SR_v1.0.3',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.SniperRifle,
+    season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: SniperRifleFrame.RapidFire
+  },
+  {
+    name: 'Succession',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.SniperRifle,
+    season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: SniperRifleFrame.Aggressive
+  },
+  {
+    name: 'Hollow Denial',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.TraceRifle,
+    season: 17,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: TraceRifleFrame.Adaptive
+  },
+  {
+    name: 'Retraced Path',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.TraceRifle,
+    season: 18,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: TraceRifleFrame.Adaptive
+  },
+  {
+    name: 'Path of Least Resistance',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.TraceRifle,
+    season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: TraceRifleFrame.Adaptive
+  },
+  {
+    name: 'Half-Truths',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.Sword,
+    season: 18,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Adaptive
+  },
+  {
+    name: 'The Other Half',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.Sword,
+    season: 18,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Adaptive
+  },
+  {
+    name: 'Bequest',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.Sword,
+    season: 19,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Adaptive
   },
 ]

@@ -1,16 +1,3 @@
-// import {
-
-// } from 'bungie-api-ts/destiny2'
-
-export interface Todo {
-  id: number
-  content: string
-}
-
-export interface Meta {
-  totalCount: number
-}
-
 export enum DamageType {
   Kinetic = 'kinetic',
   Void = 'void',
