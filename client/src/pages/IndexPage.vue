@@ -6,9 +6,9 @@
       <h2>{{ capitalizeText(ammoType) }}</h2>
       <div class="row q-gutter-md">
         <weapon-table
-          v-for="weaponType of getWeaponTypesOfAmmoType(AmmoType.Primary)"
+          v-for="weaponType of getWeaponTypesOfAmmoType(ammoType)"
           :weapon-type="weaponType"
-          :ammo-type="AmmoType.Primary"
+          :ammo-type="ammoType"
         />
       </div>
     </section>

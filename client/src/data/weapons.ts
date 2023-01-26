@@ -2,7 +2,7 @@ import {
   Weapon, WeaponType, DamageType, AmmoType, WeaponSlot, BowFrame,
   AutoRifleFrame, FusionRifleFrame, GlaiveFrame, GrenadeLauncherFrame,
   HandCannonFrame, LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame,
-  RocketLauncherFrame, ScoutRifleFrame, SidearmFrame
+  RocketLauncherFrame, ScoutRifleFrame, SidearmFrame, SubmachineGunFrame
 } from 'src/components/models'
 
 export const weapons: Weapon[] = [
@@ -446,5 +446,50 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Primary,
     slot: WeaponSlot.Energy,
     frame: SidearmFrame.RapidFire
+  },
+  {
+    name: 'Forensic Nightmare',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.SubmachineGun,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: SubmachineGunFrame.Precision
+  },
+  {
+    name: 'Submission',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.SubmachineGun,
+    season: 16,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: SubmachineGunFrame.Lightweight
+  },
+  {
+    name: 'CALUS Mini-Tool',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.SubmachineGun,
+    season: 17,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: SubmachineGunFrame.Lightweight
+  },
+  {
+    name: 'Blood Feud',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.SubmachineGun,
+    season: 18,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: SubmachineGunFrame.Aggressive
+  },
+  {
+    name: 'IKELOS_SMG_v1.0.3',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.SubmachineGun,
+    season: 19,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: SubmachineGunFrame.Aggressive
   },
 ]
