@@ -76,7 +76,10 @@ export enum FusionRifleFrame {
   RapidFire = 'rapid-fire'
 }
 
-export enum GlaiveFrame { Adaptive = 'adaptive' }
+export enum GlaiveFrame {
+  Adaptive = 'adaptive',
+  Aggressive = 'aggressive'
+}
 
 export enum GrenadeLauncherFrame {
   Wave = 'wave',

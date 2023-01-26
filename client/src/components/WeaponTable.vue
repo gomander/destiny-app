@@ -22,7 +22,7 @@ const props = defineProps<Props>()
 const columns = [
   {
     name: 'damageType',
-    label: 'Damage Type',
+    label: capitalizeWeaponFrame(props.weaponType),
     field: 'damageType',
     sortable: false
   }
