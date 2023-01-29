@@ -6,8 +6,7 @@
     separator="cell"
     hide-bottom
     dense
-  >
-  </q-table>
+  />
 </template>
 
 <script setup lang="ts">

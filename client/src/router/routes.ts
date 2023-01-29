@@ -6,6 +6,16 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
+  {
+    path: '/craftable-weapons',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/CraftableWeaponsPage.vue') }],
+  },
+  {
+    path: '/historical-power',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

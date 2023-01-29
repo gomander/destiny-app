@@ -2,7 +2,6 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
     :href="link"
   >
     <q-item-section
@@ -28,7 +27,7 @@ export interface EssentialLinkProps {
 }
 withDefaults(defineProps<EssentialLinkProps>(), {
   caption: '',
-  link: '#',
+  link: '/',
   icon: '',
 });
 </script>
