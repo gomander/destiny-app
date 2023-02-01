@@ -44,16 +44,13 @@ export const capitalizeText = (s: string) => {
 export const getAvailableDamageTypes = (weaponType: WeaponType, ammoType?: AmmoType) => {
   const damageTypes = [
     DamageType.Kinetic,
+    DamageType.Stasis,
     DamageType.Void,
     DamageType.Arc,
-    DamageType.Solar,
-    DamageType.Stasis
+    DamageType.Solar
   ]
   if (weaponCannotBeKinetic(weaponType, ammoType)) {
     damageTypes.shift()
-  }
-  if (weaponType === WeaponType.Glaive) {
-    damageTypes.pop()
   }
   return damageTypes
 }
