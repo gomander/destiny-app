@@ -26,7 +26,7 @@ export const levels = [
   {
     name: 'Season of the Outlaw',
     season: 4,
-    base: 350,
+    base: 340,
     soft: 500,
     powerful: 600,
     pinnacle: null
@@ -34,7 +34,7 @@ export const levels = [
   {
     name: 'Season of the Forge',
     season: 5,
-    base: 350,
+    base: 340,
     soft: 600,
     powerful: 650,
     pinnacle: null
@@ -42,7 +42,7 @@ export const levels = [
   {
     name: 'Season of the Drifter',
     season: 6,
-    base: 350,
+    base: 340,
     soft: 650,
     powerful: 700,
     pinnacle: null
@@ -50,7 +50,7 @@ export const levels = [
   {
     name: 'Season of Opulence',
     season: 7,
-    base: 350,
+    base: 340,
     soft: 700,
     powerful: 750,
     pinnacle: null
