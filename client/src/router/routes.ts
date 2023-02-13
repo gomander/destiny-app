@@ -12,6 +12,11 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/CraftableWeaponsPage.vue') }],
   },
   {
+    path: '/bounty-calculator',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/BountyCalculatorPage.vue') }],
+  },
+  {
     path: '/historical-power',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }],

@@ -65,6 +65,12 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/craftable-weapons'
   },
   {
+    title: 'Bounty Calculator',
+    caption: 'Bounties to XP and levels',
+    icon: 'chat',
+    link: '/bounty-calculator'
+  },
+  {
     title: 'Historical Power',
     caption: 'Levels by season',
     icon: 'chat',
