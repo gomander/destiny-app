@@ -34,7 +34,21 @@
 
       <q-select
         v-model="ghostShellMod"
-        :options="ghostShellXpMods"
+        :options="ghostMods"
+        emit-value
+        map-options
+        filled
+        dense
+        options-dense
+      />
+
+      <div>
+        Shared Wisdom:
+      </div>
+
+      <q-select
+        v-model="sharedWisdom"
+        :options="sharedWisdomTiers"
         emit-value
         map-options
         filled
@@ -50,29 +64,22 @@
     <div>
       Stored XP: {{ storedXp }}
     </div>
-
-    <div>
-      Stored XP: {{ storedXp2 }}
-    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import ghostShellXpMods from 'src/data/ghost-shell-xp-mods'
+import { ghostMods, sharedWisdomTiers } from 'src/data/xp-modifiers'
 import BountyTable from 'src/components/BountyTable.vue'
-import { calculateTotal, calculateXp } from 'src/utils/bounty-util'
+import { calculateTotal } from 'src/utils/bounty-util'
 
 const characterCount = ref(3)
 const seasonPass = ref(true)
 const wellRested = ref(true)
-const ghostShellMod = ref(ghostShellXpMods[0].value)
+const ghostShellMod = ref(ghostMods[0].value)
+const sharedWisdom = ref(sharedWisdomTiers[0].value)
 
 const storedXp = computed(() =>
-  Math.floor(calculateTotal(92, 76, ghostShellMod.value, seasonPass.value, wellRested.value, 1))
-)
-
-const storedXp2 = computed(() =>
-  Math.floor(calculateXp(76, 92, seasonPass.value, wellRested.value, ghostShellMod.value, 1).xp)
+  Math.floor(calculateTotal(102, 78, ghostShellMod.value, seasonPass.value, wellRested.value, sharedWisdom.value, 1))
 )
 </script>
