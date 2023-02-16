@@ -9,10 +9,6 @@ const WELL_RESTED_LEVELS = 5
 const SMALL_XP_BOOST_LEVELS = [7, 16, 36, 46, 66, 76]
 const SMALL_XP_BOOST = 0.02
 
-const xpToLevel = (xp: number) => {
-  return xp / XP_PER_LEVEL + 1
-}
-
 const addBounties = (
   bountyCount: number,
   bountyValue: number,
@@ -30,7 +26,7 @@ const addBounties = (
     if (seasonPass) {
       let seasonPassBonus = 1 + SEASON_PASS_BONUS
       for (const level of SMALL_XP_BOOST_LEVELS) {
-        if (xpToLevel(xpSaved) >= level) {
+        if (xpSaved / XP_PER_LEVEL + 1 >= level) {
           seasonPassBonus += SMALL_XP_BOOST
         }
       }
@@ -41,22 +37,24 @@ const addBounties = (
   return xpSaved
 }
 
-export const calculateTotal = (
+/**
+ * Calculate XP saved from a previous season
+ * @param dailies The number of daily bounties saved
+ * @param weeklies The number of weekly bounties saved
+ * @param ghostMod The XP ghost mod value, defaults to 0.12
+ * @param seasonPass Whether to use the season pass, defaults to true
+ * @param wellRested Whether to use Well Rested, defaults to true
+ * @param sharedWisdom The Shared Wisdom buff value, defaults to 0
+ * @returns The total XP saved with all multipliers factored in
+ */
+export const calculateXp = (
   dailies: number,
   weeklies: number,
-  ghostMod?: number,
-  seasonPass?: boolean,
-  wellRested?: boolean,
-  sharedWisdom?: number,
-  startLevel?: number
+  ghostMod = ghostMods[0].value,
+  seasonPass = true,
+  wellRested = true,
+  sharedWisdom = 0
 ) => {
-  if (!ghostMod && ghostMod !== 0) ghostMod = ghostMods[0].value
-  if (seasonPass !== true && seasonPass !== false) seasonPass = true
-  if (wellRested !== true && wellRested !== false) wellRested = true
-  if (!sharedWisdom) sharedWisdom = 0
-  if (!startLevel) startLevel = 1
-  let xpSaved = 0
-  xpSaved = addBounties(dailies, DAILY_XP, ghostMod, wellRested, seasonPass, sharedWisdom, xpSaved)
-  xpSaved = addBounties(weeklies, WEEKLY_XP, ghostMod, wellRested, seasonPass, sharedWisdom, xpSaved)
-  return xpSaved
+  const xpSaved = addBounties(dailies, DAILY_XP, ghostMod, wellRested, seasonPass, sharedWisdom, 0)
+  return addBounties(weeklies, WEEKLY_XP, ghostMod, wellRested, seasonPass, sharedWisdom, xpSaved)
 }

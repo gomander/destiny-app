@@ -71,15 +71,24 @@
 import { ref, computed } from 'vue'
 import { ghostMods, sharedWisdomTiers } from 'src/data/xp-modifiers'
 import BountyTable from 'src/components/BountyTable.vue'
-import { calculateTotal } from 'src/utils/bounty-util'
+import { calculateXp } from 'src/utils/bounty-util'
 
 const characterCount = ref(3)
 const seasonPass = ref(true)
 const wellRested = ref(true)
 const ghostShellMod = ref(ghostMods[0].value)
-const sharedWisdom = ref(sharedWisdomTiers[0].value)
+const sharedWisdom = ref(0)
 
 const storedXp = computed(() =>
-  Math.floor(calculateTotal(102, 78, ghostShellMod.value, seasonPass.value, wellRested.value, sharedWisdom.value, 1))
+  Math.floor(
+    calculateXp(
+      102,
+      78,
+      ghostShellMod.value,
+      seasonPass.value,
+      wellRested.value,
+      sharedWisdom.value
+    )
+  )
 )
 </script>
