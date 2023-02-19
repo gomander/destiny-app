@@ -26,7 +26,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          {{ userStore.uniqueName }}
         </q-item-label>
 
         <EssentialLink
@@ -45,35 +45,37 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useQuasar } from 'quasar';
+import { useQuasar } from 'quasar'
+import { useUserStore } from 'src/stores/user-store'
 import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const $q = useQuasar()
 $q.dark.set('auto')
+const userStore = useUserStore()
 
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Home',
     caption: '',
-    icon: 'code',
+    icon: 'fas fa-house',
     link: '/'
   },
   {
     title: 'Craftable Weapons',
     caption: 'By type, frame, and element',
-    icon: 'school',
+    icon: 'fas fa-hammer',
     link: '/craftable-weapons'
   },
   {
     title: 'Bounty Calculator',
     caption: 'Bounties to XP and levels',
-    icon: 'chat',
+    icon: 'fas fa-calculator',
     link: '/bounty-calculator'
   },
   {
     title: 'Historical Power',
     caption: 'Levels by season',
-    icon: 'chat',
+    icon: 'fas fa-clock-rotate-left',
     link: '/historical-power'
   },
 ]

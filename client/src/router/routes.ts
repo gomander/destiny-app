@@ -9,17 +9,22 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/craftable-weapons',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/CraftableWeaponsPage.vue') }],
+    children: [{ path: '', component: () => import('pages/CraftableWeaponsPage.vue') }]
   },
   {
     path: '/bounty-calculator',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/BountyCalculatorPage.vue') }],
+    children: [{ path: '', component: () => import('pages/BountyCalculatorPage.vue') }]
   },
   {
     path: '/historical-power',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }],
+    children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }]
+  },
+  {
+    path: '/auth-return',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/AuthReturnPage.vue') }]
   },
 
   // Always leave this as last one,
