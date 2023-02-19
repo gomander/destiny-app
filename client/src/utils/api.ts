@@ -1,11 +1,3 @@
-export const getMembershipDataForCurrentUser = async () => {
-  const res = await fetch(
-    `${BUNGIE_API_ROOT}/User/GetMembershipsForCurrentUser/`
-  )
-  const respObj = await res.json()
-  console.log(respObj)
-}
-
 export const authorizationURL = () => {
   const queryParams = new URLSearchParams({
     client_id: BUNGIE_OAUTH_CLIENT_ID,
