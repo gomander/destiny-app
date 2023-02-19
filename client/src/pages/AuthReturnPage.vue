@@ -19,7 +19,9 @@ onMounted(async () => {
   userStore.accessToken = tokens.access_token
   userStore.membershipId = tokens.membership_id
   const membershipData = await api.getMembershipData(userStore.accessToken)
-  userStore.uniqueName = membershipData.Response.bungieNetUser.uniqueName
+  userStore.bungieNetUser = membershipData.Response.bungieNetUser
+  userStore.destinyMemberships = membershipData.Response.destinyMemberships
+  userStore.primaryMembershipId = membershipData.Response.primaryMembershipId
   router.push({ path: '/' })
 })
 </script>

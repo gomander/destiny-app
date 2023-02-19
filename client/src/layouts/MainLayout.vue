@@ -26,7 +26,7 @@
         <q-item-label
           header
         >
-          {{ userStore.uniqueName }}
+          {{ userStore.bungieNetUser.uniqueName }}
         </q-item-label>
 
         <EssentialLink
