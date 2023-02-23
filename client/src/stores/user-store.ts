@@ -8,7 +8,9 @@ export const useUserStore = defineStore(
       membershipId: '',
       bungieNetUser: {} as any,
       destinyMemberships: [] as any[],
-      primaryMembershipId: ''
+      primaryMembershipId: '',
+      manifest: {} as any,
+      inventoryItemDefinitions: [] as any[]
     }),
     persist: true
   }
