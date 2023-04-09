@@ -78,7 +78,10 @@ const getInventoryItemDefinitions = async () => {
 
   const getFrameNameFromHash = (hash: number) => {
     const frame = userStore.inventoryItemDefinitions.get(hash)!
-    return (frame.displayProperties.name as string)
+    if (frame.displayProperties.description === 'Well-rounded, reliable, fires a 3-round burst.') {
+      return 'adaptive burst'
+    }
+    return frame.displayProperties.name
       .toLowerCase()
       .replace('frame', '')
       .replace('glaive', '')
