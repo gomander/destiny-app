@@ -8,11 +8,6 @@
     />
 
     <q-btn
-      label="Get manifest"
-      @click="getManifest()"
-    />
-
-    <q-btn
       label="Get profile data"
       @click="getProfileData()"
     />
@@ -36,8 +31,7 @@ import {
   AmmoType, DamageType, WeaponFrame, WeaponType, WeaponSlot
 } from 'src/components/models'
 import {
-  BungieAmmoType, BungieDamageType, BungieItemSubType, BungieRarity,
-  BungieWeaponSlot
+  BungieAmmoType, BungieDamageType, BungieItemSubType, BungieWeaponSlot
 } from 'src/types/bungie';
 import * as api from 'src/utils/api'
 
@@ -48,8 +42,9 @@ const authUrl = api.authorizationURL()
 const getManifest = async () => {
   const res = await api.getDestinyManifest()
   userStore.manifest = res.Response
-  console.log(userStore.manifest)
 }
+
+getManifest()
 
 const getProfileData = async (
   components = [100, 200, 201]
