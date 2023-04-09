@@ -44,6 +44,24 @@ export const weapons: Weapon[] = [
     frame: AutoRifleFrame.Precision
   },
   {
+    name: 'Perpetualis',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.AutoRifle,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: AutoRifleFrame.Adaptive
+  },
+  {
+    name: 'Rufus\'s Fury',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.AutoRifle,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: AutoRifleFrame.RapidFire
+  },
+  {
     name: 'Fel Taradiddle',
     damageType: DamageType.Kinetic,
     weaponType: WeaponType.Bow,
@@ -69,6 +87,15 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Primary,
     slot: WeaponSlot.Energy,
     frame: BowFrame.Lightweight
+  },
+  {
+    name: 'Raconteur',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.Bow,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: BowFrame.Precision
   },
   {
     name: 'Deliverance',
@@ -105,6 +132,24 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Special,
     slot: WeaponSlot.Energy,
     frame: FusionRifleFrame.HighImpact
+  },
+  {
+    name: 'Iterative Loop',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.FusionRifle,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: FusionRifleFrame.RapidFire
+  },
+  {
+    name: 'Royal Executioner',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.FusionRifle,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: FusionRifleFrame.Adaptive
   },
   {
     name: 'The Enigma',
@@ -170,10 +215,46 @@ export const weapons: Weapon[] = [
     frame: GrenadeLauncherFrame.Lightweight
   },
   {
+    name: 'Prodigal Return',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.GrenadeLauncher,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: GrenadeLauncherFrame.Lightweight
+  },
+  {
     name: 'Tarnation',
     damageType: DamageType.Arc,
     weaponType: WeaponType.GrenadeLauncher,
     season: 16,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: GrenadeLauncherFrame.RapidFire
+  },
+  {
+    name: 'Dimensional Hypotrochoid',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.GrenadeLauncher,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: GrenadeLauncherFrame.CompressedWave
+  },
+  {
+    name: 'Regnant',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.GrenadeLauncher,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: GrenadeLauncherFrame.Adaptive
+  },
+  {
+    name: 'Koraxis\'s Distress',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.GrenadeLauncher,
+    season: 20,
     ammoType: AmmoType.Heavy,
     slot: WeaponSlot.Power,
     frame: GrenadeLauncherFrame.RapidFire
@@ -215,6 +296,15 @@ export const weapons: Weapon[] = [
     frame: HandCannonFrame.Precision
   },
   {
+    name: 'Round Robin',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.HandCannon,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: HandCannonFrame.Aggressive
+  },
+  {
     name: 'Cataclysmic',
     damageType: DamageType.Solar,
     weaponType: WeaponType.LinearFusionRifle,
@@ -246,6 +336,15 @@ export const weapons: Weapon[] = [
     damageType: DamageType.Stasis,
     weaponType: WeaponType.LinearFusionRifle,
     season: 19,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: LinearFusionRifleFrame.Aggressive
+  },
+  {
+    name: 'Briar\'s Contempt',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.LinearFusionRifle,
+    season: 20,
     ammoType: AmmoType.Heavy,
     slot: WeaponSlot.Power,
     frame: LinearFusionRifleFrame.Aggressive
@@ -348,6 +447,24 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Primary,
     slot: WeaponSlot.Energy,
     frame: PulseRifleFrame.Lightweight
+  },
+  {
+    name: 'Disparity',
+    damageType: DamageType.Stasis,
+    weaponType: WeaponType.PulseRifle,
+    season: 19,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: PulseRifleFrame.AggressiveBurst
+  },
+  {
+    name: 'Phyllotactic Spiral',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.PulseRifle,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: PulseRifleFrame.HighImpact
   },
   {
     name: 'Palmyra-B',
@@ -548,6 +665,24 @@ export const weapons: Weapon[] = [
     frame: ShotgunFrame.PinpointSlug
   },
   {
+    name: 'Imperial Decree',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.Shotgun,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: ShotgunFrame.Aggressive
+  },
+  {
+    name: 'Nessa\'s Oblation',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.Shotgun,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: ShotgunFrame.PinpointSlug
+  },
+  {
     name: 'Thoughtless',
     damageType: DamageType.Stasis,
     weaponType: WeaponType.SniperRifle,
@@ -602,6 +737,15 @@ export const weapons: Weapon[] = [
     frame: SniperRifleFrame.Aggressive
   },
   {
+    name: 'Volta Bracket',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.SniperRifle,
+    season: 20,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: SniperRifleFrame.Aggressive
+  },
+  {
     name: 'Hollow Denial',
     damageType: DamageType.Void,
     weaponType: WeaponType.TraceRifle,
@@ -624,6 +768,15 @@ export const weapons: Weapon[] = [
     damageType: DamageType.Arc,
     weaponType: WeaponType.TraceRifle,
     season: 19,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: TraceRifleFrame.Adaptive
+  },
+  {
+    name: 'Acasia\'s Dejection',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.TraceRifle,
+    season: 20,
     ammoType: AmmoType.Special,
     slot: WeaponSlot.Energy,
     frame: TraceRifleFrame.Adaptive
@@ -654,5 +807,125 @@ export const weapons: Weapon[] = [
     ammoType: AmmoType.Heavy,
     slot: WeaponSlot.Power,
     frame: SwordFrame.Adaptive
+  },
+  {
+    name: 'Caretaker',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Sword,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Adaptive
+  },
+  {
+    name: 'Goldtusk',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.Sword,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Lightweight
+  },
+  {
+    name: 'Death\'s Razor',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.Sword,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Vortex
+  },
+  {
+    name: 'Throne-Cleaver',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Sword,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: SwordFrame.Aggressive
+  },
+]
+
+export const upcomingWeapons: Weapon[] = [
+  {
+    name: 'Marsilion-C',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.GrenadeLauncher,
+    season: 20,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: GrenadeLauncherFrame.RapidFire
+  },
+  {
+    name: 'Age-Old Bond',
+    damageType: DamageType.Void,
+    weaponType: WeaponType.AutoRifle,
+    season: 21,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: AutoRifleFrame.HighImpact
+  },
+  {
+    name: 'Tyranny of Heaven',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.Bow,
+    season: 21,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: BowFrame.Lightweight
+  },
+  {
+    name: 'Nation of Beasts',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.HandCannon,
+    season: 21,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Energy,
+    frame: HandCannonFrame.Adaptive
+  },
+  {
+    name: 'Chattering Bone',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.PulseRifle,
+    season: 21,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: PulseRifleFrame.Lightweight
+  },
+  {
+    name: 'Transfiguration',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.ScoutRifle,
+    season: 21,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: ScoutRifleFrame.HighImpact
+  },
+  {
+    name: 'Techeun Force',
+    damageType: DamageType.Arc,
+    weaponType: WeaponType.FusionRifle,
+    season: 21,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Energy,
+    frame: FusionRifleFrame.Adaptive
+  },
+  {
+    name: 'The Supremacy',
+    damageType: DamageType.Kinetic,
+    weaponType: WeaponType.SniperRifle,
+    season: 21,
+    ammoType: AmmoType.Special,
+    slot: WeaponSlot.Kinetic,
+    frame: SniperRifleFrame.RapidFire
+  },
+  {
+    name: 'Apex Predator',
+    damageType: DamageType.Solar,
+    weaponType: WeaponType.RocketLauncher,
+    season: 21,
+    ammoType: AmmoType.Heavy,
+    slot: WeaponSlot.Power,
+    frame: RocketLauncherFrame.Adaptive
   },
 ]
