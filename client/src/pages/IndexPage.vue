@@ -68,13 +68,16 @@ const getProfileData = async (
 const getInventoryItemDefinitions = async () => {
   if (!userStore.manifest.jsonWorldComponentContentPaths) await getManifest()
   if (!Object.keys(userStore.inventoryItemDefinitions).length) {
-    userStore.inventoryItemDefinitions = await api.getDestinyManifestDefinition(
+    const items = await api.getDestinyManifestDefinition(
       userStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
     )
+    for (const item in items) {
+      userStore.inventoryItemDefinitions.set(Number(item), items[item])
+    }
   }
 
   const getFrameNameFromHash = (hash: number) => {
-    const frame = userStore.inventoryItemDefinitions[hash]
+    const frame = userStore.inventoryItemDefinitions.get(hash)!
     return (frame.displayProperties.name as string)
       .toLowerCase()
       .replace('frame', '')
@@ -89,20 +92,18 @@ const getInventoryItemDefinitions = async () => {
       .trim()
   }
 
-  for (const key in userStore.inventoryItemDefinitions) {
-    const item = userStore.inventoryItemDefinitions[key]
-    if (item.inventory?.recipeItemHash && item.inventory?.tierType === BungieRarity['legendary']) {
+  userStore.inventoryItemDefinitions.forEach((item) => {
+    if (item.inventory?.recipeItemHash) {
       userStore.craftableWeapons.push({
         name: item.displayProperties.name,
         damageType: BungieDamageType[item.defaultDamageType] as DamageType,
         weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
         season: 1,
-        ammoType: BungieAmmoType[item.equippingBlock.ammoType] as AmmoType,
-        slot: BungieWeaponSlot[item.equippingBlock.equipmentSlotTypeHash] as WeaponSlot,
-        frame: getFrameNameFromHash(item.sockets.socketEntries[0].singleInitialItemHash) as WeaponFrame
+        ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
+        slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
+        frame: getFrameNameFromHash(item.sockets!.socketEntries[0].singleInitialItemHash) as WeaponFrame
       })
     }
-  }
-  console.log(userStore.craftableWeapons)
+  })
 }
 </script>
