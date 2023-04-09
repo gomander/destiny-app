@@ -566,6 +566,15 @@ export const weapons: Weapon[] = [
     frame: SidearmFrame.RapidFire
   },
   {
+    name: 'Mykel\'s Reverence',
+    damageType: DamageType.Strand,
+    weaponType: WeaponType.Sidearm,
+    season: 20,
+    ammoType: AmmoType.Primary,
+    slot: WeaponSlot.Kinetic,
+    frame: SidearmFrame.RapidFire
+  },
+  {
     name: 'Forensic Nightmare',
     damageType: DamageType.Stasis,
     weaponType: WeaponType.SubmachineGun,

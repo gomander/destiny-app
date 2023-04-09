@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { WeaponType, Weapon, AmmoType } from './models'
-import { weapons } from 'src/data/weapons'
+// import { weapons } from 'src/data/weapons'
 import {
   getTableTitle, capitalizeText, getAvailableDamageTypes, getAvailableFrames
 } from 'src/utils/weapon-util'
@@ -21,8 +21,13 @@ interface Props {
   label?: string
   weaponType: WeaponType
   ammoType?: AmmoType
+  weapons: Weapon[]
 }
 const props = defineProps<Props>()
+
+if (props.weaponType === WeaponType.AutoRifle) {
+  console.log(props.weapons)
+}
 
 const columns = [
   {
@@ -46,7 +51,7 @@ for (const frame of frames) {
     sortable: false
   })
 }
-const myWeapons = weapons.filter(weapon => {
+const myWeapons = props.weapons.filter(weapon => {
   if (weapon.weaponType !== props.weaponType) return false
   if (props.ammoType) return weapon.ammoType === props.ammoType
   return true

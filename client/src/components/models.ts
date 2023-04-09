@@ -92,7 +92,6 @@ export enum HeavyGrenadeLauncherFrame {
 export enum HandCannonFrame {
   Aggressive = 'aggressive',
   Adaptive = 'adaptive',
-  Lightweight = 'lightweight',
   Precision = 'precision'
 }
 
@@ -160,7 +159,7 @@ export enum SubmachineGunFrame {
 }
 
 export enum SwordFrame {
-  Adaptive = 'adpative',
+  Adaptive = 'adaptive',
   Vortex = 'vortex',
   Caster = 'caster',
   Lightweight = 'lightweight',

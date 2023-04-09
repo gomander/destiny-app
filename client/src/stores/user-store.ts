@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { Weapon } from 'src/components/models'
 
 export const useUserStore = defineStore(
   'user',
@@ -10,7 +11,8 @@ export const useUserStore = defineStore(
       destinyMemberships: [] as any[],
       primaryMembershipId: '',
       manifest: {} as any,
-      inventoryItemDefinitions: [] as any[]
+      inventoryItemDefinitions: {} as any,
+      craftableWeapons: [] as Weapon[]
     }),
     persist: true
   }

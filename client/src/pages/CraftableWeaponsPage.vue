@@ -9,6 +9,7 @@
           v-for="weaponType of getWeaponTypesOfAmmoType(ammoType)"
           :weapon-type="weaponType"
           :ammo-type="ammoType"
+          :weapons="userStore.craftableWeapons"
         />
       </div>
     </section>
@@ -19,4 +20,7 @@
 import { AmmoType } from 'src/components/models'
 import WeaponTable from 'src/components/WeaponTable.vue'
 import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
+import { useUserStore } from 'src/stores/user-store'
+
+const userStore = useUserStore()
 </script>
