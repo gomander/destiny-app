@@ -6,7 +6,7 @@
     separator="horizontal"
     hide-bottom
     dense
-    :pagination="{ rowsPerPage: 13 }"
+    :pagination="{ rowsPerPage: rows.length }"
   />
 </template>
 
@@ -66,6 +66,11 @@ const rows = [
   },
   {
     source: 'Starhorse',
+    weeklies: 1,
+    dailies: 0
+  },
+  {
+    source: 'Nimbus',
     weeklies: 1,
     dailies: 0
   },

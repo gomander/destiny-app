@@ -6,6 +6,7 @@
     separator="cell"
     hide-bottom
     dense
+    :pagination="{ rowsPerPage: tableRows.length }"
   />
 </template>
 

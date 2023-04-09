@@ -5,7 +5,7 @@
     <q-table
       :rows="rows"
       :columns="columns"
-      :pagination="{ rowsNumber: 50 }"
+      :pagination="{ rowsNumber: rows.length }"
       separator="cell"
       hide-bottom
     />
