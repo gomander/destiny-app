@@ -45,6 +45,7 @@ export const getAvailableDamageTypes = (weaponType: WeaponType, ammoType?: AmmoT
   const damageTypes = [
     DamageType.Kinetic,
     DamageType.Stasis,
+    DamageType.Strand,
     DamageType.Void,
     DamageType.Arc,
     DamageType.Solar

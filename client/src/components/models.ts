@@ -3,7 +3,8 @@ export enum DamageType {
   Void = 'void',
   Arc = 'arc',
   Solar = 'solar',
-  Stasis = 'stasis'
+  Stasis = 'stasis',
+  Strand = 'strand'
 }
 
 export enum WeaponType {
@@ -73,22 +74,25 @@ export enum GrenadeLauncherFrame {
   Wave = 'wave',
   Lightweight = 'lightweight',
   Adaptive = 'adaptive',
-  RapidFire = 'rapid-fire'
+  RapidFire = 'rapid-fire',
+  CompressedWave = 'compressed wave'
 }
 
 export enum SpecialGrenadeLauncherFrame {
-  Wave = 'wave',
-  Lightweight = 'lightweight'
+  Wave = GrenadeLauncherFrame.Wave,
+  Lightweight = GrenadeLauncherFrame.Lightweight
 }
 
 export enum HeavyGrenadeLauncherFrame {
-  Adaptive = 'adaptive',
-  RapidFire = 'rapid-fire'
+  Adaptive = GrenadeLauncherFrame.Adaptive,
+  RapidFire = GrenadeLauncherFrame.RapidFire,
+  CompressedWave = GrenadeLauncherFrame.CompressedWave
 }
 
 export enum HandCannonFrame {
   Aggressive = 'aggressive',
   Adaptive = 'adaptive',
+  Lightweight = 'lightweight',
   Precision = 'precision'
 }
 
@@ -158,7 +162,9 @@ export enum SubmachineGunFrame {
 export enum SwordFrame {
   Adaptive = 'adpative',
   Vortex = 'vortex',
-  Caster = 'caster'
+  Caster = 'caster',
+  Lightweight = 'lightweight',
+  Aggressive = 'aggressive'
 }
 
 export enum TraceRifleFrame { Adaptive = 'adaptive' }

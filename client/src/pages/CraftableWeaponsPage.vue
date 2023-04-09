@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { AmmoType } from 'components/models'
+import { AmmoType } from 'src/components/models'
 import WeaponTable from 'src/components/WeaponTable.vue'
 import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
 </script>
