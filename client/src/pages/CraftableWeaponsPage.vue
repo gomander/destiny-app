@@ -12,11 +12,20 @@
         />
       </div>
     </section>
+
+    <section>
+      <h2>Custom tables</h2>
+      <custom-grid-display
+        :weapon-type="WeaponType.AutoRifle"
+        :ammo-type="AmmoType.Primary"
+      />
+    </section>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { AmmoType } from 'src/components/models'
+import CustomGridDisplay from 'src/components/CustomGridDisplay.vue';
+import { AmmoType, WeaponType } from 'src/components/models'
 import WeaponTable from 'src/components/WeaponTable.vue'
 import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
 </script>
