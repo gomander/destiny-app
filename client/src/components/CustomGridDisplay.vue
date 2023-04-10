@@ -7,7 +7,7 @@
       class="grid-label"
       ref="label"
     >
-      {{ weaponType }}
+      <div>{{ weaponType }}</div>
     </div>
     <div
       class="top-header"
@@ -79,9 +79,11 @@ const left = ref<HTMLDivElement | null>(null)
 const data = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
-  top.value!.style.gridTemplateColumns = frames.reduce((acc) => acc + '1fr ', '')
-  data.value!.style.gridTemplateColumns = frames.reduce((acc, value) => `${acc}[${value}] 1fr `, '')
-  data.value!.style.gridTemplateRows = elements.reduce((acc, value) => `${acc}[${value}] 1fr `, '')
+  const cssFrames = frames.map((frame) => `[${frame}] 1fr`).join(' ')
+  top.value!.style.gridTemplateColumns = cssFrames
+  data.value!.style.gridTemplateColumns = cssFrames
+  const cssElements = elements.map((element) => `[${element}] 1fr`).join(' ')
+  data.value!.style.gridTemplateRows = cssElements
 })
 </script>
 
@@ -89,6 +91,15 @@ onMounted(() => {
 .outer-grid
   display: grid
   grid-template-areas: 'label top' 'left data'
+  grid-template-columns: minmax(min-content, 10%) 1fr
+  background-color: #222
+  border: 0.1rem solid white
+  border-radius: 0.25rem
+
+  & > div > div
+      border: 0.1rem solid white
+      padding: 0.25rem
+
 .grid-label
   grid-area: label
 .top-header
@@ -100,4 +111,5 @@ onMounted(() => {
 .grid-data
   display: grid
   grid-area: data
+  background-color: #333
 </style>
