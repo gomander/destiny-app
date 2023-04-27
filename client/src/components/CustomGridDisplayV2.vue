@@ -28,10 +28,16 @@
 
     <div
       class="grid-data"
+      v-for="style of cellStyles"
+      :style="style"
+    ></div>
+
+    <div
+      class="grid-data"
       v-for="weapon of data"
       :style="{ gridRow: 'r' + weapon.damageTypeHash, gridColumn: 'c' + weapon.frameHash }"
     >
-      <img :src="weapon.icon">
+      <img :src="weapon.icon"><br/>
       {{ weapon.name }}
     </div>
   </div>
@@ -51,7 +57,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const data = gameStore.craftableWeapons.filter(
-  (weapon) => weapon.weaponType === props.weaponType && (!props.ammoType || weapon.ammoType === props.ammoType)
+  (weapon) => weapon.weaponType === props.weaponType &&
+    (!props.ammoType || weapon.ammoType === props.ammoType)
 )
 
 const frameHashes = data.map(
@@ -60,9 +67,9 @@ const frameHashes = data.map(
   (value, index, self) => index === self.findIndex((t) => t === value)
 )
 
-const frames = frameHashes.map((column) => {
-  return gameStore.weaponFrameDefinitions[column]!
-})
+const frames = frameHashes.map(
+  (column) => gameStore.weaponFrameDefinitions[column]
+)
 
 const elementHashes = data.map(
   (weapon) => weapon.damageTypeHash
@@ -70,9 +77,20 @@ const elementHashes = data.map(
   (value, index, self) => index === self.findIndex((t) => t === value)
 )
 
-const elements = elementHashes.map((row) => {
-  return gameStore.damageTypeDefinitions[row]!
-})
+const elements = elementHashes.map(
+  (row) => gameStore.damageTypeDefinitions[row]
+)
+
+const cellStyles = ref(
+  elements.map(
+    (element) => frames.map(
+      (frame) => ({
+        gridColumn: 'c' + frame.hash,
+        gridRow: 'r' + element.hash
+      })
+    )
+  ).flat()
+)
 
 const grid = ref<HTMLDivElement | null>(null)
 const rowHeaderRefs = ref<HTMLDivElement[]>([])
@@ -99,4 +117,5 @@ onMounted(() => {
   & > div
     border: 0.1rem solid white
     padding: 0.25rem
+    text-align: center
 </style>
