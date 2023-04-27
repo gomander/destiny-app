@@ -21,21 +21,24 @@
 
 <script setup lang="ts">
 import { useUserStore } from 'src/stores/user-store'
+import { useGameStore } from 'src/stores/game-store'
 import {
   AmmoType, DamageType, WeaponFrame, WeaponType, WeaponSlot
 } from 'src/components/models'
 import {
   BungieAmmoType, BungieDamageType, BungieItemSubType, BungieWeaponSlot
-} from 'src/types/bungie';
+} from 'src/types/bungie'
 import * as api from 'src/utils/api'
+import { DestinyInventoryItemDefinition } from 'bungie-api-ts/destiny2'
 
 const userStore = useUserStore()
+const gameStore = useGameStore()
 
 const authUrl = api.authorizationURL()
 
 const getManifest = async () => {
   const res = await api.getDestinyManifest()
-  userStore.manifest = res.Response
+  gameStore.manifest = res.Response
 }
 
 getManifest().then(() => {
@@ -43,11 +46,12 @@ getManifest().then(() => {
 })
 
 const getDamageTypeDefinitions = async () => {
+  if (Object.keys(gameStore.damageTypeDefinitions).length) return
   const res = await api.getDestinyManifestDefinition(
-    userStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
+    gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
   )
-  for (const damageType in res) {
-    userStore.damageTypeDefinitions[Number(damageType)] = res[damageType]
+  for (const key in res) {
+    gameStore.damageTypeDefinitions[key] = res[key]
   }
 }
 
@@ -66,18 +70,24 @@ const getProfileData = async (
 }
 
 const getInventoryItemDefinitions = async () => {
-  if (!userStore.manifest.jsonWorldComponentContentPaths) await getManifest()
-  if (!Object.keys(userStore.inventoryItemDefinitions).length) {
-    const items = await api.getDestinyManifestDefinition(
-      userStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
-    )
-    for (const item in items) {
-      userStore.inventoryItemDefinitions[Number(item)] = items[item]
+  if (!gameStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  const items = await api.getDestinyManifestDefinition(
+    gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
+  ) as { [n: number]: DestinyInventoryItemDefinition }
+
+  for (const key of Object.keys(items)) {
+    const hash = Number(key)
+    if (items[hash].itemType === 19 && items[hash].itemCategoryHashes?.includes(2237038328)) {
+      gameStore.weaponFrameDefinitions[key] = items[hash]
+    }
+
+    if (items[hash].itemType === 3 && items[hash].itemCategoryHashes?.includes(1)) {
+      gameStore.weaponDefinitions[key] = items[hash]
     }
   }
 
   const getFrameNameFromHash = (hash: number) => {
-    const frame = userStore.inventoryItemDefinitions[hash]!
+    const frame = gameStore.weaponFrameDefinitions[hash]
     if (frame.displayProperties.description === 'Well-rounded, reliable, fires a 3-round burst.') {
       return 'adaptive burst'
     }
@@ -95,10 +105,10 @@ const getInventoryItemDefinitions = async () => {
       .trim()
   }
 
-  for (const key in userStore.inventoryItemDefinitions) {
-    const item = userStore.inventoryItemDefinitions[Number(key)]
+  for (const key in gameStore.weaponDefinitions) {
+    const item = gameStore.weaponDefinitions[Number(key)]
     if (item.inventory?.recipeItemHash) {
-      userStore.craftableWeapons.push({
+      gameStore.craftableWeapons.push({
         name: item.displayProperties.name,
         damageType: BungieDamageType[item.defaultDamageType] as DamageType,
         damageTypeHash: item.damageTypeHashes[0],

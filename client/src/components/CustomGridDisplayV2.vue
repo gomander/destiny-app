@@ -39,10 +39,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useUserStore } from 'src/stores/user-store'
-import { AmmoType, WeaponType } from './models';
+import { AmmoType, WeaponType } from './models'
+import { useGameStore } from 'src/stores/game-store'
 
-const userStore = useUserStore()
+const gameStore = useGameStore()
 
 interface Props {
   weaponType: WeaponType
@@ -50,8 +50,8 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const data = userStore.craftableWeapons.filter(
-  (weapon) => weapon.weaponType === props.weaponType
+const data = gameStore.craftableWeapons.filter(
+  (weapon) => weapon.weaponType === props.weaponType && (!props.ammoType || weapon.ammoType === props.ammoType)
 )
 
 const frameHashes = data.map(
@@ -61,7 +61,7 @@ const frameHashes = data.map(
 )
 
 const frames = frameHashes.map((column) => {
-  return userStore.inventoryItemDefinitions[column]!
+  return gameStore.weaponFrameDefinitions[column]!
 })
 
 const elementHashes = data.map(
@@ -71,7 +71,7 @@ const elementHashes = data.map(
 )
 
 const elements = elementHashes.map((row) => {
-  return userStore.damageTypeDefinitions[row]!
+  return gameStore.damageTypeDefinitions[row]!
 })
 
 const grid = ref<HTMLDivElement | null>(null)

@@ -45,10 +45,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useUserStore } from 'src/stores/user-store'
+import { useGameStore } from 'src/stores/game-store'
 import { AmmoType, WeaponType } from './models';
 
-const userStore = useUserStore()
+const gameStore = useGameStore()
 
 interface Props {
   weaponType: WeaponType
@@ -56,7 +56,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const weapons = userStore.craftableWeapons.filter(
+const weapons = gameStore.craftableWeapons.filter(
   (weapon) => weapon.weaponType === props.weaponType
 )
 

@@ -22,7 +22,15 @@
 
       <custom-grid-display-v2
         :weapon-type="WeaponType.AutoRifle"
-        :ammo-type="AmmoType.Primary"
+      />
+
+      <custom-grid-display-v2
+        :weapon-type="WeaponType.MachineGun"
+      />
+
+      <custom-grid-display-v2
+        :weapon-type="WeaponType.GrenadeLauncher"
+        :ammo-type="AmmoType.Special"
       />
     </section>
   </q-page>
