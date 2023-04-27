@@ -16,12 +16,6 @@
       label="Get inventory item definitions"
       @click="getInventoryItemDefinitions()"
     />
-
-    <div class="row wrap">
-      <div style="width: 96px; height: 96px; background-image: url('https://www.bungie.net/common/destiny2_content/icons/0b00492a2f9613854b867c2b054a3784.jpg');">
-      </div>
-      <img src="https://www.bungie.net/common/destiny2_content/icons/0b00492a2f9613854b867c2b054a3784.jpg">
-    </div>
   </q-page>
 </template>
 
@@ -44,7 +38,18 @@ const getManifest = async () => {
   userStore.manifest = res.Response
 }
 
-getManifest()
+getManifest().then(() => {
+  getDamageTypeDefinitions()
+})
+
+const getDamageTypeDefinitions = async () => {
+  const res = await api.getDestinyManifestDefinition(
+    userStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
+  )
+  for (const damageType in res) {
+    userStore.damageTypeDefinitions[Number(damageType)] = res[damageType]
+  }
+}
 
 const getProfileData = async (
   components = [100, 200, 201]
@@ -67,12 +72,12 @@ const getInventoryItemDefinitions = async () => {
       userStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
     )
     for (const item in items) {
-      userStore.inventoryItemDefinitions.set(Number(item), items[item])
+      userStore.inventoryItemDefinitions[Number(item)] = items[item]
     }
   }
 
   const getFrameNameFromHash = (hash: number) => {
-    const frame = userStore.inventoryItemDefinitions.get(hash)!
+    const frame = userStore.inventoryItemDefinitions[hash]!
     if (frame.displayProperties.description === 'Well-rounded, reliable, fires a 3-round burst.') {
       return 'adaptive burst'
     }
@@ -90,18 +95,21 @@ const getInventoryItemDefinitions = async () => {
       .trim()
   }
 
-  userStore.inventoryItemDefinitions.forEach((item) => {
+  for (const key in userStore.inventoryItemDefinitions) {
+    const item = userStore.inventoryItemDefinitions[Number(key)]
     if (item.inventory?.recipeItemHash) {
       userStore.craftableWeapons.push({
         name: item.displayProperties.name,
         damageType: BungieDamageType[item.defaultDamageType] as DamageType,
+        damageTypeHash: item.damageTypeHashes[0],
         weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
-        season: 1,
         ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
         slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-        frame: getFrameNameFromHash(item.sockets!.socketEntries[0].singleInitialItemHash) as WeaponFrame
+        frame: getFrameNameFromHash(item.sockets!.socketEntries[0].singleInitialItemHash) as WeaponFrame,
+        frameHash: item.sockets?.socketEntries[0].singleInitialItemHash!,
+        icon: 'https://www.bungie.net' + item.displayProperties.icon
       })
     }
-  })
+  }
 }
 </script>

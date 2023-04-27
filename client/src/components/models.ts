@@ -171,9 +171,11 @@ export enum TraceRifleFrame { Adaptive = 'adaptive' }
 export interface Weapon {
   name: string
   damageType: DamageType
+  damageTypeHash: number
   weaponType: WeaponType
-  season: number
   ammoType: AmmoType
   slot: WeaponSlot
   frame: WeaponFrame
+  frameHash: number
+  icon: string
 }

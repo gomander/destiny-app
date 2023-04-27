@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { Weapon } from 'src/components/models'
-import { DestinyManifest, DestinyInventoryItemDefinition } from 'bungie-api-ts/destiny2'
+import {
+  DestinyManifest, DestinyInventoryItemDefinition, DestinyDamageTypeDefinition
+} from 'bungie-api-ts/destiny2'
 
 export const useUserStore = defineStore(
   'user',
@@ -12,8 +14,10 @@ export const useUserStore = defineStore(
       destinyMemberships: [] as any[],
       primaryMembershipId: '',
       manifest: {} as DestinyManifest,
-      inventoryItemDefinitions: new Map<number, DestinyInventoryItemDefinition>(),
-      craftableWeapons: [] as Weapon[]
+      inventoryItemDefinitions: {} as { [n: number]: DestinyInventoryItemDefinition },
+      craftableWeapons: [] as Weapon[],
+      damageTypeDefinitions: {} as { [n: number]: DestinyDamageTypeDefinition },
+      weaponFrameDefinitions: [] as DestinyInventoryItemDefinition[]
     }),
     persist: true
   }
