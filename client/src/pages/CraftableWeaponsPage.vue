@@ -36,6 +36,11 @@
         :weapon-type="WeaponType.GrenadeLauncher"
         :ammo-type="AmmoType.Special"
       />
+
+      <custom-grid-display-v2
+        :weapon-type="WeaponType.GrenadeLauncher"
+        :ammo-type="AmmoType.Heavy"
+      />
     </section>
   </q-page>
 </template>

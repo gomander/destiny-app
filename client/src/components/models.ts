@@ -27,6 +27,28 @@ export enum WeaponType {
   TraceRifle = 'trace rifle'
 }
 
+export enum ExplicitWeaponType {
+  AutoRifle = 'auto rifle',
+  Bow = 'bow',
+  FusionRifle = 'fusion rifle',
+  Glaive = 'glaive',
+  GrenadeLauncher = 'grenade launcher',
+  SpecialGrenadeLauncher = 'special grenade launcher',
+  HeavyGrenadeLauncher = 'heavy grenade launcher',
+  HandCannon = 'hand cannon',
+  LinearFusionRifle = 'linear fusion rifle',
+  MachineGun = 'machine gun',
+  PulseRifle = 'pulse rifle',
+  RocketLauncher = 'rocket launcher',
+  ScoutRifle = 'scout rifle',
+  Shotgun = 'shotgun',
+  Sidearm = 'sidearm',
+  SniperRifle = 'sniper rifle',
+  SubmachineGun = 'submachine gun',
+  Sword = 'sword',
+  TraceRifle = 'trace rifle'
+}
+
 export enum AmmoType {
   Primary = 'primary',
   Special = 'special',
@@ -178,4 +200,40 @@ export interface Weapon {
   frame: WeaponFrame
   frameHash: number
   icon: string
+}
+
+export enum DestinyIcon {
+  AutoRifle = '',
+  Bow = '',
+  FusionRifle = '',
+  Glaive = '',
+  GrenadeLauncher = '',
+  SpecialGrenadeLauncher = '',
+  HeavyGrenadeLauncher = '',
+  HandCannon = '',
+  LinearFusionRifle = '',
+  MachineGun = '',
+  PulseRifle = '',
+  RocketLauncher = '',
+  ScoutRifle = '',
+  Shotgun = '',
+  Sidearm = '',
+  SniperRifle = '',
+  SubmachineGun = '',
+  Sword = '',
+  TraceRifle = '',
+  Helmet = '',
+  Gauntlets = '',
+  ChestArmor = '',
+  LegArmor = '',
+  ClassArmor = '',
+  Primary = '',
+  Special = '',
+  Heavy = '',
+  Titan = '',
+  Warlock = '',
+  Hunter = '',
+  Overload = '',
+  Barrier = '',
+  Unstoppable = ''
 }

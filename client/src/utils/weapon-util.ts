@@ -1,5 +1,5 @@
 import {
-  AmmoType, AutoRifleFrame, BowFrame, DamageType, FusionRifleFrame, GlaiveFrame,
+  AmmoType, AutoRifleFrame, BowFrame, DamageType, DestinyIcon, ExplicitWeaponType, FusionRifleFrame, GlaiveFrame,
   GrenadeLauncherFrame, HandCannonFrame, HeavyGrenadeLauncherFrame,
   LinearFusionRifleFrame, MachineGunFrame, PulseRifleFrame, RocketLauncherFrame,
   ScoutRifleFrame, ShotgunFrame, SidearmFrame, SniperRifleFrame,
@@ -112,4 +112,17 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
       WeaponType.Sword
     ]
   }
+}
+
+function getEnumKeyByEnumValue<T extends {[index:string]:string}>(myEnum:T, enumValue:string):keyof T|null {
+  let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
+  return keys.length > 0 ? keys[0] : null;
+}
+
+export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType) => {
+  const explicitWeaponType = (weaponType === 'grenade launcher' && ammoType)
+    ? ammoType + ' ' + weaponType
+    : weaponType as unknown as ExplicitWeaponType
+  const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)!
+  return [DestinyIcon[w], capitalizeText(explicitWeaponType)]
 }

@@ -7,7 +7,10 @@
       class="grid-label"
       ref="label"
     >
-      {{ weaponType }}
+      <div>
+        <h3>{{ weaponName }}</h3>
+        <i>{{ weaponIcon }}</i>
+      </div>
     </div>
 
     <div
@@ -15,7 +18,10 @@
       v-for="column of frames"
       ref="columnHeaderRefs"
     >
-      {{ column.displayProperties.name }}
+      <div>
+        <img :src="'https://www.bungie.net' + column.displayProperties.icon" alt=""><br/>
+        {{ column.displayProperties.name }}
+      </div>
     </div>
 
     <div
@@ -23,7 +29,10 @@
       v-for="row of elements"
       ref="rowHeaderRefs"
     >
-      {{ row.displayProperties.name }}
+      <div>
+        <img :src="'https://www.bungie.net' + row.displayProperties.icon" alt=""><br/>
+        {{ row.displayProperties.name }}
+      </div>
     </div>
 
     <div
@@ -34,7 +43,7 @@
       <div
         v-for="weapon of cellWeapons[i]"
       >
-        <img :src="weapon.icon"><br/>
+        <img :src="weapon.icon" alt=""><br/>
         {{ weapon.name }}
       </div>
     </div>
@@ -44,6 +53,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { AmmoType, WeaponType } from './models'
+import { getWeaponIconAndName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
 
 const gameStore = useGameStore()
@@ -101,6 +111,8 @@ const cellWeapons = ref(
   ).flat()
 )
 
+const [weaponIcon, weaponName] = getWeaponIconAndName(props.weaponType, props.ammoType)
+
 const grid = ref<HTMLDivElement | null>(null)
 const rowHeaderRefs = ref<HTMLDivElement[]>([])
 const columnHeaderRefs = ref<HTMLDivElement[]>([])
@@ -130,4 +142,11 @@ onMounted(() => {
     display: flex
     gap: 1em
     justify-content: center
+
+img
+  width: 96px
+  height: 96px
+
+i
+  font-size: 250%
 </style>
