@@ -149,4 +149,5 @@ img
 
 i
   font-size: 250%
+  font-style: normal
 </style>
