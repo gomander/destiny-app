@@ -22,6 +22,7 @@
         <img
           :src="'https://www.bungie.net' + column.displayProperties.icon"
           alt=""
+          :title="column.displayProperties.description"
         />
         {{ column.displayProperties.name }}
       </div>
@@ -36,7 +37,8 @@
         <img
           :src="'https://www.bungie.net' + row.displayProperties.icon"
           alt=""
-        >
+          :title="row.displayProperties.description"
+        />
         {{ row.displayProperties.name }}
       </div>
     </div>
@@ -49,7 +51,7 @@
       <div
         v-for="weapon of cellWeapons[i]"
       >
-        <img :src="weapon.icon" alt="">
+        <img :src="weapon.icon" alt=""/>
         {{ weapon.name }}
       </div>
     </div>
@@ -144,9 +146,9 @@ onMounted(() => {
 
   & > div
     border: 0.1em solid white
-    padding: 1em
+    padding: 0.75em
     display: flex
-    gap: 1em
+    gap: 0.75em
     justify-content: center
 
     & > div
@@ -154,7 +156,6 @@ onMounted(() => {
       flex-direction: column
       gap: 0.25em
       align-items: center
-      font-size: 1.1em
 
 img
   width: 96px

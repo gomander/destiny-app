@@ -51,6 +51,7 @@ const getDamageTypeDefinitions = async () => {
     gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
   )
   for (const key in res) {
+    if (res[key].displayProperties.name === 'Raid') continue
     gameStore.damageTypeDefinitions[key] = res[key]
   }
 }
