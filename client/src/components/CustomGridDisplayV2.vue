@@ -19,7 +19,10 @@
       ref="columnHeaderRefs"
     >
       <div>
-        <img :src="'https://www.bungie.net' + column.displayProperties.icon" alt=""><br/>
+        <img
+          :src="'https://www.bungie.net' + column.displayProperties.icon"
+          alt=""
+        />
         {{ column.displayProperties.name }}
       </div>
     </div>
@@ -30,7 +33,10 @@
       ref="rowHeaderRefs"
     >
       <div>
-        <img :src="'https://www.bungie.net' + row.displayProperties.icon" alt=""><br/>
+        <img
+          :src="'https://www.bungie.net' + row.displayProperties.icon"
+          alt=""
+        >
         {{ row.displayProperties.name }}
       </div>
     </div>
@@ -43,7 +49,7 @@
       <div
         v-for="weapon of cellWeapons[i]"
       >
-        <img :src="weapon.icon" alt=""><br/>
+        <img :src="weapon.icon" alt="">
         {{ weapon.name }}
       </div>
     </div>
@@ -134,18 +140,26 @@ onMounted(() => {
   background-color: #222
   border: 0.1em solid white
   border-radius: 0.25em
+  max-width: fit-content
 
   & > div
     border: 0.1em solid white
-    padding: 0.5em
-    text-align: center
+    padding: 1em
     display: flex
     gap: 1em
     justify-content: center
 
+    & > div
+      display: flex
+      flex-direction: column
+      gap: 0.25em
+      align-items: center
+      font-size: 1.1em
+
 img
   width: 96px
   height: 96px
+  border-radius: 0.5em
 
 i
   font-size: 250%

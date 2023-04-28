@@ -87,6 +87,7 @@ const getInventoryItemDefinitions = async () => {
     if (
       items[hash].itemType === 3 &&
       items[hash].itemCategoryHashes?.includes(1) &&
+      items[hash].summaryItemHash === 3520001075 &&
       items[hash].sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071
     ) {
       gameStore.weaponDefinitions[key] = items[hash]

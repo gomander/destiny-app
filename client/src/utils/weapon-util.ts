@@ -124,5 +124,5 @@ export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType
     ? ammoType + ' ' + weaponType
     : weaponType as unknown as ExplicitWeaponType
   const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)!
-  return [DestinyIcon[w], capitalizeText(explicitWeaponType)]
+  return [DestinyIcon[w], capitalizeText(weaponType)]
 }
