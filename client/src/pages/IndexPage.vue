@@ -77,11 +77,18 @@ const getInventoryItemDefinitions = async () => {
 
   for (const key of Object.keys(items)) {
     const hash = Number(key)
-    if (items[hash].itemType === 19 && items[hash].itemCategoryHashes?.includes(2237038328)) {
+    if (
+      items[hash].itemType === 19 &&
+      items[hash].itemCategoryHashes?.includes(2237038328)
+    ) {
       gameStore.weaponFrameDefinitions[key] = items[hash]
     }
 
-    if (items[hash].itemType === 3 && items[hash].itemCategoryHashes?.includes(1)) {
+    if (
+      items[hash].itemType === 3 &&
+      items[hash].itemCategoryHashes?.includes(1) &&
+      items[hash].sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071
+    ) {
       gameStore.weaponDefinitions[key] = items[hash]
     }
   }

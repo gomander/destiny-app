@@ -28,17 +28,15 @@
 
     <div
       class="grid-data"
-      v-for="style of cellStyles"
+      v-for="(style, i) of cellStyles"
       :style="style"
-    ></div>
-
-    <div
-      class="grid-data"
-      v-for="weapon of data"
-      :style="{ gridRow: 'r' + weapon.damageTypeHash, gridColumn: 'c' + weapon.frameHash }"
     >
-      <img :src="weapon.icon"><br/>
-      {{ weapon.name }}
+      <div
+        v-for="weapon of cellWeapons[i]"
+      >
+        <img :src="weapon.icon"><br/>
+        {{ weapon.name }}
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +90,17 @@ const cellStyles = ref(
   ).flat()
 )
 
+const cellWeapons = ref(
+  elements.map(
+    (element) => frames.map(
+      (frame) => data.filter(
+        (weapon) => weapon.frameHash === frame.hash &&
+          weapon.damageTypeHash === element.hash
+      )
+    )
+  ).flat()
+)
+
 const grid = ref<HTMLDivElement | null>(null)
 const rowHeaderRefs = ref<HTMLDivElement[]>([])
 const columnHeaderRefs = ref<HTMLDivElement[]>([])
@@ -111,11 +120,14 @@ onMounted(() => {
 .grid
   display: grid
   background-color: #222
-  border: 0.1rem solid white
-  border-radius: 0.25rem
+  border: 0.1em solid white
+  border-radius: 0.25em
 
   & > div
-    border: 0.1rem solid white
-    padding: 0.25rem
+    border: 0.1em solid white
+    padding: 0.5em
     text-align: center
+    display: flex
+    gap: 1em
+    justify-content: center
 </style>

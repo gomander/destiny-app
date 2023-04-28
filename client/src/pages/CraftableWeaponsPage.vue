@@ -29,6 +29,10 @@
       />
 
       <custom-grid-display-v2
+        :weapon-type="WeaponType.Shotgun"
+      />
+
+      <custom-grid-display-v2
         :weapon-type="WeaponType.GrenadeLauncher"
         :ammo-type="AmmoType.Special"
       />
