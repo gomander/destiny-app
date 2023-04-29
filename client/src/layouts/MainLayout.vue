@@ -1,5 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <definition-fetcher/>
+
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -47,6 +49,7 @@
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'src/stores/user-store'
+import DefinitionFetcher from 'src/components/DefinitionFetcher.vue'
 import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const $q = useQuasar()

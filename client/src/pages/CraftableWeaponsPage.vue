@@ -91,9 +91,6 @@
 </template>
 
 <script setup lang="ts">
-import CustomGridDisplay from 'src/components/CustomGridDisplay.vue'
 import CustomGridDisplayV2 from 'src/components/CustomGridDisplayV2.vue'
 import { AmmoType, WeaponType } from 'src/components/models'
-import WeaponTable from 'src/components/WeaponTable.vue'
-import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
 </script>

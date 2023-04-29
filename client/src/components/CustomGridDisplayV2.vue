@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { AmmoType, WeaponType } from './models'
 import { getWeaponIconAndName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
@@ -72,34 +72,44 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const data = gameStore.craftableWeapons.filter(
-  (weapon) => weapon.weaponType === props.weaponType &&
-    (!props.ammoType || weapon.ammoType === props.ammoType)
+const data = computed(
+  () => gameStore.craftableWeapons.filter(
+    (weapon) => weapon.weaponType === props.weaponType &&
+      (!props.ammoType || weapon.ammoType === props.ammoType)
+  )
 )
 
-const frameHashes = data.map(
-  (weapon) => weapon.frameHash
-).filter(
-  (value, index, self) => index === self.findIndex((t) => t === value)
+const frameHashes = computed(
+  () => data.value.map(
+    (weapon) => weapon.frameHash
+  ).filter(
+    (value, index, self) => index === self.findIndex((t) => t === value)
+  )
 )
 
-const frames = frameHashes.map(
-  (column) => gameStore.weaponFrameDefinitions[column]
+const frames = computed(
+  () => frameHashes.value.map(
+    (column) => gameStore.weaponFrameDefinitions[column]
+  )
 )
 
-const elementHashes = data.map(
-  (weapon) => weapon.damageTypeHash
-).filter(
-  (value, index, self) => index === self.findIndex((t) => t === value)
+const elementHashes = computed(
+  () => data.value.map(
+    (weapon) => weapon.damageTypeHash
+  ).filter(
+    (value, index, self) => index === self.findIndex((t) => t === value)
+  )
 )
 
-const elements = elementHashes.map(
-  (row) => gameStore.damageTypeDefinitions[row]
+const elements = computed(
+  () => elementHashes.value.map(
+    (row) => gameStore.damageTypeDefinitions[row]
+  )
 )
 
-const cellStyles = ref(
-  elements.map(
-    (element) => frames.map(
+const cellStyles = computed(
+  () => elements.value.map(
+    (element) => frames.value.map(
       (frame) => ({
         gridColumn: 'c' + frame.hash,
         gridRow: 'r' + element.hash
@@ -108,10 +118,10 @@ const cellStyles = ref(
   ).flat()
 )
 
-const cellWeapons = ref(
-  elements.map(
-    (element) => frames.map(
-      (frame) => data.filter(
+const cellWeapons = computed(
+  () => elements.value.map(
+    (element) => frames.value.map(
+      (frame) => data.value.filter(
         (weapon) => weapon.frameHash === frame.hash &&
           weapon.damageTypeHash === element.hash
       )
@@ -119,21 +129,29 @@ const cellWeapons = ref(
   ).flat()
 )
 
-const [weaponIcon, weaponName] = getWeaponIconAndName(props.weaponType, props.ammoType)
-
-const grid = ref<HTMLDivElement | null>(null)
-const rowHeaderRefs = ref<HTMLDivElement[]>([])
-const columnHeaderRefs = ref<HTMLDivElement[]>([])
-
-onMounted(() => {
-  const cssColumns = '[rows] 1fr ' + frames.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
-  const cssRows = '[columns] 1fr ' + elements.map((element) => `[r${element.hash}] 1fr`).join(' ')
+const resetGrid = () => {
+  const cssColumns = '[rows] 1fr ' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
+  const cssRows = '[columns] 1fr ' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
   grid.value!.style.gridTemplateColumns = cssColumns
   grid.value!.style.gridTemplateRows = cssRows
   rowHeaderRefs.value.forEach((div) => {
     div.style.gridColumn = 'rows'
   })
+}
+
+watch(gameStore.craftableWeapons, () => {
+  resetGrid()
 })
+
+onMounted(() => {
+  resetGrid()
+})
+
+const [weaponIcon, weaponName] = getWeaponIconAndName(props.weaponType, props.ammoType)
+
+const grid = ref<HTMLDivElement | null>(null)
+const rowHeaderRefs = ref<HTMLDivElement[]>([])
+const columnHeaderRefs = ref<HTMLDivElement[]>([])
 </script>
 
 <style scoped lang="sass">
