@@ -14,7 +14,7 @@
         />
 
         <q-toolbar-title>
-          Destiny Stuff
+          Contraver.se
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
