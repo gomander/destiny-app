@@ -7,8 +7,8 @@ import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
-import { DamageType, WeaponType, AmmoType, WeaponSlot } from './models'
-import { swapUniqueFrames } from 'src/utils/weapon-util'
+import { DamageType, WeaponType, AmmoType, WeaponSlot, Weapon } from './models'
+import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 
 const gameStore = useGameStore()
 
@@ -34,6 +34,19 @@ const getDamageTypeDefinitions = async () => {
   }
 }
 
+const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
+  return {
+    name: item.displayProperties.name,
+    damageType: BungieDamageType[item.defaultDamageType] as DamageType,
+    damageTypeHash: item.damageTypeHashes[0],
+    weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
+    ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
+    slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
+    frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
+    icon: 'https://www.bungie.net' + item.displayProperties.icon
+  }
+}
+
 const getInventoryItemDefinitions = async () => {
   if (!gameStore.manifest.jsonWorldComponentContentPaths) await getManifest()
   const items = await api.getDestinyManifestDefinition(
@@ -41,53 +54,43 @@ const getInventoryItemDefinitions = async () => {
   ) as { [n: number]: DestinyInventoryItemDefinition }
 
   for (const key of Object.keys(items)) {
-    const hash = Number(key)
+    const item = items[Number(key)]
     if (
-      items[hash].itemType === 19 && // mod
-      items[hash].itemCategoryHashes?.includes(2237038328) // intrinsic
+      item.itemType === 19 && // mod
+      item.itemCategoryHashes?.includes(2237038328) // intrinsic
     ) {
-      gameStore.weaponFrameDefinitions[key] = items[hash]
+      gameStore.weaponFrameDefinitions[key] = item
     }
 
     if (
-      items[hash].itemType === 3 && // weapon
-      items[hash].itemCategoryHashes?.includes(1) && // weapon
-      items[hash].quality?.versions.find( // unsunset
-        (version) => version.powerCapHash === 2759499571 // 999990
-      )
+      item.itemType === 3 && // weapon
+      item.itemCategoryHashes?.includes(1) && // weapon
+      item.quality?.currentVersion === item.quality!.versions.length - 1 && // newest version
+      item.quality.versions[item.quality.currentVersion].powerCapHash === 2759499571 // 999990
     ) {
-      gameStore.weaponDefinitions[key] = items[hash]
+      gameStore.weaponDefinitions[key] = item
     }
   }
+
+  gameStore.weapons = []
+  gameStore.craftableWeapons = []
 
   for (const key in gameStore.weaponDefinitions) {
     const item = gameStore.weaponDefinitions[Number(key)]
     if (
-      item.inventory?.recipeItemHash &&
-      item.summaryItemHash === 3520001075 && // legendary
-      item.sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071 // empty enhancement socket
+      item.inventory?.tierTypeName === 'Legendary' &&
+      !/^.+ \((?!Baroque)\w+\)$/.test(item.displayProperties.name) && // adept
+      !isOldDuplicate(item.hash)
     ) {
-      gameStore.craftableWeapons.push({
-        name: item.displayProperties.name,
-        damageType: BungieDamageType[item.defaultDamageType] as DamageType,
-        damageTypeHash: item.damageTypeHashes[0],
-        weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
-        ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
-        slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-        frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
-        icon: 'https://www.bungie.net' + item.displayProperties.icon
-      })
+      const weapon = createWeapon(item)
+      gameStore.weapons.push(weapon)
+      if (
+        item.inventory?.recipeItemHash &&
+        item.sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071 // empty enhancement socket
+      ) {
+        gameStore.craftableWeapons.push(weapon)
+      }
     }
-    gameStore.weapons.push({
-      name: item.displayProperties.name,
-      damageType: BungieDamageType[item.defaultDamageType] as DamageType,
-      damageTypeHash: item.damageTypeHashes[0],
-      weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
-      ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
-      slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-      frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
-      icon: 'https://www.bungie.net' + item.displayProperties.icon
-    })
   }
 }
 </script>

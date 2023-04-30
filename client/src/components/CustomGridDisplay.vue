@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { AmmoType, WeaponType } from './models'
+import { AmmoType, Weapon, WeaponType } from './models'
 import { getWeaponIconAndName, cleanUpFrameName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
 
@@ -69,11 +69,12 @@ const gameStore = useGameStore()
 interface Props {
   weaponType: WeaponType
   ammoType?: AmmoType
+  weapons: Weapon[]
 }
 const props = defineProps<Props>()
 
 const data = computed(
-  () => gameStore.craftableWeapons.filter(
+  () => props.weapons.filter(
     (weapon) => weapon.weaponType === props.weaponType &&
       (!props.ammoType || weapon.ammoType === props.ammoType)
   )
@@ -90,6 +91,8 @@ const frameHashes = computed(
 const frames = computed(
   () => frameHashes.value.map(
     (column) => gameStore.weaponFrameDefinitions[column]
+  ).sort(
+    (a, b) => a.displayProperties.name < b.displayProperties.name ? -1 : 1
   )
 )
 
@@ -104,7 +107,12 @@ const elementHashes = computed(
 const elements = computed(
   () => elementHashes.value.map(
     (row) => gameStore.damageTypeDefinitions[row]
-  )
+  ).sort((a, b) => {
+    const order = ['Kinetic', 'Stasis', 'Strand', 'Void', 'Solar', 'Arc']
+    const indexA = order.findIndex((e) => e === a.displayProperties.name)
+    const indexB = order.findIndex((e) => e === b.displayProperties.name)
+    return indexA < indexB ? -1 : 1
+  })
 )
 
 const cellStyles = computed(
@@ -124,7 +132,7 @@ const cellWeapons = computed(
       (frame) => data.value.filter(
         (weapon) => weapon.frameHash === frame.hash &&
           weapon.damageTypeHash === element.hash
-      )
+      ).sort((a, b) => a.name < b.name ? -1 : 1)
     )
   ).flat()
 )
@@ -161,6 +169,7 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
   border: 0.1em solid white
   border-radius: 0.25em
   max-width: fit-content
+  text-align: center
 
   & > div
     border: 0.1em solid white

@@ -1,6 +1,6 @@
 <template>
   <q-page class="items-center justify-evenly q-pa-md q-gutter-y-md">
-    <h1>Craftable Weapons</h1>
+    <h1>Unsunset Weapons</h1>
 
     <section
       class="q-gutter-y-md"
@@ -12,7 +12,7 @@
         v-for="weaponType of getWeaponTypesOfAmmoType(ammoType)"
         :weapon-type="weaponType"
         :ammo-type="ammoType"
-        :weapons="gameStore.craftableWeapons"
+        :weapons="gameStore.weapons"
       />
     </section>
   </q-page>

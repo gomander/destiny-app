@@ -70,6 +70,12 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/craftable-weapons'
   },
   {
+    title: 'Unsunset Weapons',
+    caption: 'By type, frame, and element',
+    icon: 'fas fa-gun',
+    link: '/unsunset-weapons'
+  },
+  {
     title: 'Bounty Calculator',
     caption: 'Bounties to XP and levels',
     icon: 'fas fa-calculator',
