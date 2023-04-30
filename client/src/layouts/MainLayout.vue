@@ -47,13 +47,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useQuasar } from 'quasar'
 import { useUserStore } from 'src/stores/user-store'
 import DefinitionFetcher from 'src/components/DefinitionFetcher.vue'
 import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
-const $q = useQuasar()
-$q.dark.set('auto')
 const userStore = useUserStore()
 
 const essentialLinks: EssentialLinkProps[] = [
