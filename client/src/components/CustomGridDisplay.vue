@@ -1,42 +1,57 @@
 <template>
   <div
-    class="outer-grid"
+    class="grid"
     ref="grid"
   >
     <div
       class="grid-label"
       ref="label"
     >
-      <div>{{ weaponType }}</div>
-    </div>
-    <div
-      class="top-header"
-      ref="top"
-    >
-      <div
-        v-for="frame of frames"
-      >
-        {{ frame }}
+      <div>
+        <h3>{{ weaponName }}</h3>
+        <i>{{ weaponIcon }}</i>
       </div>
     </div>
+
     <div
-      class="left-header"
-      ref="left"
+      class="column-header"
+      v-for="column of frames"
+      ref="columnHeaderRefs"
     >
-      <div
-        v-for="element of elements"
-      >
-        {{ element }}
+      <div>
+        <img
+          :src="'https://www.bungie.net' + column.displayProperties.icon"
+          alt=""
+          :title="column.displayProperties.description"
+        />
+        {{ column.displayProperties.name }}
       </div>
     </div>
+
+    <div
+      class="row-header"
+      v-for="row of elements"
+      ref="rowHeaderRefs"
+    >
+      <div>
+        <img
+          :src="'https://www.bungie.net' + row.displayProperties.icon"
+          alt=""
+          :title="row.displayProperties.description"
+        />
+        {{ row.displayProperties.name }}
+      </div>
+    </div>
+
     <div
       class="grid-data"
-      ref="data"
+      v-for="(style, i) of cellStyles"
+      :style="style"
     >
       <div
-        v-for="weapon of weapons"
-        :style="{ gridRow: weapon.damageType, gridColumn: weapon.frame }"
+        v-for="weapon of cellWeapons[i]"
       >
+        <img :src="weapon.icon" alt=""/>
         {{ weapon.name }}
       </div>
     </div>
@@ -44,9 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { AmmoType, WeaponType } from './models'
+import { getWeaponIconAndName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
-import { AmmoType, WeaponType } from './models';
 
 const gameStore = useGameStore()
 
@@ -56,60 +72,115 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-const weapons = gameStore.craftableWeapons.filter(
-  (weapon) => weapon.weaponType === props.weaponType
+const data = computed(
+  () => gameStore.craftableWeapons.filter(
+    (weapon) => weapon.weaponType === props.weaponType &&
+      (!props.ammoType || weapon.ammoType === props.ammoType)
+  )
 )
 
-const frames = weapons.map(
-  (weapon) => weapon.frame
-).filter(
-  (value, index, self) => index === self.findIndex((t) => t === value)
+const frameHashes = computed(
+  () => data.value.map(
+    (weapon) => weapon.frameHash
+  ).filter(
+    (value, index, self) => index === self.findIndex((t) => t === value)
+  )
 )
 
-const elements = weapons.map(
-  (weapon) => weapon.damageType
-).filter(
-  (value, index, self) => index === self.findIndex((t) => t === value)
+const frames = computed(
+  () => frameHashes.value.map(
+    (column) => gameStore.weaponFrameDefinitions[column]
+  )
 )
 
-const grid = ref<HTMLDivElement | null>(null)
-const label = ref<HTMLDivElement | null>(null)
-const top = ref<HTMLDivElement | null>(null)
-const left = ref<HTMLDivElement | null>(null)
-const data = ref<HTMLDivElement | null>(null)
+const elementHashes = computed(
+  () => data.value.map(
+    (weapon) => weapon.damageTypeHash
+  ).filter(
+    (value, index, self) => index === self.findIndex((t) => t === value)
+  )
+)
+
+const elements = computed(
+  () => elementHashes.value.map(
+    (row) => gameStore.damageTypeDefinitions[row]
+  )
+)
+
+const cellStyles = computed(
+  () => elements.value.map(
+    (element) => frames.value.map(
+      (frame) => ({
+        gridColumn: 'c' + frame.hash,
+        gridRow: 'r' + element.hash
+      })
+    )
+  ).flat()
+)
+
+const cellWeapons = computed(
+  () => elements.value.map(
+    (element) => frames.value.map(
+      (frame) => data.value.filter(
+        (weapon) => weapon.frameHash === frame.hash &&
+          weapon.damageTypeHash === element.hash
+      )
+    )
+  ).flat()
+)
+
+const resetGrid = () => {
+  const cssColumns = '[rows] 1fr ' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
+  const cssRows = '[columns] 1fr ' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
+  grid.value!.style.gridTemplateColumns = cssColumns
+  grid.value!.style.gridTemplateRows = cssRows
+  rowHeaderRefs.value.forEach((div) => {
+    div.style.gridColumn = 'rows'
+  })
+}
+
+watch(gameStore.craftableWeapons, () => {
+  resetGrid()
+})
 
 onMounted(() => {
-  const cssFrames = frames.map((frame) => `[${frame}] 1fr`).join(' ')
-  top.value!.style.gridTemplateColumns = cssFrames
-  data.value!.style.gridTemplateColumns = cssFrames
-  const cssElements = elements.map((element) => `[${element}] 1fr`).join(' ')
-  data.value!.style.gridTemplateRows = cssElements
+  resetGrid()
 })
+
+const [weaponIcon, weaponName] = getWeaponIconAndName(props.weaponType, props.ammoType)
+
+const grid = ref<HTMLDivElement | null>(null)
+const rowHeaderRefs = ref<HTMLDivElement[]>([])
+const columnHeaderRefs = ref<HTMLDivElement[]>([])
 </script>
 
 <style scoped lang="sass">
-.outer-grid
+.grid
   display: grid
-  grid-template-areas: 'label top' 'left data'
-  grid-template-columns: minmax(min-content, 10%) 1fr
   background-color: #222
-  border: 0.1rem solid white
-  border-radius: 0.25rem
+  border: 0.1em solid white
+  border-radius: 0.25em
+  max-width: fit-content
 
-  & > div > div
-      border: 0.1rem solid white
-      padding: 0.25rem
+  & > div
+    border: 0.1em solid white
+    padding: 0.75em
+    display: flex
+    gap: 0.75em
+    justify-content: center
 
-.grid-label
-  grid-area: label
-.top-header
-  display: grid
-  grid-area: top
-.left-header
-  display: grid
-  grid-area: left
-.grid-data
-  display: grid
-  grid-area: data
-  background-color: #333
+    & > div
+      display: flex
+      flex-direction: column
+      gap: 0.25em
+      align-items: center
+
+img
+  width: 96px
+  height: 96px
+  border-radius: 0.5em
+
+i
+  font-size: 250%
+  font-style: normal
 </style>

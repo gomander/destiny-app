@@ -7,9 +7,7 @@ import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
-import {
-  DamageType, WeaponType, AmmoType, WeaponSlot, WeaponFrame
-} from './models'
+import { DamageType, WeaponType, AmmoType, WeaponSlot } from './models'
 
 const gameStore = useGameStore()
 
@@ -61,25 +59,6 @@ const getInventoryItemDefinitions = async () => {
     }
   }
 
-  const getFrameNameFromHash = (hash: number) => {
-    const frame = gameStore.weaponFrameDefinitions[hash]
-    if (frame.displayProperties.description === 'Well-rounded, reliable, fires a 3-round burst.') {
-      return 'adaptive burst'
-    }
-    return frame.displayProperties.name
-      .toLowerCase()
-      .replace('frame', '')
-      .replace('glaive', '')
-      .replace('häkke', '')
-      .replace('omolon', '')
-      .replace('veist', '')
-      .replace('suros', '')
-      .replace('mida synergy', 'lightweight')
-      .replace('together forever', 'adaptive')
-      .replace('legacy pr-55', 'lightweight')
-      .trim()
-  }
-
   for (const key in gameStore.weaponDefinitions) {
     const item = gameStore.weaponDefinitions[Number(key)]
     if (
@@ -94,7 +73,6 @@ const getInventoryItemDefinitions = async () => {
         weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
         ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
         slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-        frame: getFrameNameFromHash(item.sockets!.socketEntries[0].singleInitialItemHash) as WeaponFrame,
         frameHash: item.sockets?.socketEntries[0].singleInitialItemHash!,
         icon: 'https://www.bungie.net' + item.displayProperties.icon
       })
