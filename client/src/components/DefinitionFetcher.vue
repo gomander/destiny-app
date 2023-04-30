@@ -44,17 +44,18 @@ const getInventoryItemDefinitions = async () => {
   for (const key of Object.keys(items)) {
     const hash = Number(key)
     if (
-      items[hash].itemType === 19 &&
-      items[hash].itemCategoryHashes?.includes(2237038328)
+      items[hash].itemType === 19 && // mod
+      items[hash].itemCategoryHashes?.includes(2237038328) // intrinsic
     ) {
       gameStore.weaponFrameDefinitions[key] = items[hash]
     }
 
     if (
-      items[hash].itemType === 3 &&
-      items[hash].itemCategoryHashes?.includes(1) &&
-      items[hash].summaryItemHash === 3520001075 &&
-      items[hash].sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071
+      items[hash].itemType === 3 && // weapon
+      items[hash].itemCategoryHashes?.includes(1) && // weapon
+      items[hash].quality?.versions.find( // unsunset
+        (version) => version.powerCapHash === 2759499571 // 999990
+      )
     ) {
       gameStore.weaponDefinitions[key] = items[hash]
     }
@@ -81,7 +82,11 @@ const getInventoryItemDefinitions = async () => {
 
   for (const key in gameStore.weaponDefinitions) {
     const item = gameStore.weaponDefinitions[Number(key)]
-    if (item.inventory?.recipeItemHash) {
+    if (
+      item.inventory?.recipeItemHash &&
+      item.summaryItemHash === 3520001075 && // legendary
+      item.sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071 // empty enhancement socket
+    ) {
       gameStore.craftableWeapons.push({
         name: item.displayProperties.name,
         damageType: BungieDamageType[item.defaultDamageType] as DamageType,

@@ -9,7 +9,7 @@ export const useGameStore = defineStore(
   {
     state: () => ({
       manifest: {} as DestinyManifest,
-      inventoryItemDefinitions: {} as any, // { [k: string]: DestinyInventoryItemDefinition },
+      weapons: [] as Weapon[],
       craftableWeapons: [] as Weapon[],
       damageTypeDefinitions: {} as { [k: string]: DestinyDamageTypeDefinition },
       weaponDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
