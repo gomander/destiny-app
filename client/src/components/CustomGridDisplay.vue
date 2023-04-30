@@ -24,7 +24,7 @@
           alt=""
           :title="column.displayProperties.description"
         />
-        {{ column.displayProperties.name }}
+        {{ cleanUpFrameName(column.displayProperties.name) }}
       </div>
     </div>
 
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { AmmoType, WeaponType } from './models'
-import { getWeaponIconAndName } from '../utils/weapon-util'
+import { getWeaponIconAndName, cleanUpFrameName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
 
 const gameStore = useGameStore()

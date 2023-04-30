@@ -8,6 +8,7 @@ import {
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
 import { DamageType, WeaponType, AmmoType, WeaponSlot } from './models'
+import { swapUniqueFrames } from 'src/utils/weapon-util'
 
 const gameStore = useGameStore()
 
@@ -73,10 +74,20 @@ const getInventoryItemDefinitions = async () => {
         weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
         ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
         slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-        frameHash: item.sockets?.socketEntries[0].singleInitialItemHash!,
+        frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
         icon: 'https://www.bungie.net' + item.displayProperties.icon
       })
     }
+    gameStore.weapons.push({
+      name: item.displayProperties.name,
+      damageType: BungieDamageType[item.defaultDamageType] as DamageType,
+      damageTypeHash: item.damageTypeHashes[0],
+      weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
+      ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
+      slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
+      frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
+      icon: 'https://www.bungie.net' + item.displayProperties.icon
+    })
   }
 }
 </script>

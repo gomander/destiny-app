@@ -57,3 +57,18 @@ export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType
   const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)!
   return [DestinyIcon[w], capitalizeText(weaponType)]
 }
+
+export const swapUniqueFrames = (frameHash: number) => {
+  if (frameHash === 1282254042) return 1294026524 // together forever
+  if (frameHash === 2213377102) return 1458010786 // mida synergy
+  if (frameHash === 216781713) return 3419274965 // häkke precision
+  if (frameHash === 31057037) return 3449390870 // omolon adaptive
+  if (frameHash === 3364911712) return 3920852688 // veist rapid-fire
+  return frameHash
+}
+
+export const cleanUpFrameName = (frame: string) => {
+  return frame
+    .replace('Frame', '')
+    .replace('Glaive', '')
+}
