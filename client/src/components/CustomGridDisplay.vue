@@ -21,10 +21,9 @@
       <div>
         <img
           :src="'https://www.bungie.net' + column.displayProperties.icon"
-          alt=""
-          :title="column.displayProperties.description"
+          :alt="cleanUpFrameName(column.displayProperties.name)"
+          :title="cleanUpFrameName(column.displayProperties.name) + '\n\n' + column.displayProperties.description"
         />
-        <div class="weapon-name">{{ cleanUpFrameName(column.displayProperties.name) }}</div>
       </div>
     </div>
 
@@ -36,10 +35,9 @@
       <div>
         <img
           :src="'https://www.bungie.net' + row.displayProperties.icon"
-          alt=""
-          :title="row.displayProperties.description"
+          :alt="row.displayProperties.name"
+          :title="row.displayProperties.name"
         />
-        <div class="weapon-name">{{ row.displayProperties.name }}</div>
       </div>
     </div>
 
@@ -48,11 +46,12 @@
       v-for="(style, i) of cellStyles"
       :style="style"
     >
-      <div
-        v-for="weapon of cellWeapons[i]"
-      >
-        <img :src="weapon.icon" alt=""/>
-        <div class="weapon-name">{{ weapon.name }}</div>
+      <div v-for="weapon of cellWeapons[i]">
+        <img
+          :src="weapon.icon"
+          :alt="weapon.name"
+          :title="weapon.name"
+        />
       </div>
     </div>
   </div>
@@ -141,7 +140,7 @@ const cellWeapons = computed(
 )
 
 const resetGrid = () => {
-  const cssColumns = '[rows] 120px' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
+  const cssColumns = '[rows] 80px' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
   const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
   grid.value!.style.gridTemplateColumns = cssColumns
   grid.value!.style.gridTemplateRows = cssRows
@@ -171,14 +170,14 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
   background-color: #222
   border: 0.1em solid white
   border-radius: 0.25em
-  max-width: fit-content
+  width: fit-content
   text-align: center
 
   & > div
     border: 0.1em solid white
-    padding: 0.75em
+    padding: 0.5em
     display: flex
-    gap: 0.75em
+    gap: 0.5em
     justify-content: center
 
     & > div
@@ -187,25 +186,13 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
       gap: 0.25em
       justify-content: center
       align-items: center
-      height: 96px
-      position: relative
+      height: 64px
 
 img
-  width: 96px
-  height: 96px
+  height: 100%
   border-radius: 0.5em
 
 i
-  font-size: 250%
+  font-size: 125%
   font-style: normal
-
-.weapon-name
-  position: absolute
-  bottom: 0em
-  left: 0
-  right: 0
-  border-radius: 0 0 0.5em 0.5em
-  background: rgba(0, 0, 0, 0.75)
-  word-wrap: break-word
-  font-size: 0.8em
 </style>
