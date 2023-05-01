@@ -24,7 +24,7 @@
           alt=""
           :title="column.displayProperties.description"
         />
-        {{ cleanUpFrameName(column.displayProperties.name) }}
+        <div class="weapon-name">{{ cleanUpFrameName(column.displayProperties.name) }}</div>
       </div>
     </div>
 
@@ -39,7 +39,7 @@
           alt=""
           :title="row.displayProperties.description"
         />
-        {{ row.displayProperties.name }}
+        <div class="weapon-name">{{ row.displayProperties.name }}</div>
       </div>
     </div>
 
@@ -52,7 +52,7 @@
         v-for="weapon of cellWeapons[i]"
       >
         <img :src="weapon.icon" alt=""/>
-        {{ weapon.name }}
+        <div class="weapon-name">{{ weapon.name }}</div>
       </div>
     </div>
   </div>
@@ -96,6 +96,10 @@ const frames = computed(
   )
 )
 
+const damageTypeOrder = props.ammoType === AmmoType.Heavy
+  ? ['Kinetic', 'Void', 'Solar', 'Arc', 'Stasis', 'Strand']
+  : ['Kinetic', 'Stasis', 'Strand', 'Void', 'Solar', 'Arc']
+
 const elementHashes = computed(
   () => data.value.map(
     (weapon) => weapon.damageTypeHash
@@ -108,9 +112,8 @@ const elements = computed(
   () => elementHashes.value.map(
     (row) => gameStore.damageTypeDefinitions[row]
   ).sort((a, b) => {
-    const order = ['Kinetic', 'Stasis', 'Strand', 'Void', 'Solar', 'Arc']
-    const indexA = order.findIndex((e) => e === a.displayProperties.name)
-    const indexB = order.findIndex((e) => e === b.displayProperties.name)
+    const indexA = damageTypeOrder.findIndex((e) => e === a.displayProperties.name)
+    const indexB = damageTypeOrder.findIndex((e) => e === b.displayProperties.name)
     return indexA < indexB ? -1 : 1
   })
 )
@@ -138,8 +141,8 @@ const cellWeapons = computed(
 )
 
 const resetGrid = () => {
-  const cssColumns = '[rows] 1fr ' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
-  const cssRows = '[columns] 1fr ' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
+  const cssColumns = '[rows] 120px' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
+  const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
   grid.value!.style.gridTemplateColumns = cssColumns
   grid.value!.style.gridTemplateRows = cssRows
   rowHeaderRefs.value.forEach((div) => {
@@ -182,7 +185,10 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
       display: flex
       flex-direction: column
       gap: 0.25em
+      justify-content: center
       align-items: center
+      height: 96px
+      position: relative
 
 img
   width: 96px
@@ -192,4 +198,14 @@ img
 i
   font-size: 250%
   font-style: normal
+
+.weapon-name
+  position: absolute
+  bottom: 0em
+  left: 0
+  right: 0
+  border-radius: 0 0 0.5em 0.5em
+  background: rgba(0, 0, 0, 0.75)
+  word-wrap: break-word
+  font-size: 0.8em
 </style>
