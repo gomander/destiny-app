@@ -44,9 +44,15 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
     ]
   }
 }
-
-function getEnumKeyByEnumValue<T extends {[index:string]:string}>(myEnum:T, enumValue:string):keyof T|null {
-  let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
+/**
+ * Generic reverse-mapping function for string enums
+ *
+ * @param myEnum The enum to reverse-map
+ * @param enumValue The value to look for
+ * @returns The first string enum key that has the given value, or null
+ */
+function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
+  const keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
   return keys.length > 0 ? keys[0] : null;
 }
 
@@ -59,14 +65,14 @@ export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType
 }
 
 export const swapUniqueFrames = (frameHash: number) => {
-  if (frameHash === 1282254042) return 1294026524 // together forever
-  if (frameHash === 2213377102) return 1458010786 // mida synergy
-  if (frameHash === 3054949324) return 3983457027 // shot package
-  if (frameHash === 216781713) return 3419274965 // häkke precision
-  if (frameHash === 31057037) return 3449390870 // omolon adaptive
-  if (frameHash === 3364911712) return 3920852688 // veist rapid-fire
-  if (frameHash === 3468089894) return 1525239159 // aggressive smgs
-  if (frameHash === 895140517) return 1636108362 // precision shotguns
+  if (frameHash === 1282254042) return 1294026524 // Together Forever -> Adaptive (Drang)
+  if (frameHash === 2213377102) return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
+  if (frameHash === 3054949324) return 3983457027 // Shot Package -> Aggressive (Felwinter's Lie)
+  if (frameHash === 216781713) return 3419274965 // Häkke Precision -> Precision (rocket launchers)
+  if (frameHash === 31057037) return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
+  if (frameHash === 3364911712) return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
+  if (frameHash === 3468089894) return 1525239159 // Aggressive -> Aggressive (The Immortal)
+  if (frameHash === 895140517) return 1636108362 // Precision -> Precision (shotguns)
   return frameHash
 }
 
@@ -109,6 +115,7 @@ const oldDupes = [
   3169616514, // Bite of the Fox
   3183283212, // Wendigo GL3
   555148853, // Wendigo GL3 (Adept)
+  1972985595, // Swarm of the Raven
   47772649, // THE SWARM
   3836861464, // THE SWARM (Adept)
   66875353, // Avalanche
@@ -116,6 +123,14 @@ const oldDupes = [
   2759251821, // Unwavering Duty (Adept)
   4009352833, // Roar of the Bear
   3400256755, // Zephyr
+  601592879, // Age-Old Bond
+  2721249463, // Tyranny of Heaven
+  654370424, // Nation of Beasts
+  568515759, // Chattering Bone
+  3799980700, // Transfiguration
+  4094657108, // Techeun Force
+  686951703, // The Supremacy
+  2545083870, // Apex Predator
 ]
 
 export const isOldDuplicate = (hash: number) => {
