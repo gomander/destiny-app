@@ -83,46 +83,57 @@ export const cleanUpFrameName = (frame: string) => {
 }
 
 const oldDupes = [
-  528834068, // Braytech Werewolf
+  // Seventh Seraph
   1561006927, // Seventh Seraph Carbine
   3037520408, // Seventh Seraph Officer Revolver
-  540880995, // Dark Decider
-  1574601402, // Whistler's Whim
-  711889599, // Whistler's Whim (Adept)
-  3102421004, // Exalted Truth
-  3920882229, // Exalted Truth (Adept)
+  // Guardian Games
   294129361, // The Title
+  // IKELOS v1.0.2
   // 1096206669, // IKELOS_SG_v1.0.2
   // 1200824700, // IKELOS_HC_v1.0.2
   // 1253087083, // IKELOS_SR_v1.0.2
   // 2222560548, // IKELOS_SMG_v1.0.2
+  // Festival of the Lost
+  528834068, // Braytech Werewolf
   2261046232, // Jurassic Green
-  4281371574, 772231794, // Hung Jury SR4
-  681067419, 4074251943, // Hung Jury SR4 (Adept)
+  // Iron Banner
+  540880995, // Dark Decider
   1532276803, // Allied Demand
-  1506719573, // Cold Front
   2488587246, // The Hero's Burden
-  1030895163, // Glacioclasm
   1999697514, // The Wizened Rebuke
-  40394833, // The Militia's Birthright
-  2378101424, // The Militia's Birthright (Adept)
+  487361141, // Gunnora's Axe
+  3169616514, // Bite of the Fox
+  1972985595, // Swarm of the Raven
+  4009352833, // Roar of the Bear
+  // The Dawning
+  1506719573, // Cold Front
+  1030895163, // Glacioclasm
+  66875353, // Avalanche
+  3400256755, // Zephyr
+  // Trials of Osiris
+  1574601402, // Whistler's Whim
+  711889599, // Whistler's Whim (Adept)
+  3102421004, // Exalted Truth
+  3920882229, // Exalted Truth (Adept)
+  3658188704, // The Messenger
+  1173780905, // The Messenger (Adept)
   1697682876, // Astral Horizon
   532746994, // Astral Horizon (Adept)
-  487361141, // Gunnora's Axe
   2185327324, // The Inquisitor
   2307365, // The Inquisitor (Adept)
-  1094005544, // Mindbender's Ambition
-  3169616514, // Bite of the Fox
-  3183283212, // Wendigo GL3
-  555148853, // Wendigo GL3 (Adept)
-  1972985595, // Swarm of the Raven
-  47772649, // THE SWARM
-  3836861464, // THE SWARM (Adept)
-  66875353, // Avalanche
   3624844116, // Unwavering Duty
   2759251821, // Unwavering Duty (Adept)
-  4009352833, // Roar of the Bear
-  3400256755, // Zephyr
+  // Nightfall
+  4281371574, 772231794, // Hung Jury SR4
+  681067419, 4074251943, // Hung Jury SR4 (Adept)
+  40394833, // The Militia's Birthright
+  2378101424, // The Militia's Birthright (Adept)
+  1094005544, // Mindbender's Ambition
+  3183283212, // Wendigo GL3
+  555148853, // Wendigo GL3 (Adept)
+  47772649, // THE SWARM
+  3836861464, // THE SWARM (Adept)
+  // Last Wish
   601592879, // Age-Old Bond
   2721249463, // Tyranny of Heaven
   654370424, // Nation of Beasts
