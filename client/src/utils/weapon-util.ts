@@ -65,15 +65,17 @@ export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType
 }
 
 export const swapUniqueFrames = (frameHash: number) => {
-  if (frameHash === 1282254042) return 1294026524 // Together Forever -> Adaptive (Drang)
-  if (frameHash === 2213377102) return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
-  if (frameHash === 3054949324) return 3983457027 // Shot Package -> Aggressive (Felwinter's Lie)
-  if (frameHash === 216781713) return 3419274965 // Häkke Precision -> Precision (rocket launchers)
-  if (frameHash === 31057037) return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
-  if (frameHash === 3364911712) return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
-  if (frameHash === 3468089894) return 1525239159 // Aggressive -> Aggressive (The Immortal)
-  if (frameHash === 895140517) return 1636108362 // Precision -> Precision (shotguns)
-  return frameHash
+  switch (frameHash) {
+    case 1282254042: return 1294026524 // Together Forever -> Adaptive (Drang)
+    case 2213377102: return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
+    case 3054949324: return 3983457027 // Shot Package -> Aggressive (Felwinter's Lie)
+    case 216781713: return 3419274965 // Häkke Precision -> Precision (rocket launchers)
+    case 31057037: return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
+    case 3364911712: return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
+    case 3468089894: return 1525239159 // Aggressive -> Aggressive (The Immortal)
+    case 895140517: return 1636108362 // Precision -> Precision (shotguns)
+    default: return frameHash
+  }
 }
 
 export const cleanUpFrameName = (frame: string) => {
