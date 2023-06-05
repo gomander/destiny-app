@@ -154,7 +154,7 @@ const resetGrid = () => {
   })
 }
 
-watch(gameStore.craftableWeapons, () => {
+watch(data, () => {
   resetGrid()
 })
 
