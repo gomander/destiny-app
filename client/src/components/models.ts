@@ -70,6 +70,7 @@ export interface Weapon {
   slot: WeaponSlot
   frameHash: number
   icon: string
+  hash: number
 }
 
 export enum DestinyIcon {

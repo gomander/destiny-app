@@ -43,7 +43,8 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
     ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
     slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
     frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
-    icon: 'https://www.bungie.net' + item.displayProperties.icon
+    icon: 'https://www.bungie.net' + item.displayProperties.icon,
+    hash: item.hash
   }
 }
 

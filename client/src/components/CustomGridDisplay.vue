@@ -47,11 +47,16 @@
       :style="style"
     >
       <div v-for="weapon of cellWeapons[i]">
-        <img
-          :src="weapon.icon"
-          :alt="weapon.name"
-          :title="weapon.name"
-        />
+        <a
+          :href="`https://d2foundry.gg/w/${weapon.hash}`"
+          target="_blank"
+        >
+          <img
+            :src="weapon.icon"
+            :alt="weapon.name"
+            :title="weapon.name"
+          />
+        </a>
       </div>
     </div>
   </div>
@@ -187,6 +192,9 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
       justify-content: center
       align-items: center
       height: 64px
+
+      & > a
+        height: 64px
 
 img
   height: 100%
