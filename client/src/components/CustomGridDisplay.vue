@@ -176,14 +176,13 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
 <style scoped lang="sass">
 .grid
   display: grid
-  background-color: #222
-  border: 0.1em solid white
+  border: 0.1em solid black
   border-radius: 0.25em
   width: fit-content
   text-align: center
 
   & > div
-    border: 0.1em solid white
+    border: 0.1em solid black
     padding: 0.5em
     display: flex
     gap: 0.5em
@@ -199,6 +198,13 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
 
       & > a
         height: 64px
+
+  &-data
+    background-color: $grey-9
+
+.grid-label, .column-header, .row-header
+  color: white
+  background-color: $grey-10
 
 img
   height: 100%
