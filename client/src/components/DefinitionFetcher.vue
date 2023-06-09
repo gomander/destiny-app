@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { DestinyInventoryItemDefinition } from 'bungie-api-ts/destiny2'
 import { useGameStore } from 'src/stores/game-store'
+import { useDefinitionsStore } from 'src/stores/definitions-store'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot
 } from 'src/types/bungie'
@@ -12,10 +13,11 @@ import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
 const gameStore = useGameStore()
+const definitionsStore = useDefinitionsStore()
 
 const getManifest = async () => {
   const res = await api.getDestinyManifest()
-  gameStore.manifest = res.Response
+  definitionsStore.manifest = res.Response
 }
 
 getManifest().then(() => {
@@ -25,13 +27,13 @@ getManifest().then(() => {
 })
 
 const getDamageTypeDefinitions = async () => {
-  if (Object.keys(gameStore.damageTypeDefinitions).length) return
+  if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
   const res = await api.getDestinyManifestDefinition(
-    gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
+    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
   )
   for (const key in res) {
     if (res[key].displayProperties.name === 'Raid') continue
-    gameStore.damageTypeDefinitions[key] = res[key]
+    definitionsStore.damageTypeDefinitions[key] = res[key]
   }
 }
 
@@ -50,9 +52,9 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
 }
 
 const getInventoryItemDefinitions = async () => {
-  if (!gameStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
   const items = await api.getDestinyManifestDefinition(
-    gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
+    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
   ) as { [n: number]: DestinyInventoryItemDefinition }
 
   const xpHashes = xpRewardTiers.map(tier => tier.hash)
@@ -63,7 +65,7 @@ const getInventoryItemDefinitions = async () => {
       item.itemType === 19 && // mod
       item.itemCategoryHashes?.includes(2237038328) // intrinsic
     ) {
-      gameStore.weaponFrameDefinitions[key] = item
+      definitionsStore.weaponFrameDefinitions[key] = item
     }
 
     if (
@@ -72,22 +74,22 @@ const getInventoryItemDefinitions = async () => {
       item.quality?.currentVersion === item.quality!.versions.length - 1 && // newest version
       item.quality.versions[item.quality.currentVersion].powerCapHash === 2759499571 // 999990
     ) {
-      gameStore.weaponDefinitions[key] = item
+      definitionsStore.weaponDefinitions[key] = item
     }
 
     if (
       item.itemType === 26 && // bounty
       item.value.itemValue.filter(entry => xpHashes.includes(entry.itemHash)) // XP, XP+, or XP++
     ) {
-      gameStore.bountyDefinitions[key] = item
+      definitionsStore.bountyDefinitions[key] = item
     }
   }
 
   gameStore.weapons = []
   gameStore.craftableWeapons = []
 
-  for (const key in gameStore.weaponDefinitions) {
-    const item = gameStore.weaponDefinitions[Number(key)]
+  for (const key in definitionsStore.weaponDefinitions) {
+    const item = definitionsStore.weaponDefinitions[Number(key)]
     if (
       item.inventory?.tierTypeName === 'Legendary' &&
       !/^.+ \((?!Baroque)\w+\)$/.test(item.displayProperties.name) && // adept
@@ -106,8 +108,8 @@ const getInventoryItemDefinitions = async () => {
 
   gameStore.bounties = []
 
-  for (const key in gameStore.bountyDefinitions) {
-    const item = gameStore.bountyDefinitions[Number(key)]
+  for (const key in definitionsStore.bountyDefinitions) {
+    const item = definitionsStore.bountyDefinitions[Number(key)]
     const xpHash = item.value.itemValue.find(entry => xpHashes.includes(entry.itemHash))?.itemHash
     const xp = xpRewardTiers.find(tier => tier.hash === xpHash)?.label
     if (!(xp && xpHash)) continue
@@ -117,6 +119,30 @@ const getInventoryItemDefinitions = async () => {
       hash: item.hash,
       xp,
       xpHash
+    })
+  }
+
+  gameStore.weaponFrames = []
+
+  for (const key in definitionsStore.weaponFrameDefinitions) {
+    const item = definitionsStore.weaponFrameDefinitions[Number(key)]
+    gameStore.weaponFrames.push({
+      name: item.displayProperties.name,
+      icon: item.displayProperties.icon,
+      description: item.displayProperties.description,
+      hash: item.hash
+    })
+  }
+
+  gameStore.damageTypes = []
+
+  for (const key in definitionsStore.damageTypeDefinitions) {
+    const damageType = definitionsStore.damageTypeDefinitions[Number(key)]
+    gameStore.damageTypes.push({
+      name: damageType.displayProperties.name,
+      icon: damageType.displayProperties.icon,
+      description: damageType.displayProperties.description,
+      hash: damageType.hash
     })
   }
 }

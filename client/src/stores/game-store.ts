@@ -1,21 +1,15 @@
 import { defineStore } from 'pinia'
-import { Bounty, Weapon } from 'src/components/models'
-import {
-  DestinyManifest, DestinyInventoryItemDefinition, DestinyDamageTypeDefinition
-} from 'bungie-api-ts/destiny2'
+import { Bounty, IDamageType, Weapon, WeaponFrame } from 'src/components/models'
 
 export const useGameStore = defineStore(
   'game',
   {
     state: () => ({
-      manifest: {} as DestinyManifest,
       weapons: [] as Weapon[],
       craftableWeapons: [] as Weapon[],
-      damageTypeDefinitions: {} as { [k: string]: DestinyDamageTypeDefinition },
-      weaponDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
-      weaponFrameDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
-      bountyDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
-      bounties: [] as Bounty[]
+      bounties: [] as Bounty[],
+      weaponFrames: [] as WeaponFrame[],
+      damageTypes: [] as IDamageType[]
     }),
     persist: true
   }

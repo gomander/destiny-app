@@ -81,6 +81,20 @@ export interface Bounty {
   xpHash: number
 }
 
+export interface WeaponFrame {
+  name: string,
+  icon: string,
+  description: string,
+  hash: number
+}
+
+export interface IDamageType {
+  name: string,
+  icon: string,
+  description: string,
+  hash: number
+}
+
 export enum DestinyIcon {
   AutoRifle = '',
   Bow = '',

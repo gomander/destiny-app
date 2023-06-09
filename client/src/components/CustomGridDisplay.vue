@@ -20,9 +20,9 @@
     >
       <div>
         <img
-          :src="'https://www.bungie.net' + column.displayProperties.icon"
-          :alt="cleanUpFrameName(column.displayProperties.name)"
-          :title="cleanUpFrameName(column.displayProperties.name) + '\n\n' + column.displayProperties.description"
+          :src="'https://www.bungie.net' + column?.icon"
+          :alt="cleanUpFrameName(column!.name)"
+          :title="cleanUpFrameName(column!.name) + '\n\n' + column?.description"
         />
       </div>
     </div>
@@ -34,9 +34,9 @@
     >
       <div>
         <img
-          :src="'https://www.bungie.net' + row.displayProperties.icon"
-          :alt="row.displayProperties.name"
-          :title="row.displayProperties.name"
+          :src="'https://www.bungie.net' + row?.icon"
+          :alt="row?.name"
+          :title="row?.name"
         />
       </div>
     </div>
@@ -67,6 +67,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { AmmoType, Weapon, WeaponType } from './models'
 import { getWeaponIconAndName, cleanUpFrameName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
+import { useDefinitionsStore } from 'src/stores/definitions-store'
 
 const gameStore = useGameStore()
 
@@ -94,9 +95,9 @@ const frameHashes = computed(
 
 const frames = computed(
   () => frameHashes.value.map(
-    (column) => gameStore.weaponFrameDefinitions[column]
+    (column) => gameStore.weaponFrames.find(frame => frame.hash === column)
   ).sort(
-    (a, b) => a.displayProperties.name < b.displayProperties.name ? -1 : 1
+    (a, b) => a!.name < b!.name ? -1 : 1
   )
 )
 
@@ -114,10 +115,10 @@ const elementHashes = computed(
 
 const elements = computed(
   () => elementHashes.value.map(
-    (row) => gameStore.damageTypeDefinitions[row]
+    (row) => gameStore.damageTypes.find(damageType => damageType.hash === row)
   ).sort((a, b) => {
-    const indexA = damageTypeOrder.findIndex((e) => e === a.displayProperties.name)
-    const indexB = damageTypeOrder.findIndex((e) => e === b.displayProperties.name)
+    const indexA = damageTypeOrder.findIndex((e) => e === a?.name)
+    const indexB = damageTypeOrder.findIndex((e) => e === b?.name)
     return indexA < indexB ? -1 : 1
   })
 )
@@ -126,8 +127,8 @@ const cellStyles = computed(
   () => elements.value.map(
     (element) => frames.value.map(
       (frame) => ({
-        gridColumn: 'c' + frame.hash,
-        gridRow: 'r' + element.hash
+        gridColumn: 'c' + frame?.hash,
+        gridRow: 'r' + element?.hash
       })
     )
   ).flat()
@@ -137,16 +138,16 @@ const cellWeapons = computed(
   () => elements.value.map(
     (element) => frames.value.map(
       (frame) => data.value.filter(
-        (weapon) => weapon.frameHash === frame.hash &&
-          weapon.damageTypeHash === element.hash
+        (weapon) => weapon.frameHash === frame?.hash &&
+          weapon.damageTypeHash === element?.hash
       ).sort((a, b) => a.name < b.name ? -1 : 1)
     )
   ).flat()
 )
 
 const resetGrid = () => {
-  const cssColumns = '[rows] 80px' + frames.value.map((frame) => `[c${frame.hash}] 1fr`).join(' ')
-  const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element.hash}] 1fr`).join(' ')
+  const cssColumns = '[rows] 80px' + frames.value.map((frame) => `[c${frame?.hash}] 1fr`).join(' ')
+  const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element?.hash}] 1fr`).join(' ')
   grid.value!.style.gridTemplateColumns = cssColumns
   grid.value!.style.gridTemplateRows = cssRows
   rowHeaderRefs.value.forEach((div) => {
@@ -155,6 +156,10 @@ const resetGrid = () => {
 }
 
 watch(data, () => {
+  resetGrid()
+})
+
+watch(gameStore.weaponFrames, () => {
   resetGrid()
 })
 
