@@ -1,5 +1,5 @@
 cd client
-call quasar build
+call npm run build
 cd ..
 
 firebase deploy
