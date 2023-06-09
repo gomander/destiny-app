@@ -40,6 +40,7 @@ const getDamageTypeDefinitions = async () => {
 }
 
 const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
+  const frameHash = swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!)
   const weapon: Weapon = {
     name: item.displayProperties.name,
     damageType: BungieDamageType[item.defaultDamageType] as DamageTypeEnum,
@@ -47,21 +48,39 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
     weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
     ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,
     slot: BungieWeaponSlot[item.equippingBlock!.equipmentSlotTypeHash] as WeaponSlot,
-    frameHash: swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!),
+    frame: definitionsStore.weaponFrameDefinitions[frameHash].displayProperties.name,
+    frameHash,
     icon: 'https://www.bungie.net' + item.displayProperties.icon,
     hash: item.hash
   }
-  if (item.itemSubType === 9) weapon.stats = {
-    range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)!.value,
-    stability: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.stability)!.value,
-    handling: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.handling)!.value,
-    reloadSpeed: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.reloadSpeed)!.value,
-    zoom: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.zoom)!.value,
-    aimAssistance: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.aimAssistance)!.value,
-    airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)!.value,
-    recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)!.value,
-    magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)!.value,
-    inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)!.value,
+  if (
+    [
+      BungieItemSubType['auto rifle'],
+      BungieItemSubType['shotgun'],
+      BungieItemSubType['machine gun'],
+      BungieItemSubType['hand cannon'],
+      BungieItemSubType['fusion rifle'],
+      BungieItemSubType['sniper rifle'],
+      BungieItemSubType['pulse rifle'],
+      BungieItemSubType['scout rifle'],
+      BungieItemSubType['sidearm'],
+      BungieItemSubType['linear fusion rifle'],
+      BungieItemSubType['submachine gun'],
+      BungieItemSubType['trace rifle']
+    ].includes(item.itemSubType as unknown as BungieItemSubType)
+  ) {
+    weapon.stats = {
+      range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)!.value,
+      stability: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.stability)!.value,
+      handling: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.handling)!.value,
+      reloadSpeed: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.reloadSpeed)!.value,
+      zoom: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.zoom)!.value,
+      aimAssistance: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.aimAssistance)!.value,
+      airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)!.value,
+      recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)!.value,
+      magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)!.value,
+      inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)!.value,
+    }
   }
   return weapon
 }

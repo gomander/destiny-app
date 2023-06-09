@@ -1,23 +1,194 @@
 <template>
-  <q-page class="items-center justify-evenly q-pa-md">
+  <q-page class="items-center justify-evenly q-pa-md q-gutter-y-md">
     <h1>Weapon Ranking</h1>
 
-    <q-btn-toggle
-      v-model="state.mode"
-      :options="[
-        { label: 'PvE', value: 'pve' },
-        { label: 'PvP', value: 'pvp' }
-      ]"
-    />
+    <div class="row wrap q-gutter-md q-mt-none controls-row">
+      <q-btn-toggle
+        v-model="gameMode"
+        :options="gameModes"
+        no-caps
+      />
 
-    <div v-for="weapon of sortedWeapons">
-      {{ weapon.name }} {{ createScore(weapon.stats!) }}
+      <q-select
+        v-model="weaponType"
+        :options="weaponTypes"
+        emit-value
+        map-options
+        filled
+        dense
+        options-dense
+        label="Weapon type"
+        class="col"
+      />
+
+      <q-select
+        v-model="slot"
+        :options="weaponSlots"
+        emit-value
+        map-options
+        filled
+        dense
+        options-dense
+        label="Slot"
+        class="col"
+      />
+
+      <q-select
+        v-model="damageType"
+        :options="damageTypes"
+        emit-value
+        map-options
+        filled
+        dense
+        options-dense
+        label="Damage type"
+        class="col"
+      />
+
+      <q-input
+        v-model="frame"
+        filled
+        dense
+        label="Frame"
+        class="col"
+      />
+    </div>
+
+    <div class="row q-gutter-md q-mt-none">
+      <q-markup-table
+        class="col-shrink"
+        v-if="weaponsWithScores.length"
+      >
+        <thead>
+          <tr>
+            <th class="text-left">Place</th>
+            <th class="text-left">Weapon</th>
+            <th class="text-left">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(entry, i) of weaponsWithScores">
+            <td>{{ i + 1 }}.</td>
+            <td class="weapon">
+              <img
+                :src="entry.weapon.icon"
+                :alt="entry.weapon.name"
+                :title="entry.weapon.name"
+              />
+              <div>{{ entry.weapon.name }}</div>
+            </td>
+            <td>{{ entry.score }}</td>
+          </tr>
+        </tbody>
+      </q-markup-table>
+
+      <div v-else>No weapons meet your criteria!</div>
+
+      <div class="col-shrink q-gutter-y-md">
+        <q-btn-toggle
+          v-model="weightMode"
+          :options="weightModes"
+          no-caps
+        />
+
+        <div class="q-gutter-md q-mt-none">
+          <q-input
+            type="number"
+            v-model.number="weights.range"
+            filled
+            dense
+            label="Range"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.stability"
+            filled
+            dense
+            label="Stability"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.handling"
+            filled
+            dense
+            label="Handling"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.reloadSpeed"
+            filled
+            dense
+            label="Reload speed"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.zoom"
+            filled
+            dense
+            label="Zoom"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.aimAssistance"
+            filled
+            dense
+            label="Aim assistance"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.airborneEffectiveness"
+            filled
+            dense
+            label="Airborne Effectiveness"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.recoilDirection"
+            filled
+            dense
+            label="Recoil direction"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.magazine"
+            filled
+            dense
+            label="Magazine"
+            :disable="weightMode === 'default'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.inventorySize"
+            filled
+            dense
+            label="Inventory size"
+            :disable="weightMode === 'default'"
+          />
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useGameStore } from 'src/stores/game-store'
 import {
   DamageTypeEnum, GameMode, WeaponSlot, WeaponStats, WeaponType
@@ -25,48 +196,109 @@ import {
 
 const gameStore = useGameStore()
 
-const state = reactive({
-  mode: 'pvp' as GameMode,
-  weaponType: 'hand cannon' as WeaponType,
-  damageType: null as DamageTypeEnum | null,
-  slot: 'energy' as WeaponSlot | null
-})
-
-const weapons = computed(() => gameStore.weapons.filter(weapon =>
-  weapon.weaponType === state.weaponType &&
-  (!state.damageType || weapon.damageType === state.damageType) &&
-  (!state.slot || weapon.slot === state.slot)
-))
-
-const sortedWeapons = computed(() => weapons.value.sort(
-  (a, b) => createScore(b.stats!) - createScore(a.stats!)
-))
-
 const PVE_STAT_MODIFIERS: WeaponStats = {
-  range: 1,
-  stability: 1 / 2,
-  handling: 1 / 3,
-  reloadSpeed: 3 / 5,
-  zoom: 5 / 2,
-  aimAssistance: 2 / 3,
+  range: 3,
+  stability: 1,
+  handling: 1,
+  reloadSpeed: 3,
+  zoom: 2,
+  aimAssistance: 1,
   airborneEffectiveness: 1,
-  recoilDirection: 1 / 4,
-  magazine: 2 / 5,
-  inventorySize: 3
+  recoilDirection: 3,
+  magazine: 4,
+  inventorySize: 5
 }
 
 const PVP_STAT_MODIFIERS: WeaponStats = {
-  range: 1,
-  stability: 3 / 5,
-  handling: 2 / 5,
-  reloadSpeed: 1 / 3,
-  zoom: 3,
-  aimAssistance: 1,
-  airborneEffectiveness: 1,
-  recoilDirection: 1 / 4,
-  magazine: 1 / 5,
+  range: 5,
+  stability: 3,
+  handling: 2,
+  reloadSpeed: 1,
+  zoom: 8,
+  aimAssistance: 5,
+  airborneEffectiveness: 3,
+  recoilDirection: 1,
+  magazine: 1,
   inventorySize: 0
 }
+
+const state = reactive({
+  weaponType: 'auto rifle' as WeaponType,
+  damageType: null as DamageTypeEnum | null,
+  slot: null as WeaponSlot | null,
+  frame: null,
+  weightMode: 'default' as 'default' | 'manual',
+  weights: { ...PVP_STAT_MODIFIERS }
+})
+
+const gameMode = ref<GameMode>('pvp')
+const weaponType = ref<WeaponType>(WeaponType.AutoRifle)
+const damageType = ref<DamageTypeEnum | null>(null)
+const slot = ref<WeaponSlot | null>(null)
+const frame = ref<string | null>(null)
+const weightMode = ref<'default' | 'manual'>('default')
+const weights = ref<WeaponStats>({ ...PVP_STAT_MODIFIERS })
+
+watch(gameMode, () => {
+  if (weightMode.value === 'default') {
+    weights.value = gameMode.value === 'pve'
+      ? { ...PVE_STAT_MODIFIERS }
+      : { ...PVP_STAT_MODIFIERS }
+  }
+})
+
+const gameModes = [
+  { label: 'PvE', value: 'pve' },
+  { label: 'PvP', value: 'pvp' }
+]
+
+const weightModes = [
+  { label: 'Default', value: 'default' },
+  { label: 'Manual', value: 'manual'}
+]
+
+const weaponTypes = [
+  { label: 'Auto Rifle', value: WeaponType.AutoRifle },
+  { label: 'Hand Cannon', value: WeaponType.HandCannon },
+  { label: 'Pulse Rifle', value: WeaponType.PulseRifle },
+  { label: 'Scout Rifle', value: WeaponType.ScoutRifle },
+  { label: 'Sidearm', value: WeaponType.Sidearm },
+  { label: 'Submachine Gun', value: WeaponType.SubmachineGun },
+  { label: 'Fusion Rifle', value: WeaponType.FusionRifle },
+  { label: 'Shotgun', value: WeaponType.Shotgun },
+  { label: 'Sniper Rifle', value: WeaponType.SniperRifle },
+  { label: 'Trace Rifle', value: WeaponType.TraceRifle },
+  { label: 'Linear Fusion Rifle', value: WeaponType.LinearFusionRifle },
+  { label: 'Machine Gun', value: WeaponType.MachineGun }
+]
+
+const weaponSlots = [
+  { label: 'All', value: null },
+  { label: 'Kinetic', value: WeaponSlot.Kinetic },
+  { label: 'Energy', value: WeaponSlot.Energy },
+  { label: 'Power', value: WeaponSlot.Power }
+]
+
+const damageTypes = [
+  { label: 'All', value: null },
+  { label: 'Kinetic', value: DamageTypeEnum.Kinetic },
+  { label: 'Stasis', value: DamageTypeEnum.Stasis },
+  { label: 'Strand', value: DamageTypeEnum.Strand },
+  { label: 'Void', value: DamageTypeEnum.Void },
+  { label: 'Solar', value: DamageTypeEnum.Solar },
+  { label: 'Arc', value: DamageTypeEnum.Arc }
+]
+
+const weapons = computed(() => gameStore.weapons.filter(weapon =>
+  weapon.weaponType === weaponType.value &&
+  (!damageType.value || weapon.damageType === damageType.value) &&
+  (!slot.value || weapon.slot === slot.value) &&
+  (!frame.value || weapon.frame === frame.value)
+))
+
+const weaponsWithScores = computed(() => weapons.value.map(weapon => (
+  { weapon, score: createScore(weapon.stats!, weights.value) }
+)).sort((a, b) => b.score - a.score))
 
 const judgeRecoilDirection = (recoilDirection: number) => {
   const deviation = Math.abs(
@@ -75,10 +307,7 @@ const judgeRecoilDirection = (recoilDirection: number) => {
   return Math.round(50 - (deviation - recoilDirection) / 2)
 }
 
-const createScore = (stats: WeaponStats) => {
-  const modifier = state.mode === 'pve'
-    ? PVE_STAT_MODIFIERS
-    : PVP_STAT_MODIFIERS
+const createScore = (stats: WeaponStats, modifier: WeaponStats) => {
   return Math.round(
     stats.range * modifier.range +
     stats.stability * modifier.stability  +
@@ -93,3 +322,21 @@ const createScore = (stats: WeaponStats) => {
   )
 }
 </script>
+
+<style scoped lang="sass">
+.controls-row
+  max-width: 55em
+.q-select, .q-input
+  min-width: 10em
+
+.weapon
+  min-width: 15em
+  display: flex
+  align-items: center
+  gap: 1.5em
+
+  & > img
+    width: 2em
+    height: 2em
+    border-radius: 0.5em
+</style>

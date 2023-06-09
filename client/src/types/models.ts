@@ -68,6 +68,7 @@ export interface Weapon {
   weaponType: WeaponType
   ammoType: AmmoType
   slot: WeaponSlot
+  frame: string
   frameHash: number
   icon: string
   hash: number
