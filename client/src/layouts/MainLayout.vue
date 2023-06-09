@@ -14,7 +14,7 @@
         />
 
         <q-toolbar-title>
-          Contraver.se
+          DARCI.gg
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -79,17 +79,17 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/bounty-calculator'
   },
   {
-    title: 'Historical Power',
-    caption: 'Levels by season',
-    icon: 'fas fa-clock-rotate-left',
-    link: '/historical-power'
-  },
-  {
     title: 'Weapon Ranking',
     caption: 'Judge base stats',
     icon: 'fas fa-ranking-star',
     link: '/weapon-ranking'
-  }
+  },
+  // {
+  //   title: 'Historical Power',
+  //   caption: 'Levels by season',
+  //   icon: 'fas fa-clock-rotate-left',
+  //   link: '/historical-power'
+  // }
 ]
 
 const leftDrawerOpen = ref(false)

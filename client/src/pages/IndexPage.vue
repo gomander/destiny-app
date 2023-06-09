@@ -2,15 +2,22 @@
   <q-page class="items-center justify-evenly q-pa-md">
     <h1>Destiny</h1>
 
-    <q-btn
-      label="Authorize"
-      :href="authUrl"
-    />
+    <div class="row q-gutter-md q-pb-md">
+      <q-btn
+        label="Authorize"
+        :href="authUrl"
+      />
 
-    <q-btn
-      label="Get profile data"
-      @click="getProfileData()"
-    />
+      <q-btn
+        label="Get profile data"
+        @click="getProfileData()"
+      />
+    </div>
+
+    <div>
+      These buttons do stuff but it's not used anywhere yet. For now just ignore
+      them and check out the other pages in the sidebar/hamburger menu.
+    </div>
   </q-page>
 </template>
 

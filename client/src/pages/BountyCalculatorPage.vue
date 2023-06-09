@@ -55,7 +55,7 @@
         />
       </div>
 
-      <div class="row q-gutter-x-md">
+      <div class="row q-gutter-md q-mt-none">
         <BountyTable v-for="_character in state.characterCount"/>
       </div>
 

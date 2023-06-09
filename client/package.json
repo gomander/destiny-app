@@ -1,9 +1,9 @@
 {
-  "name": "destiny-app",
-  "version": "0.0.1",
-  "description": "Goldfish's Destiny Stuff",
-  "productName": "Contraverse",
-  "author": "Gunnar Omander <gunnar.omander@gmail.com>",
+  "name": "darci.gg",
+  "version": "0.0.2",
+  "description": "A collection of tools and information for Destiny 2.",
+  "productName": "DARCI",
+  "author": "Gunnar Omander <gunnar@gomander.dev>",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",

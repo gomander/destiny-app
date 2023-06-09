@@ -1,6 +1,6 @@
-# Destiny App (destiny-app)
+# DARCI.gg
 
-Goldfish's Destiny Stuff
+A collection of tools and information for Destiny 2.
 
 ## Install the dependencies
 ```bash

@@ -188,7 +188,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useGameStore } from 'src/stores/game-store'
 import {
   DamageTypeEnum, GameMode, WeaponSlot, WeaponStats, WeaponType
@@ -221,15 +221,6 @@ const PVP_STAT_MODIFIERS: WeaponStats = {
   magazine: 1,
   inventorySize: 0
 }
-
-const state = reactive({
-  weaponType: 'auto rifle' as WeaponType,
-  damageType: null as DamageTypeEnum | null,
-  slot: null as WeaponSlot | null,
-  frame: null,
-  weightMode: 'default' as 'default' | 'manual',
-  weights: { ...PVP_STAT_MODIFIERS }
-})
 
 const gameMode = ref<GameMode>('pvp')
 const weaponType = ref<WeaponType>(WeaponType.AutoRifle)

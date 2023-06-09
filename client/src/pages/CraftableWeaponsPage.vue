@@ -2,6 +2,8 @@
   <q-page class="items-center justify-evenly q-pa-md q-gutter-y-md">
     <h1>Craftable Weapons</h1>
 
+    <p>A landscape display is recommended for this page.</p>
+
     <section
       class="q-gutter-y-md"
       v-for="ammoType of AmmoType"
