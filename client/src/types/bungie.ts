@@ -62,3 +62,16 @@ export enum BungieWeaponSlot {
   'energy' = 2465295065,
   'power' = 953998645
 }
+
+export enum BungieWeaponStat {
+  'range' = 1240592695,
+  'stability' = 155624089,
+  'handling' = 943549884,
+  'reloadSpeed' = 4188031367,
+  'zoom' = 3555269338,
+  'aimAssistance' = 1345609583,
+  'airborneEffectiveness' = 2714457168,
+  'recoilDirection' = 2715839340,
+  'magazine' = 3871231066,
+  'inventorySize' = 1931675084
+}

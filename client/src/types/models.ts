@@ -71,6 +71,20 @@ export interface Weapon {
   frameHash: number
   icon: string
   hash: number
+  stats?: WeaponStats
+}
+
+export interface WeaponStats {
+  range: number
+  stability: number
+  handling: number
+  reloadSpeed: number
+  zoom: number
+  aimAssistance: number
+  airborneEffectiveness: number
+  recoilDirection: number
+  magazine: number
+  inventorySize: number
 }
 
 export interface Bounty {
@@ -130,3 +144,5 @@ export enum DestinyIcon {
   Barrier = '',
   Unstoppable = ''
 }
+
+export type GameMode = 'pve' | 'pvp'

@@ -27,6 +27,11 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }]
   },
   {
+    path: '/weapon-ranking',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/WeaponRankPage.vue') }]
+  },
+  {
     path: '/auth-return',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/AuthReturnPage.vue') }]

@@ -5,12 +5,12 @@ import { DestinyInventoryItemDefinition } from 'bungie-api-ts/destiny2'
 import { useGameStore } from 'src/stores/game-store'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import {
-  BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot
+  BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot, BungieWeaponStat
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
 import {
   DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon
-} from './models'
+} from 'src/types/models'
 import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
@@ -40,7 +40,7 @@ const getDamageTypeDefinitions = async () => {
 }
 
 const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
-  return {
+  const weapon: Weapon = {
     name: item.displayProperties.name,
     damageType: BungieDamageType[item.defaultDamageType] as DamageTypeEnum,
     damageTypeHash: item.damageTypeHashes[0],
@@ -51,6 +51,19 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
     icon: 'https://www.bungie.net' + item.displayProperties.icon,
     hash: item.hash
   }
+  if (item.itemSubType === 9) weapon.stats = {
+    range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)!.value,
+    stability: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.stability)!.value,
+    handling: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.handling)!.value,
+    reloadSpeed: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.reloadSpeed)!.value,
+    zoom: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.zoom)!.value,
+    aimAssistance: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.aimAssistance)!.value,
+    airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)!.value,
+    recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)!.value,
+    magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)!.value,
+    inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)!.value,
+  }
+  return weapon
 }
 
 const getInventoryItemDefinitions = async () => {

@@ -1,6 +1,6 @@
 import {
   AmmoType, DestinyIcon, ExplicitWeaponType, WeaponType
-} from 'src/components/models'
+} from 'src/types/models'
 
 export const capitalizeText = (s: string) => {
   return s.toLowerCase()

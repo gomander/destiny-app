@@ -84,6 +84,12 @@ const essentialLinks: EssentialLinkProps[] = [
     icon: 'fas fa-clock-rotate-left',
     link: '/historical-power'
   },
+  {
+    title: 'Weapon Ranking',
+    caption: 'Judge base stats',
+    icon: 'fas fa-ranking-star',
+    link: '/weapon-ranking'
+  }
 ]
 
 const leftDrawerOpen = ref(false)

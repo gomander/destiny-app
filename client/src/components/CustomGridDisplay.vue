@@ -64,8 +64,8 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { AmmoType, Weapon, WeaponType } from './models'
-import { getWeaponIconAndName, cleanUpFrameName } from '../utils/weapon-util'
+import { AmmoType, Weapon, WeaponType } from 'src/types/models'
+import { getWeaponIconAndName, cleanUpFrameName } from 'src/utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
 
 const gameStore = useGameStore()
@@ -201,6 +201,9 @@ const columnHeaderRefs = ref<HTMLDivElement[]>([])
 
   &-data
     background-color: $grey-9
+
+    & img
+      border: 0.1em solid $grey-6
 
 .grid-label, .column-header, .row-header
   color: white
