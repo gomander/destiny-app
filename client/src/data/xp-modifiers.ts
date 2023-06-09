@@ -15,3 +15,9 @@ export const sharedWisdomTiers = [
   { label: '2%', value: 0.02 },
   { label: '0%', value: 0 }
 ]
+
+export const xpRewardTiers = [
+  { label: 'XP', hash: 1858002338, value: 3000 },
+  { label: 'XP+', hash: 3348653032, value: 6000 },
+  { label: 'XP++', hash: 3582080006, value: 12000 }
+]

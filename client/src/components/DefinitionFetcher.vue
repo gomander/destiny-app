@@ -9,6 +9,7 @@ import {
 import * as api from 'src/utils/api'
 import { DamageType, WeaponType, AmmoType, WeaponSlot, Weapon } from './models'
 import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
+import { xpRewardTiers } from 'src/data/xp-modifiers'
 
 const gameStore = useGameStore()
 
@@ -54,6 +55,8 @@ const getInventoryItemDefinitions = async () => {
     gameStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
   ) as { [n: number]: DestinyInventoryItemDefinition }
 
+  const xpHashes = xpRewardTiers.map(tier => tier.hash)
+
   for (const key of Object.keys(items)) {
     const item = items[Number(key)]
     if (
@@ -70,6 +73,13 @@ const getInventoryItemDefinitions = async () => {
       item.quality.versions[item.quality.currentVersion].powerCapHash === 2759499571 // 999990
     ) {
       gameStore.weaponDefinitions[key] = item
+    }
+
+    if (
+      item.itemType === 26 && // bounty
+      item.value.itemValue.filter(entry => xpHashes.includes(entry.itemHash)) // XP, XP+, or XP++
+    ) {
+      gameStore.bountyDefinitions[key] = item
     }
   }
 
@@ -92,6 +102,22 @@ const getInventoryItemDefinitions = async () => {
         gameStore.craftableWeapons.push(weapon)
       }
     }
+  }
+
+  gameStore.bounties = []
+
+  for (const key in gameStore.bountyDefinitions) {
+    const item = gameStore.bountyDefinitions[Number(key)]
+    const xpHash = item.value.itemValue.find(entry => xpHashes.includes(entry.itemHash))?.itemHash
+    const xp = xpRewardTiers.find(tier => tier.hash === xpHash)?.label
+    if (!(xp && xpHash)) continue
+    gameStore.bounties.push({
+      name: item.displayProperties.name,
+      icon: item.displayProperties.icon,
+      hash: item.hash,
+      xp,
+      xpHash
+    })
   }
 }
 </script>
