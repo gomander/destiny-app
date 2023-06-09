@@ -8,7 +8,7 @@ import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
-import { DamageType, WeaponType, AmmoType, WeaponSlot, Weapon } from './models'
+import { DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon } from './models'
 import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
@@ -40,7 +40,7 @@ const getDamageTypeDefinitions = async () => {
 const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
   return {
     name: item.displayProperties.name,
-    damageType: BungieDamageType[item.defaultDamageType] as DamageType,
+    damageType: BungieDamageType[item.defaultDamageType] as DamageTypeEnum,
     damageTypeHash: item.damageTypeHashes[0],
     weaponType: BungieItemSubType[item.itemSubType] as WeaponType,
     ammoType: BungieAmmoType[item.equippingBlock!.ammoType] as AmmoType,

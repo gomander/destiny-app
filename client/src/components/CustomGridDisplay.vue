@@ -67,7 +67,6 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { AmmoType, Weapon, WeaponType } from './models'
 import { getWeaponIconAndName, cleanUpFrameName } from '../utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
-import { useDefinitionsStore } from 'src/stores/definitions-store'
 
 const gameStore = useGameStore()
 

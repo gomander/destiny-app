@@ -1,4 +1,4 @@
-export enum DamageType {
+export enum DamageTypeEnum {
   Kinetic = 'kinetic',
   Void = 'void',
   Arc = 'arc',
@@ -63,7 +63,7 @@ export enum WeaponSlot {
 
 export interface Weapon {
   name: string
-  damageType: DamageType
+  damageType: DamageTypeEnum
   damageTypeHash: number
   weaponType: WeaponType
   ammoType: AmmoType
@@ -88,7 +88,7 @@ export interface WeaponFrame {
   hash: number
 }
 
-export interface IDamageType {
+export interface DamageType {
   name: string,
   icon: string,
   description: string,
