@@ -7,7 +7,7 @@
         Characters:
 
         <q-slider
-          v-model="characterCount"
+          v-model="state.characterCount"
           :min="1"
           :max="3"
           markers
@@ -17,13 +17,13 @@
       </div>
 
       <q-checkbox
-        v-model="seasonPass"
+        v-model="state.seasonPass"
         label="Season Pass"
         dense
       />
 
       <q-checkbox
-        v-model="wellRested"
+        v-model="state.wellRested"
         label="Well Rested"
         dense
       />
@@ -33,7 +33,7 @@
       </div>
 
       <q-select
-        v-model="ghostShellMod"
+        v-model="state.ghostShellMod"
         :options="ghostMods"
         emit-value
         map-options
@@ -47,7 +47,7 @@
       </div>
 
       <q-select
-        v-model="sharedWisdom"
+        v-model="state.sharedWisdom"
         :options="sharedWisdomTiers"
         emit-value
         map-options
@@ -58,37 +58,56 @@
     </div>
 
     <div class="row q-gutter-x-md">
-      <BountyTable v-for="character in characterCount"/>
+      <BountyTable v-for="character in state.characterCount"/>
     </div>
 
     <div>
       Stored XP: {{ storedXp }}
     </div>
+
+    <div>
+      <q-slider
+        readonly
+        :min="progressBase"
+        :max="progressBase + 10"
+        v-model="storedLevels"
+        track-size="10px"
+        thumb-size="0px"
+        markers
+        marker-labels
+      />
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { ghostMods, sharedWisdomTiers } from 'src/data/xp-modifiers'
 import BountyTable from 'src/components/BountyTable.vue'
 import { calculateXp } from 'src/utils/bounty-util'
 
-const characterCount = ref(3)
-const seasonPass = ref(true)
-const wellRested = ref(true)
-const ghostShellMod = ref(ghostMods[0].value)
-const sharedWisdom = ref(0)
+const state = reactive({
+  characterCount: 3,
+  seasonPass: true,
+  wellRested: true,
+  ghostShellMod: ghostMods[0].value,
+  sharedWisdom: 0
+})
 
 const storedXp = computed(() =>
   Math.floor(
     calculateXp(
-      102,
-      78,
-      ghostShellMod.value,
-      seasonPass.value,
-      wellRested.value,
-      sharedWisdom.value
+      33 * state.characterCount,
+      27 * state.characterCount,
+      state.ghostShellMod,
+      state.seasonPass,
+      state.wellRested,
+      state.sharedWisdom
     )
   )
 )
+
+const progressBase = computed(() => Math.floor(storedXp.value / 1000000) * 10)
+
+const storedLevels = computed(() => storedXp.value / 100000)
 </script>
