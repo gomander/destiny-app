@@ -316,9 +316,9 @@ const createScore = (stats: WeaponStats, modifier: WeaponStats) => {
 
 <style scoped lang="sass">
 .controls-row
-  max-width: 55em
+  max-width: 64em
 .q-select, .q-input
-  min-width: 10em
+  min-width: 12.5em
 
 .weapon
   min-width: 15em

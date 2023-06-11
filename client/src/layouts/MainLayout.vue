@@ -14,7 +14,7 @@
         />
 
         <q-toolbar-title>
-          DARCI.gg
+          DARCI
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
