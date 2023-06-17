@@ -130,15 +130,6 @@
 
           <q-input
             type="number"
-            v-model.number="weights.zoom"
-            filled
-            dense
-            label="Zoom"
-            :disable="weightMode === 'default'"
-          />
-
-          <q-input
-            type="number"
             v-model.number="weights.aimAssistance"
             filled
             dense
@@ -148,19 +139,19 @@
 
           <q-input
             type="number"
-            v-model.number="weights.airborneEffectiveness"
+            v-model.number="weights.zoom"
             filled
             dense
-            label="Airborne Effectiveness"
+            label="Zoom"
             :disable="weightMode === 'default'"
           />
 
           <q-input
             type="number"
-            v-model.number="weights.recoilDirection"
+            v-model.number="weights.airborneEffectiveness"
             filled
             dense
-            label="Recoil direction"
+            label="Airborne Effectiveness"
             :disable="weightMode === 'default'"
           />
 
@@ -180,6 +171,15 @@
             dense
             label="Reserves (PvE only)"
             :disable="weightMode === 'default' || gameMode === 'pvp'"
+          />
+
+          <q-input
+            type="number"
+            v-model.number="weights.recoilDirection"
+            filled
+            dense
+            label="Recoil direction"
+            :disable="weightMode === 'default'"
           />
         </div>
       </div>
