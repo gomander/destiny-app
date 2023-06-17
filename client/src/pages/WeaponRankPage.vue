@@ -169,7 +169,7 @@
             v-model.number="weights.magazine"
             filled
             dense
-            label="Magazine"
+            label="Magazine Size"
             :disable="weightMode === 'default'"
           />
 
@@ -178,7 +178,7 @@
             v-model.number="weights.inventorySize"
             filled
             dense
-            label="Inventory size (PvE only)"
+            label="Reserves (PvE only)"
             :disable="weightMode === 'default' || gameMode === 'pvp'"
           />
         </div>
