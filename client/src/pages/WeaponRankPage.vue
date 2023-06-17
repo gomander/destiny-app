@@ -178,8 +178,8 @@
             v-model.number="weights.inventorySize"
             filled
             dense
-            label="Inventory size"
-            :disable="weightMode === 'default'"
+            label="Inventory size (PvE only)"
+            :disable="weightMode === 'default' || gameMode === 'pvp'"
           />
         </div>
       </div>
@@ -210,13 +210,13 @@ const PVE_STAT_MODIFIERS: WeaponStats = {
 }
 
 const PVP_STAT_MODIFIERS: WeaponStats = {
-  range: 5,
+  range: 6,
   stability: 3,
   handling: 2,
   reloadSpeed: 1,
   zoom: 8,
-  aimAssistance: 5,
-  airborneEffectiveness: 3,
+  aimAssistance: 4,
+  airborneEffectiveness: 2,
   recoilDirection: 1,
   magazine: 1,
   inventorySize: 0
@@ -309,7 +309,7 @@ const createScore = (stats: WeaponStats, modifier: WeaponStats) => {
     stats.airborneEffectiveness * modifier.airborneEffectiveness +
     judgeRecoilDirection(stats.recoilDirection) * modifier.recoilDirection +
     stats.magazine * modifier.magazine +
-    stats.inventorySize * modifier.inventorySize
+    stats.inventorySize * modifier.inventorySize * Number(gameMode.value === 'pve')
   )
 }
 </script>
