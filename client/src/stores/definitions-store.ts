@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import {
-  DestinyManifest, DestinyInventoryItemDefinition, DestinyDamageTypeDefinition
+  DestinyManifest, DestinyInventoryItemDefinition, DestinyDamageTypeDefinition,
+  DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
 
 export const useDefinitionsStore = defineStore(
@@ -12,6 +13,8 @@ export const useDefinitionsStore = defineStore(
       weaponDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
       weaponFrameDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
       bountyDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
+      presentationNodeDefinitions: {} as { [k: string]: DestinyPresentationNodeDefinition },
+      recordDefinitions: {} as { [k: string]: DestinyRecordDefinition },
     }),
     persist: false
   }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Bounty, DamageType, Weapon, WeaponFrame } from 'src/types/models'
+import { Bounty, DamageType, TriumphCategory, Weapon, WeaponFrame } from 'src/types/models'
 
 export const useGameStore = defineStore(
   'game',
@@ -9,7 +9,8 @@ export const useGameStore = defineStore(
       craftableWeapons: [] as Weapon[],
       bounties: [] as Bounty[],
       weaponFrames: [] as WeaponFrame[],
-      damageTypes: [] as DamageType[]
+      damageTypes: [] as DamageType[],
+      raidTriumphs: [] as TriumphCategory[]
     }),
     persist: true
   }

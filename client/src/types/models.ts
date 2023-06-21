@@ -147,3 +147,18 @@ export enum DestinyIcon {
 }
 
 export type GameMode = 'pve' | 'pvp'
+
+export interface Triumph {
+  name: string
+  hash: number
+}
+
+export interface TriumphPlayer extends Triumph {
+  complete: boolean
+}
+
+export interface TriumphCategory {
+  name: string
+  hash: number
+  triumphHashes: number[]
+}

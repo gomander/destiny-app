@@ -1,11 +1,12 @@
 <template></template>
 
 <script setup lang="ts">
-import { DestinyInventoryItemDefinition } from 'bungie-api-ts/destiny2'
+import { DestinyInventoryItemDefinition, DestinyPresentationNodeDefinition } from 'bungie-api-ts/destiny2'
 import { useGameStore } from 'src/stores/game-store'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import {
-  BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot, BungieWeaponStat
+  BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
+  BungieWeaponStat, RaidTriumphCategories
 } from 'src/types/bungie'
 import * as api from 'src/utils/api'
 import {
@@ -22,10 +23,12 @@ const getManifest = async () => {
   definitionsStore.manifest = res.Response
 }
 
-getManifest().then(() => {
-  getDamageTypeDefinitions().then(() => {
-    getInventoryItemDefinitions()
-  })
+getManifest().then(async () => {
+  await getDamageTypeDefinitions()
+  await Promise.all([
+    getInventoryItemDefinitions(),
+    getPresentationNodeDefinitions()
+  ])
 })
 
 const getDamageTypeDefinitions = async () => {
@@ -179,5 +182,32 @@ const getInventoryItemDefinitions = async () => {
       hash: damageType.hash
     })
   }
+}
+
+const getPresentationNodeDefinitions = async () => {
+  console.log(definitionsStore.manifest.jsonWorldComponentContentPaths.en)
+  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  const nodes = await api.getDestinyManifestDefinition(
+    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
+  ) as { [n: number]: DestinyPresentationNodeDefinition }
+
+  gameStore.raidTriumphs = []
+
+  for (const key of Object.keys(nodes)) {
+    const node = nodes[Number(key)]
+
+    if (Object.values(RaidTriumphCategories).includes(node.hash)) {
+      definitionsStore.presentationNodeDefinitions[key] = node
+      gameStore.raidTriumphs.push({
+        name: node.displayProperties.name,
+        hash: node.hash,
+        triumphHashes: node.children.records.map(record => record.recordHash)
+      })
+    }
+  }
+}
+
+const getRecordDefinitions = async () => {
+
 }
 </script>
