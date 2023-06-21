@@ -28,10 +28,8 @@
     <router-view/>
 
     <ul>
-      <li
-        v-for="triumph of currentRaidTriumphHashes"
-      >
-        {{ triumph }}
+      <li v-for="triumph of currentRaidTriumphs">
+        {{ triumph.name }}
       </li>
     </ul>
   </q-page>
@@ -60,9 +58,9 @@ const path = `/rad-checklist${groupId ? `/${groupId}` : ''}`
 const currentRaid = computed(
   () => raids.find(raid => raid.id === route.path.split('/').at(-1))
 )
-const currentRaidTriumphHashes = computed(
+const currentRaidTriumphs = computed(
   () => gameStore.raidTriumphs.find(
     entry => entry.name === currentRaid.value?.name
-  )?.triumphHashes
+  )?.triumphs
 )
 </script>

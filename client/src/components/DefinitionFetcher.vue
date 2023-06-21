@@ -1,7 +1,9 @@
 <template></template>
 
 <script setup lang="ts">
-import { DestinyInventoryItemDefinition, DestinyPresentationNodeDefinition } from 'bungie-api-ts/destiny2'
+import {
+  DestinyInventoryItemDefinition, DestinyPresentationNodeDefinition, DestinyRecordDefinition
+} from 'bungie-api-ts/destiny2'
 import { useGameStore } from 'src/stores/game-store'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import {
@@ -29,6 +31,7 @@ getManifest().then(async () => {
     getInventoryItemDefinitions(),
     getPresentationNodeDefinitions()
   ])
+  await getRecordDefinitions()
 })
 
 const getDamageTypeDefinitions = async () => {
@@ -185,7 +188,6 @@ const getInventoryItemDefinitions = async () => {
 }
 
 const getPresentationNodeDefinitions = async () => {
-  console.log(definitionsStore.manifest.jsonWorldComponentContentPaths.en)
   if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
   const nodes = await api.getDestinyManifestDefinition(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
@@ -201,13 +203,33 @@ const getPresentationNodeDefinitions = async () => {
       gameStore.raidTriumphs.push({
         name: node.displayProperties.name,
         hash: node.hash,
-        triumphHashes: node.children.records.map(record => record.recordHash)
+        triumphHashes: node.children.records.map(record => record.recordHash),
+        triumphs: []
       })
     }
   }
 }
 
 const getRecordDefinitions = async () => {
+  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  const records = await api.getDestinyManifestDefinition(
+    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
+  ) as { [n: number]: DestinyRecordDefinition }
 
+  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphHashes).flat()
+
+  for (const key of Object.keys(records)) {
+    const record = records[Number(key)]
+
+    if (triumphList.includes(record.hash)) {
+      definitionsStore.recordDefinitions[key] = record
+
+      const raidName = gameStore.raidTriumphs.find(entry => entry.triumphHashes.includes(record.hash))?.name
+      gameStore.raidTriumphs.find(entry => entry.name === raidName)?.triumphs.push({
+        name: record.displayProperties.name,
+        hash: record.hash
+      })
+    }
+  }
 }
 </script>

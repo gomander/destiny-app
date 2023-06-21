@@ -161,4 +161,5 @@ export interface TriumphCategory {
   name: string
   hash: number
   triumphHashes: number[]
+  triumphs: Triumph[]
 }
