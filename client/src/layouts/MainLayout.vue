@@ -84,6 +84,12 @@ const essentialLinks: EssentialLinkProps[] = [
     icon: 'fas fa-ranking-star',
     link: '/weapon-ranking'
   },
+  {
+    title: 'RAD Checklists',
+    caption: 'Visualize player progress',
+    icon: 'fas fa-table-cells',
+    link: '/rad-checklist'
+  }
   // {
   //   title: 'Historical Power',
   //   caption: 'Levels by season',

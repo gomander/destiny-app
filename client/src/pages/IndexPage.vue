@@ -54,7 +54,7 @@ const userStore = useUserStore()
 const authUrl = api.authorizationURL()
 
 const getProfileData = async (
-  components = [100, 200, 201]
+  components = [100, 200, 201, 900]
 ) => {
   const destinyProfile = await api.getDestinyProfileData(
     components,

@@ -22,14 +22,54 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/BountyCalculatorPage.vue') }]
   },
   {
-    path: '/historical-power',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }]
-  },
-  {
     path: '/weapon-ranking',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/WeaponRankPage.vue') }]
+  },
+  {
+    path: '/rad-checklist',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: ':id(\\w\\w\\w-\\w\\w\\w)?',
+        component: () => import('pages/RADChecklistPage.vue'),
+        children: [
+          {
+            path: 'last-wish',
+            component: () => import('components/rad-checklists/LastWish.vue')
+          },
+          {
+            path: 'garden-of-salvation',
+            component: () => import('components/rad-checklists/GardenOfSalvation.vue')
+          },
+          {
+            path: 'deep-stone-crypt',
+            component: () => import('components/rad-checklists/DeepStoneCrypt.vue')
+          },
+          {
+            path: 'vault-of-glass',
+            component: () => import('components/rad-checklists/VaultOfGlass.vue')
+          },
+          {
+            path: 'vow-of-the-disciple',
+            component: () => import('components/rad-checklists/VowOfTheDisciple.vue')
+          },
+          {
+            path: 'kings-fall',
+            component: () => import('components/rad-checklists/KingsFall.vue')
+          },
+          {
+            path: 'root-of-nightmares',
+            component: () => import('components/rad-checklists/RootOfNightmares.vue')
+          },
+        ]
+      }
+    ]
+  },
+  {
+    path: '/historical-power',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/HistoricalPowerPage.vue') }]
   },
   {
     path: '/auth-return',
