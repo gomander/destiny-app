@@ -34,7 +34,7 @@
 
       <q-btn
         label="Get profile data"
-        @click="getProfileData()"
+        @click="getProfileRecords()"
         no-caps
         color="primary"
       />
@@ -48,9 +48,11 @@
 </template>
 
 <script setup lang="ts">
+import { useGameStore } from 'src/stores/game-store'
 import { useUserStore } from 'src/stores/user-store'
 import * as api from 'src/utils/api'
 
+const gameStore = useGameStore()
 const userStore = useUserStore()
 
 const authUrl = api.authorizationURL()
@@ -58,10 +60,10 @@ const authUrl = api.authorizationURL()
 const getProfileData = async (
   components = [100, 200, 201, 900],
   membershipId?: string,
-  membershipType?: number,
+  membershipType = 3,
   accessToken?: string
 ) => {
-  const profile = await api.getDestinyProfileData(
+  return await api.getDestinyProfileData(
     components,
     membershipId || userStore.primaryMembershipId,
     membershipType || userStore.destinyMemberships.find(
@@ -69,14 +71,28 @@ const getProfileData = async (
     ).membershipType,
     accessToken || userStore.accessToken
   )
-  console.log('Destiny 2 profile:', profile)
 }
 
-getProfileData(
-  [100, 200, 201, 900],
-  '4611686018505051845',
-  3
-)
+const getProfileRecords = async () => {
+  if (!userStore.membershipId) return
+  const profile = await getProfileData()
+  console.log(profile)
+
+  const records = profile?.profileRecords.data?.records
+  if (!records) return
+
+  userStore.records = []
+
+  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphHashes).flat()
+
+  for (const key of Object.keys(records)) {
+    const record = records[Number(key)]
+
+    if (triumphList.includes(Number(key))) {
+      userStore.records.push(record)
+    }
+  }
+}
 </script>
 
 <style scoped lang="sass">

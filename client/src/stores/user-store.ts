@@ -1,4 +1,4 @@
-import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
+import { DestinyRecordComponent } from 'bungie-api-ts/destiny2'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
       bungieNetUser: {} as any,
       destinyMemberships: [] as any[],
       primaryMembershipId: '',
-      records: [] as DestinyProfileRecordsComponent[]
+      records: [] as DestinyRecordComponent[]
     }),
     persist: true
   }
