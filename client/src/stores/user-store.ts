@@ -1,5 +1,5 @@
-import { DestinyRecordComponent } from 'bungie-api-ts/destiny2'
 import { defineStore } from 'pinia'
+import { TriumphPlayer } from 'src/types/models'
 
 export const useUserStore = defineStore(
   'user',
@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
       bungieNetUser: {} as any,
       destinyMemberships: [] as any[],
       primaryMembershipId: '',
-      records: {} as { [k: string]: DestinyRecordComponent }
+      records: [] as TriumphPlayer[]
     }),
     persist: true
   }

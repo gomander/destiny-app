@@ -227,6 +227,8 @@ const getRecordDefinitions = async () => {
       const raidName = gameStore.raidTriumphs.find(entry => entry.triumphHashes.includes(record.hash))?.name
       gameStore.raidTriumphs.find(entry => entry.name === raidName)?.triumphs.push({
         name: record.displayProperties.name,
+        description: record.displayProperties.description,
+        icon: record.displayProperties.icon,
         hash: record.hash
       })
     }

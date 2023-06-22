@@ -27,14 +27,29 @@
 
     <router-view/>
 
-    <ul>
-      <li
-        v-for="triumph of currentRaidTriumphs"
-        :class="userStore.records[triumph.hash] ? 'complete' : ''"
-      >
-        {{ triumph.name }}
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col">
+        <h3 class="col-header">{{ userStore.bungieNetUser.uniqueName }}</h3>
+        <ul class="q-mt-sm">
+          <li
+            v-for="triumph of currentRaidTriumphs"
+            :class="userStore.records.find(record => record.hash === triumph.hash)?.complete ? 'complete' : ''"
+          >
+            <img
+              v-if="triumph.icon"
+              :src="'https://bungie.net' + triumph.icon"
+              width="32"
+              height="32"
+            />
+
+            <div>
+              <h4>{{ triumph.name }}</h4>
+              <p>{{ triumph.description }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -73,4 +88,23 @@ const currentRaidTriumphs = computed(
 <style scoped lang="sass">
 .complete
   color: $positive
+
+.col-header
+  font-size: 125%
+
+ul
+  list-style-type: none
+
+  li
+    display: flex
+    align-items: center
+    gap: 1em
+
+    h4
+      font-size: 100%
+      line-height: 150%
+      font-weight: bold
+
+    *
+      margin: 0
 </style>

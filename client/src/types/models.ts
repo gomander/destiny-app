@@ -150,11 +150,14 @@ export type GameMode = 'pve' | 'pvp'
 
 export interface Triumph {
   name: string
+  description: string
+  icon?: string
   hash: number
 }
 
 export interface TriumphPlayer extends Triumph {
   complete: boolean
+  objectives: any
 }
 
 export interface TriumphCategory {
