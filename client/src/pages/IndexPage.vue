@@ -81,15 +81,28 @@ const getProfileRecords = async () => {
   const records = profile?.profileRecords.data?.records
   if (!records) return
 
-  userStore.records = []
+  userStore.records = {}
 
-  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphHashes).flat()
+  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphs).flat()
 
   for (const key of Object.keys(records)) {
     const record = records[Number(key)]
 
-    if (triumphList.includes(Number(key))) {
-      userStore.records.push(record)
+    const triumph = triumphList.find(triumph => triumph.hash === Number(key))
+    if (
+      triumph &&
+      (
+        (
+          record.objectives &&
+          !record.objectives.find(objective => !objective.complete)
+        ) ||
+        (
+          record.intervalObjectives &&
+          !record.intervalObjectives.find(objective => !objective.complete)
+        )
+      )
+    ) {
+      userStore.records[key] = record
     }
   }
 }

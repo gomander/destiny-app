@@ -28,7 +28,10 @@
     <router-view/>
 
     <ul>
-      <li v-for="triumph of currentRaidTriumphs">
+      <li
+        v-for="triumph of currentRaidTriumphs"
+        :class="userStore.records[triumph.hash] ? 'complete' : ''"
+      >
         {{ triumph.name }}
       </li>
     </ul>
@@ -39,9 +42,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
+import { useUserStore } from 'src/stores/user-store'
 
 const route = useRoute()
 const gameStore = useGameStore()
+const userStore = useUserStore()
 
 const raids = [
   { name: 'Last Wish', id: 'last-wish' },
@@ -64,3 +69,8 @@ const currentRaidTriumphs = computed(
   )?.triumphs
 )
 </script>
+
+<style scoped lang="sass">
+.complete
+  color: $positive
+</style>
