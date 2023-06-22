@@ -1,3 +1,5 @@
+import { DestinyProfileResponse } from "bungie-api-ts/destiny2"
+
 export const authorizationURL = () => {
   const queryParams = new URLSearchParams({
     client_id: BUNGIE_OAUTH_CLIENT_ID,
@@ -41,22 +43,23 @@ export const getMembershipData = async (accessToken: string) => {
 }
 
 export const getDestinyProfileData = async (
-  components: string[] | number[],
+  components: number[],
   destinyMembershipId: string,
   membershipType: number,
-  accessToken: string
+  accessToken?: string
 ) => {
-  const res = await fetch(
-    `${BUNGIE_API_ROOT}/Destiny2/${membershipType}/Profile/${destinyMembershipId}?components=${components.join(',')}`,
-    {
-      method: 'GET',
-      headers: {
-        'X-API-KEY': BUNGIE_API_KEY,
-        'Authorization': `Bearer ${accessToken}`
-      }
-    }
-  )
-  return await res.json()
+  const headers: HeadersInit = { 'X-API-KEY': BUNGIE_API_KEY }
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`
+  try {
+    const res = await fetch(
+      `${BUNGIE_API_ROOT}/Destiny2/${membershipType}/Profile/${destinyMembershipId}?components=${components.join(',')}`,
+      { method: 'GET', headers }
+    )
+    const data = await res.json()
+    return data.Response as DestinyProfileResponse
+  } catch (ex) {
+    console.error(ex)
+  }
 }
 
 export const getDestinyManifest = async () => {

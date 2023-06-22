@@ -1,5 +1,5 @@
 <template>
-  <q-page class="items-center justify-evenly q-pa-md">
+  <q-page class="q-pa-md">
     <h1>Welcome to DARCI.gg</h1>
 
     <p class="flavor-text">
@@ -24,17 +24,19 @@
       most things are still only semi-functional.
     </p>
 
-    <div class="row q-gutter-md q-pb-md">
+    <div class="row q-gutter-sm q-pb-md">
       <q-btn
         label="Authorize"
         :href="authUrl"
         no-caps
+        color="primary"
       />
 
       <q-btn
         label="Get profile data"
         @click="getProfileData()"
         no-caps
+        color="primary"
       />
     </div>
 
@@ -54,18 +56,27 @@ const userStore = useUserStore()
 const authUrl = api.authorizationURL()
 
 const getProfileData = async (
-  components = [100, 200, 201, 900]
+  components = [100, 200, 201, 900],
+  membershipId?: string,
+  membershipType?: number,
+  accessToken?: string
 ) => {
-  const destinyProfile = await api.getDestinyProfileData(
+  const profile = await api.getDestinyProfileData(
     components,
-    userStore.primaryMembershipId,
-    userStore.destinyMemberships.find(
+    membershipId || userStore.primaryMembershipId,
+    membershipType || userStore.destinyMemberships.find(
       m => m.membershipId === userStore.primaryMembershipId
     ).membershipType,
-    userStore.accessToken
+    accessToken || userStore.accessToken
   )
-  console.log('Destiny 2 profile:', destinyProfile)
+  console.log('Destiny 2 profile:', profile)
 }
+
+getProfileData(
+  [100, 200, 201, 900],
+  '4611686018505051845',
+  3
+)
 </script>
 
 <style scoped lang="sass">
