@@ -15,6 +15,7 @@ import {
   DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon
 } from 'src/types/models'
 import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
+import { filteredTriumphs } from 'src/utils/triumph-util'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
 const gameStore = useGameStore()
@@ -203,7 +204,9 @@ const getPresentationNodeDefinitions = async () => {
       gameStore.raidTriumphs.push({
         name: node.displayProperties.name,
         hash: node.hash,
-        triumphHashes: node.children.records.map(record => record.recordHash),
+        triumphHashes: node.children.records.map(
+          record => record.recordHash
+        ).filter(record => !filteredTriumphs.includes(record)),
         triumphs: []
       })
     }

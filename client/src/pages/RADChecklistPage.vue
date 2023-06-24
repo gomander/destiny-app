@@ -30,9 +30,10 @@
     <div class="row">
       <div class="col">
         <h3 class="col-header">{{ userStore.bungieNetUser.uniqueName }}</h3>
-        <ul class="q-mt-sm">
+        <ul class="triumph-list q-mt-sm">
           <li
             v-for="triumph of currentRaidTriumphs"
+            class="triumph"
             :class="userStore.records.find(record => record.hash === triumph.hash)?.complete ? 'complete' : ''"
           >
             <img
@@ -43,8 +44,8 @@
             />
 
             <div>
-              <h4>{{ triumph.name }}</h4>
-              <p>{{ triumph.description }}</p>
+              <h4 class="triumph-name">{{ triumph.name }}</h4>
+              <p class="triumph-description">{{ triumph.description }}</p>
             </div>
           </li>
         </ul>
@@ -92,15 +93,15 @@ const currentRaidTriumphs = computed(
 .col-header
   font-size: 125%
 
-ul
+.triumph-list
   list-style-type: none
 
-  li
+  .triumph
     display: flex
     align-items: center
     gap: 1em
 
-    h4
+    &-name
       font-size: 100%
       line-height: 150%
       font-weight: bold
