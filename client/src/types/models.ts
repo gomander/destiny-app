@@ -166,3 +166,10 @@ export interface TriumphCategory {
   triumphHashes: number[]
   triumphs: Triumph[]
 }
+
+export interface PlayerTriumphs {
+  name: string
+  discriminator: string
+  id: string
+  triumphs: TriumphPlayer[]
+}

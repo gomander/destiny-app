@@ -27,13 +27,20 @@
     <div class="row q-gutter-sm q-pb-md">
       <q-btn
         label="Authorize"
-        :href="authUrl"
+        :href="authorizationURL()"
         no-caps
         color="primary"
       />
 
       <q-btn
         label="Get profile data"
+        @click="getAuthenticatedProfileData()"
+        no-caps
+        color="primary"
+      />
+
+      <q-btn
+        label="Get profile records"
         @click="getProfileRecords()"
         no-caps
         color="primary"
@@ -48,69 +55,11 @@
 </template>
 
 <script setup lang="ts">
-import { useDefinitionsStore } from 'src/stores/definitions-store'
-import { useGameStore } from 'src/stores/game-store'
-import { useUserStore } from 'src/stores/user-store'
-import * as api from 'src/utils/api'
-
-const definitionsStore  = useDefinitionsStore()
-const gameStore = useGameStore()
-const userStore = useUserStore()
-
-const authUrl = api.authorizationURL()
-
-const getProfileData = async (
-  components = [100, 200, 201, 900],
-  membershipId?: string,
-  membershipType = 3,
-  accessToken?: string
-) => {
-  return await api.getDestinyProfileData(
-    components,
-    membershipId || userStore.primaryMembershipId,
-    membershipType || userStore.destinyMemberships.find(
-      m => m.membershipId === userStore.primaryMembershipId
-    ).membershipType,
-    accessToken || userStore.accessToken
-  )
-}
-
-const getProfileRecords = async () => {
-  if (!userStore.membershipId) return
-  const profile = await getProfileData()
-  console.log(profile)
-
-  const records = profile?.profileRecords.data?.records
-  if (!records) return
-
-  userStore.records = []
-
-  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphs).flat()
-
-  for (const key of Object.keys(records)) {
-    const record = records[Number(key)]
-
-    const triumph = triumphList.find(triumph => triumph.hash === Number(key))
-    if (triumph) {
-      const definition = definitionsStore.recordDefinitions[key]
-      userStore.records.push({
-        name: definition.displayProperties.name,
-        description: definition.displayProperties.description,
-        icon: definition.displayProperties.icon,
-        hash: Number(key),
-        complete: (
-          record.objectives &&
-          !record.objectives.find(objective => !objective.complete)
-        ) ||
-        (
-          record.intervalObjectives &&
-          !record.intervalObjectives.find(objective => !objective.complete)
-        ),
-        objectives: record.objectives || record.intervalObjectives
-      })
-    }
-  }
-}
+import { authorizationURL } from 'src/utils/api'
+import {
+  getAuthenticatedProfileData,
+  getProfileRecords
+} from 'src/services/profile-service'
 </script>
 
 <style scoped lang="sass">
