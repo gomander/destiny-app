@@ -25,8 +25,6 @@
       />
     </div>
 
-    <router-view/>
-
     <TriumphsListSolo
       v-if="!groupId"
       :triumphs="currentRaidTriumphs"
@@ -34,6 +32,7 @@
 
     <TriumphsListGroup
       v-else
+      :title="currentRaid?.name"
       :triumphs="currentRaidTriumphs"
     />
   </q-page>

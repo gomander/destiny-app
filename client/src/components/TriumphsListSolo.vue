@@ -30,7 +30,7 @@ import { Triumph } from 'src/types/models'
 const userStore = useUserStore()
 
 interface Props {
-  triumphs: Triumph[] | undefined
+  triumphs: Triumph[] | null | undefined
 }
 
 const props = defineProps<Props>()

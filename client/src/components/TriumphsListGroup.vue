@@ -1,6 +1,6 @@
 <template>
   <q-table
-    title=""
+    :title="props.title"
     :columns="columns"
     :rows="rows"
     row-key="triumph"
@@ -20,7 +20,8 @@ import { PlayerTriumphs, Triumph } from 'src/types/models'
 import { QTableColumn } from 'quasar'
 
 interface Props {
-  triumphs: Triumph[] | undefined
+  title: string | undefined
+  triumphs: Triumph[] | null | undefined
 }
 
 const props = defineProps<Props>()
