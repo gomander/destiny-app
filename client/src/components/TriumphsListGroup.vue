@@ -1,50 +1,11 @@
 <template>
-  <div class="row">
-    <div class="col-shrink q-pr-sm">
-      <h3 class="col-header">
-        Triumphs
-      </h3>
-
-      <ul class="triumph-list q-mt-sm">
-        <li
-          v-for="triumph of props.triumphs"
-          class="triumph"
-        >
-          <h4 class="triumph-name">{{ triumph.name }}</h4>
-        </li>
-      </ul>
-    </div>
-
-    <div
-      v-for="player of players"
-      class="col-shrink q-px-sm"
-    >
-      <h3 class="col-header">
-        {{ player.name }}
-      </h3>
-
-      <ul class="triumph-list q-mt-sm">
-        <li
-          v-for="triumph of props.triumphs"
-          class="triumph"
-        >
-          <h4
-            v-if="player.triumphs.find(t => t.hash === triumph.hash && t.complete)"
-            class="triumph-data"
-          >
-            X
-          </h4>
-
-          <h4
-            v-else
-            class="triumph-data"
-          >
-            no
-          </h4>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <q-table
+    title=""
+    :columns="columns"
+    :rows="rows"
+    row-key="triumph"
+    :pagination="{ rowsPerPage: 0 }"
+  />
 </template>
 
 <script setup lang="ts">
@@ -56,12 +17,45 @@ import {
 } from 'src/services/profile-service'
 import { defaultGroup } from 'src/utils/triumph-util'
 import { PlayerTriumphs, Triumph } from 'src/types/models'
+import { QTableColumn } from 'quasar'
 
 interface Props {
   triumphs: Triumph[] | undefined
 }
 
 const props = defineProps<Props>()
+
+const columns = ref<QTableColumn[]>([
+  {
+    name: 'triumphs',
+    label: 'Triumphs',
+    field: 'triumph',
+    align: 'left'
+  }
+])
+const rows = ref<{ [k: string]: string }[]>([])
+
+const populateTableRows = () => {
+  if (!props.triumphs) return
+  rows.value = []
+  for (const triumph of props.triumphs) {
+    const row: { [k: string]: string } = {
+      triumph: triumph.name
+    }
+    for (const player of players.value) {
+      row[player.id] = player.triumphs.find(
+        t => t.hash === triumph.hash
+      )?.complete
+        ? 'X'
+        : ''
+    }
+    rows.value.push(row)
+  }
+}
+
+watch(props, () => {
+  populateTableRows()
+})
 
 const playerData = ref<DestinyProfileResponse[]>([])
 const players = ref<PlayerTriumphs[]>([])
@@ -70,13 +64,21 @@ watch(playerData, () => {
     if (!player?.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
     if (!player.profileRecords.data) return
     const userInfo = player.profile.data.userInfo
-    return {
+    const newPlayer = {
       name: userInfo.bungieGlobalDisplayName,
       discriminator: String(userInfo.bungieGlobalDisplayNameCode),
       id: userInfo.membershipId,
       triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
     }
+    columns.value.push({
+      name: newPlayer.id,
+      label: newPlayer.name,
+      field: newPlayer.id,
+      align: 'center'
+    })
+    return newPlayer
   }).filter(player => player) as PlayerTriumphs[]
+  populateTableRows()
 })
 
 onMounted(async () => {
