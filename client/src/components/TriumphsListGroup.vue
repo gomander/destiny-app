@@ -48,9 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
-import { getProfileData, mapProfileRecordsToTriumphs } from 'src/services/profile-service'
+import {
+  getProfileData,
+  mapProfileRecordsToTriumphs
+} from 'src/services/profile-service'
 import { defaultGroup } from 'src/utils/triumph-util'
 import { PlayerTriumphs, Triumph } from 'src/types/models'
 
@@ -63,23 +66,22 @@ const props = defineProps<Props>()
 const playerData = ref<DestinyProfileResponse[]>([])
 const players = ref<PlayerTriumphs[]>([])
 watch(playerData, () => {
-  const newPlayers = playerData.value.map(player => {
+  players.value = playerData.value.map(player => {
     if (!player?.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
     if (!player.profileRecords.data) return
+    const userInfo = player.profile.data.userInfo
     return {
-      name: player.profile.data.userInfo.bungieGlobalDisplayName,
-      discriminator: String(player.profile.data.userInfo.bungieGlobalDisplayNameCode),
-      id: player.profile.data.userInfo.membershipId,
+      name: userInfo.bungieGlobalDisplayName,
+      discriminator: String(userInfo.bungieGlobalDisplayNameCode),
+      id: userInfo.membershipId,
       triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
     }
   }).filter(player => player) as PlayerTriumphs[]
-  players.value = newPlayers
-  console.log(players.value)
 })
 
 onMounted(async () => {
   playerData.value = (await Promise.all(
-    defaultGroup.map(player => getProfileData([100, 900], player))
+    defaultGroup.map(player => getProfileData([100, 900], player.id, player.type))
   )).filter(data => data) as DestinyProfileResponse[]
 })
 </script>
