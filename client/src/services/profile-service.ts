@@ -1,6 +1,8 @@
+import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import { useGameStore } from 'src/stores/game-store'
 import { useUserStore } from 'src/stores/user-store'
+import { TriumphPlayer } from 'src/types/models'
 import * as api from 'src/utils/api'
 
 const definitionsStore = useDefinitionsStore()
@@ -44,20 +46,26 @@ export const getProfileRecords = async () => {
   const profile = await getAuthenticatedProfileData([900])
   console.log(profile)
 
-  const records = profile?.profileRecords.data?.records
+  const records = profile?.profileRecords.data
   if (!records) return
 
-  userStore.records = []
+  userStore.records = mapProfileRecordsToTriumphs(records)
+}
 
+export const mapProfileRecordsToTriumphs = (
+  profileRecords: DestinyProfileRecordsComponent
+) => {
+  const records = profileRecords.records
   const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphs).flat()
 
+  const triumphs: TriumphPlayer[] = []
   for (const key of Object.keys(records)) {
     const record = records[Number(key)]
 
     const triumph = triumphList.find(triumph => triumph.hash === Number(key))
     if (triumph) {
       const definition = definitionsStore.recordDefinitions[key]
-      userStore.records.push({
+      triumphs.push({
         name: definition.displayProperties.name,
         description: definition.displayProperties.description,
         icon: definition.displayProperties.icon,
@@ -74,4 +82,6 @@ export const getProfileRecords = async () => {
       })
     }
   }
+
+  return triumphs
 }

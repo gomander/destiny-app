@@ -1,11 +1,8 @@
 <template>
   <div class="row">
-    <div
-      v-for="player of players"
-      class="col"
-    >
+    <div class="col-shrink q-pr-sm">
       <h3 class="col-header">
-        {{ player?.profile.data?.userInfo.displayName }}
+        Triumphs
       </h3>
 
       <ul class="triumph-list q-mt-sm">
@@ -14,7 +11,36 @@
           class="triumph"
         >
           <h4 class="triumph-name">{{ triumph.name }}</h4>
-          <p class="triumph-description">{{ triumph.description }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <div
+      v-for="player of players"
+      class="col-shrink q-px-sm"
+    >
+      <h3 class="col-header">
+        {{ player.name }}
+      </h3>
+
+      <ul class="triumph-list q-mt-sm">
+        <li
+          v-for="triumph of props.triumphs"
+          class="triumph"
+        >
+          <h4
+            v-if="player.triumphs.find(t => t.hash === triumph.hash && t.complete)"
+            class="triumph-data"
+          >
+            X
+          </h4>
+
+          <h4
+            v-else
+            class="triumph-data"
+          >
+            no
+          </h4>
         </li>
       </ul>
     </div>
@@ -22,11 +48,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
-import { getProfileData } from 'src/services/profile-service'
+import { getProfileData, mapProfileRecordsToTriumphs } from 'src/services/profile-service'
 import { defaultGroup } from 'src/utils/triumph-util'
-import { Triumph } from 'src/types/models'
+import { PlayerTriumphs, Triumph } from 'src/types/models'
 
 interface Props {
   triumphs: Triumph[] | undefined
@@ -34,12 +60,27 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const players: (DestinyProfileResponse | undefined)[] = []
+const playerData = ref<DestinyProfileResponse[]>([])
+const players = ref<PlayerTriumphs[]>([])
+watch(playerData, () => {
+  const newPlayers = playerData.value.map(player => {
+    if (!player?.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
+    if (!player.profileRecords.data) return
+    return {
+      name: player.profile.data.userInfo.bungieGlobalDisplayName,
+      discriminator: String(player.profile.data.userInfo.bungieGlobalDisplayNameCode),
+      id: player.profile.data.userInfo.membershipId,
+      triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
+    }
+  }).filter(player => player) as PlayerTriumphs[]
+  players.value = newPlayers
+  console.log(players.value)
+})
 
 onMounted(async () => {
-  players.push(...await Promise.all(
+  playerData.value = (await Promise.all(
     defaultGroup.map(player => getProfileData([100, 900], player))
-  ))
+  )).filter(data => data) as DestinyProfileResponse[]
 })
 </script>
 
@@ -58,7 +99,7 @@ onMounted(async () => {
     align-items: center
     gap: 1em
 
-    &-name
+    &-name, &-data
       font-size: 100%
       line-height: 150%
       font-weight: bold
