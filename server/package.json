@@ -7,10 +7,13 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc",
+    "build": "tsc && npm run copy-package && npm run copy-docker && npm run copy-env",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "predeploy": "tsc",
-    "deploy": "deploy-prod.bat"
+    "predeploy": "npm run build",
+    "deploy": "deploy-prod.bat",
+    "copy-package": "copy package*.json dist || cp package*.json dist",
+    "copy-docker": "copy Dockerfile dist || cp Dockerfile dist",
+    "copy-env": "copy .env* dist || cp .env* dist"
   },
   "license": "ISC",
   "devDependencies": {
