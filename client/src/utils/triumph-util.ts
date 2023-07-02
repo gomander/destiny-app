@@ -8,7 +8,7 @@ export const filteredTriumphs = [
 
 export const defaultGroup = [
   { id: '4611686018473797104', type: 2 }, // Azireael
-  { id: '4611686018467821175', type: 3 }, // bemon
+  // { id: '4611686018467821175', type: 3 }, // bemon
   { id: '4611686018469503660', type: 3 }, // Goldfish
   { id: '4611686018505051845', type: 3 }, // Marquis
   { id: '4611686018505071972', type: 3 }, // Monster

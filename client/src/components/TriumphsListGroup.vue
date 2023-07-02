@@ -5,7 +5,34 @@
     :rows="rows"
     row-key="triumph"
     :pagination="{ rowsPerPage: 0 }"
-  />
+    separator="cell"
+    flat bordered
+  >
+    <template v-slot:body-cell-triumphs="props">
+      <q-td
+        :props="props"
+        class="triumph"
+      >
+        <div class="triumph-data">
+          <img
+            :src="'https://bungie.net' + props.value.icon"
+            width="32"
+            height="32"
+          />
+          <div>
+            <h3 class="triumph-name">{{ props.value.name }}</h3>
+            <p>{{ props.value.description }}</p>
+          </div>
+        </div>
+      </q-td>
+    </template>
+    <template v-slot:body-cell="props">
+      <q-td
+        :props="props"
+        :class="props.value ? 'complete' : 'incomplete'"
+      />
+    </template>
+  </q-table>
 </template>
 
 <script setup lang="ts">
@@ -21,7 +48,7 @@ import { QTableColumn } from 'quasar'
 
 interface Props {
   title: string | undefined
-  triumphs: Triumph[] | null | undefined
+  triumphs: Triumph[] | undefined
 }
 
 const props = defineProps<Props>()
@@ -31,24 +58,22 @@ const columns = ref<QTableColumn[]>([
     name: 'triumphs',
     label: 'Triumphs',
     field: 'triumph',
-    align: 'left'
+    align: 'left',
+    sortable: true,
+    sort: (a: Triumph, b: Triumph) => a.description > b.description ? 1 : -1
   }
 ])
-const rows = ref<{ [k: string]: string }[]>([])
+const rows = ref<{ [k: string]: Triumph | boolean }[]>([])
 
 const populateTableRows = () => {
   if (!props.triumphs) return
   rows.value = []
   for (const triumph of props.triumphs) {
-    const row: { [k: string]: string } = {
-      triumph: triumph.name
-    }
+    const row: { [k: string]: Triumph | boolean } = { triumph }
     for (const player of players.value) {
       row[player.id] = player.triumphs.find(
         t => t.hash === triumph.hash
-      )?.complete
-        ? 'X'
-        : ''
+      )?.complete || false
     }
     rows.value.push(row)
   }
@@ -91,24 +116,28 @@ onMounted(async () => {
 
 <style scoped lang="sass">
 .complete
-  color: $positive
+  background-color: $positive
+
+.incomplete
+  background-color: $negative
 
 .col-header
-  font-size: 125%
+  font-size: 150%
 
-.triumph-list
-  list-style-type: none
+.triumph
+  max-width: 30em
 
-  .triumph
+  &-data
     display: flex
     align-items: center
     gap: 1em
 
-    &-name, &-data
-      font-size: 100%
-      line-height: 150%
-      font-weight: bold
+  &-name
+    font-size: 100%
+    line-height: 150%
+    font-weight: bold
 
-    *
-      margin: 0
+  *
+    margin: 0
+    white-space: normal
 </style>
