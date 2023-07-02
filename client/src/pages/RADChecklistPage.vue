@@ -92,7 +92,7 @@ const groupId = computed(() => route.params.id as string)
 const groupInput = ref(groupId.value)
 watch(groupId, () => groupInput.value = groupId.value)
 
-const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
+const path = computed(() => `/rad-checklist/${groupId.value || ''}`)
 
 const currentRaid = computed(
   () => raids.find(raid => raid.id === route.path.split('/').at(-1))
@@ -105,11 +105,11 @@ const currentRaidTriumphs = computed(
 
 const goToGroup = (e: Event) => {
   e.preventDefault()
-  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value?.id}`)
+  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value?.id || ''}`)
 }
 
 const goToSolo = () => {
-  router.push(`/rad-checklist/${currentRaid.value?.id}`)
+  router.push(`/rad-checklist/${currentRaid.value?.id || ''}`)
 }
 </script>
 

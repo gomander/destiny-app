@@ -51,11 +51,7 @@
     </template>
 
     <template v-slot:no-data>
-      Loading players from Bungie...
-    </template>
-
-    <template v-slot:loading>
-      <q-inner-loading showing color="primary"/>
+      {{ title ? 'Fetching data from Bungie...' : 'Select a raid' }}
     </template>
   </q-table>
 </template>
@@ -116,18 +112,15 @@ const populateTableRows = () => {
     }
     rows.value.push(row)
   }
-  loading.value = false
 }
 
 watch(props, () => {
-  loading.value = true
   populateTableRows()
 })
 
 const playerData = ref<DestinyProfileResponse[]>([])
 const players = ref<PlayerTriumphs[]>([])
 watch(playerData, () => {
-  loading.value = true
   players.value = playerData.value.map(player => {
     if (!player?.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
     if (!player.profileRecords.data) return
@@ -151,10 +144,10 @@ watch(playerData, () => {
 })
 
 onMounted(async () => {
-  loading.value = true
   playerData.value = (await Promise.all(
     defaultGroup.map(player => getProfileData([100, 900], player.id, player.type))
   )).filter(data => data) as DestinyProfileResponse[]
+  loading.value = false
 })
 </script>
 
