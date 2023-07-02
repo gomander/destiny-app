@@ -1,12 +1,8 @@
 <template>
-  <q-page class="q-pa-md q-gutter-y-md">
+  <q-page class="q-pa-md q-gutter-y-sm">
     <h1>Raid and Dungeon Checklist</h1>
 
-    <div v-if="groupId">
-      Group: {{ groupId }}
-    </div>
-
-    <div v-else>
+    <div v-if="!groupId">
       <q-btn
         label="Create group"
         no-caps
@@ -15,10 +11,37 @@
     </div>
 
     <div class="row q-gutter-sm">
+      <q-input
+        type="text"
+        label="Group"
+        v-model="groupInput"
+        dense filled
+      />
+
+      <q-btn
+        color="primary"
+        no-caps unelevated
+        :disable="!/\w\w\w\-\w\w\w/.test(groupInput)"
+        :to="`/rad-checklist/${groupInput}/${currentRaid?.id}`"
+      >
+        Go
+      </q-btn>
+
+      <q-btn
+        color="primary"
+        no-caps unelevated
+        :disable="!groupId"
+        :to="`/rad-checklist/${currentRaid?.id}`"
+      >
+        Solo
+      </q-btn>
+    </div>
+
+    <div class="row q-gutter-sm">
       <q-btn
         v-for="raid of raids"
         :label="raid.name"
-        no-caps
+        no-caps unelevated
         color="primary"
         :to="`${path}/${raid.id}`"
         :disable="route.path.includes(raid.id)"
@@ -39,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
@@ -58,8 +81,12 @@ const raids = [
   { name: 'Root of Nightmares', id: 'root-of-nightmares' },
 ]
 
-const groupId = route.params.id
-const path = `/rad-checklist${groupId ? `/${groupId}` : ''}`
+const groupId = computed(() => route.params.id as string)
+const groupInput = ref(groupId.value)
+watch(groupId, () => groupInput.value = groupId.value)
+
+const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
+
 const currentRaid = computed(
   () => raids.find(raid => raid.id === route.path.split('/').at(-1))
 )
