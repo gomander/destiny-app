@@ -3,9 +3,9 @@
     <h3 class="col-header">{{ userStore.bungieNetUser.uniqueName }}</h3>
     <ul class="triumph-list q-mt-sm">
       <li
-        v-for="triumph of props.triumphs"
+        v-for="triumph of triumphs"
         class="triumph"
-        :class="userStore.records.find(record => record.hash === triumph.hash)?.complete ? 'complete' : ''"
+        :class="getTriumphCompleted(triumph.hash)"
       >
         <img
           v-if="triumph.icon"
@@ -16,7 +16,7 @@
 
         <div>
           <h4 class="triumph-name">{{ triumph.name }}</h4>
-          <p class="triumph-description">{{ triumph.description }}</p>
+          <span class="triumph-description">{{ triumph.description }}</span>
         </div>
       </li>
     </ul>
@@ -29,11 +29,15 @@ import { Triumph } from 'src/types/models'
 
 const userStore = useUserStore()
 
-interface Props {
-  triumphs: Triumph[] | null | undefined
-}
+interface Props { triumphs: Triumph[] }
 
 const props = defineProps<Props>()
+
+const getTriumphCompleted = (hash: number) => {
+  return userStore.records.find(record => record.hash === hash)?.complete
+    ? 'complete'
+    : ''
+}
 </script>
 
 <style scoped lang="sass">
@@ -56,6 +60,6 @@ const props = defineProps<Props>()
       line-height: 150%
       font-weight: bold
 
-    *
-      margin: 0
+    &-description
+      white-space: normal
 </style>

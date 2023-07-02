@@ -85,8 +85,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 interface Props {
-  title: string | undefined
-  triumphs: Triumph[] | undefined
+  title: string
+  triumphs: Triumph[]
   groupId: string
 }
 
@@ -140,7 +140,7 @@ const playerData = ref<DestinyProfileResponse[]>([])
 const players = ref<PlayerTriumphs[]>([])
 watch(playerData, () => {
   players.value = playerData.value.map(player => {
-    if (!player?.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
+    if (!player.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
     if (!player.profileRecords.data) return
     const userInfo = player.profile.data.userInfo
     const newPlayer = {

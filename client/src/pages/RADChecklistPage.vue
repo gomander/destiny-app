@@ -65,7 +65,7 @@
 
     <TriumphsListGroup
       v-else
-      :title="currentRaid?.name"
+      :title="currentRaid.name"
       :triumphs="currentRaidTriumphs"
       :groupId="groupId"
     />
@@ -99,22 +99,23 @@ watch(groupId, () => groupInput.value = groupId.value)
 
 const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
 
-const currentRaid = computed(
-  () => raids.find(raid => raid.id === route.path.split('/').at(-1))
+const currentRaid = computed(() =>
+  raids.find(raid => raid.id === route.path.split('/').at(-1)) ||
+  { name: '', id: '' }
 )
 const currentRaidTriumphs = computed(
   () => gameStore.raidTriumphs.find(
-    entry => entry.name === currentRaid.value?.name
-  )?.triumphs
+    entry => entry.name === currentRaid.value.name
+  )?.triumphs || []
 )
 
 const goToGroup = (e: Event) => {
   e.preventDefault()
-  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value?.id || ''}`)
+  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value.id || ''}`)
 }
 
 const goToSolo = () => {
-  router.push(`/rad-checklist/${currentRaid.value?.id || ''}`)
+  router.push(`/rad-checklist/${currentRaid.value.id || ''}`)
 }
 </script>
 
