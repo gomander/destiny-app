@@ -173,3 +173,13 @@ export interface PlayerTriumphs {
   id: string
   triumphs: TriumphPlayer[]
 }
+
+interface BungieMember {
+  id: string
+  type: number
+}
+
+export interface Group {
+  creator: BungieMember
+  players: BungieMember[]
+}
