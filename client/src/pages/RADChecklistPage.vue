@@ -10,32 +10,38 @@
       />
     </div>
 
-    <div class="row q-gutter-sm">
+    <q-form
+      class="row q-gutter-sm"
+      @submit="goToGroup"
+      @reset="goToSolo"
+    >
       <q-input
+        class="group-input"
         type="text"
         label="Group"
+        maxlength="7"
         v-model="groupInput"
         dense filled
       />
 
       <q-btn
+        type="submit"
         color="primary"
         no-caps unelevated
         :disable="!/\w\w\w\-\w\w\w/.test(groupInput)"
-        :to="`/rad-checklist/${groupInput}/${currentRaid?.id}`"
       >
         Go
       </q-btn>
 
       <q-btn
+        type="reset"
         color="primary"
         no-caps unelevated
         :disable="!groupId"
-        :to="`/rad-checklist/${currentRaid?.id}`"
       >
         Solo
       </q-btn>
-    </div>
+    </q-form>
 
     <div class="row q-gutter-sm">
       <q-btn
@@ -63,12 +69,13 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 
 const route = useRoute()
+const router = useRouter()
 const gameStore = useGameStore()
 
 const raids = [
@@ -95,4 +102,18 @@ const currentRaidTriumphs = computed(
     entry => entry.name === currentRaid.value?.name
   )?.triumphs
 )
+
+const goToGroup = (e: Event) => {
+  e.preventDefault()
+  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value?.id}`)
+}
+
+const goToSolo = () => {
+  router.push(`/rad-checklist/${currentRaid.value?.id}`)
+}
 </script>
+
+<style scoped lang="sass">
+.group-input
+  max-width: 8em
+</style>
