@@ -12,6 +12,10 @@
 
     <q-form
       class="row q-gutter-sm"
+      autocorrect="off"
+      autocapitalize="off"
+      autocomplete="off"
+      spellcheck="false"
       @submit="goToGroup"
       @reset="goToSolo"
     >
@@ -63,6 +67,7 @@
       v-else
       :title="currentRaid?.name"
       :triumphs="currentRaidTriumphs"
+      :groupId="groupId"
     />
   </q-page>
 </template>
@@ -92,7 +97,7 @@ const groupId = computed(() => route.params.id as string)
 const groupInput = ref(groupId.value)
 watch(groupId, () => groupInput.value = groupId.value)
 
-const path = computed(() => `/rad-checklist/${groupId.value || ''}`)
+const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
 
 const currentRaid = computed(
   () => raids.find(raid => raid.id === route.path.split('/').at(-1))

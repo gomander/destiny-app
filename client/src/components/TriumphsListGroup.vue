@@ -63,13 +63,31 @@ import {
   getProfileData,
   mapProfileRecordsToTriumphs
 } from 'src/services/profile-service'
-import { defaultGroup } from 'src/utils/triumph-util'
 import { PlayerTriumphs, Triumph } from 'src/types/models'
 import { QTableColumn } from 'quasar'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
+import { initializeApp } from 'firebase/app'
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: 'AIzaSyAOhmSCBGqBQ_ZryxkOZHxbSi8Ru3301J8',
+  authDomain: 'destiny-app-23bc8.firebaseapp.com',
+  projectId: 'destiny-app-23bc8',
+  storageBucket: 'destiny-app-23bc8.appspot.com',
+  messagingSenderId: '1073531271884',
+  appId: '1:1073531271884:web:7ef08ace6c9cf02c75a069'
+}
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
 
 interface Props {
   title: string | undefined
   triumphs: Triumph[] | undefined
+  groupId: string
 }
 
 interface Row { [k: string]: Triumph | boolean }
@@ -144,22 +162,43 @@ watch(playerData, () => {
 })
 
 onMounted(async () => {
+  const group = await getGroup(props.groupId)
   playerData.value = (await Promise.all(
-    defaultGroup.map(player => getProfileData([100, 900], player.id, player.type))
+    group.players.map(player => getProfileData([100, 900], player.id, player.type))
   )).filter(data => data) as DestinyProfileResponse[]
   loading.value = false
 })
+
+interface BungieMember {
+  id: string
+  type: number
+}
+
+interface Group {
+  creator: BungieMember
+  players: BungieMember[]
+}
+
+const db = getFirestore(app)
+
+const getGroup = async (groupId: string): Promise<Group> => {
+  const docRef = doc(db, 'groups', groupId)
+  const docSnap = await getDoc(docRef)
+  return docSnap.data() as Group | undefined ||
+    {
+      creator: { id: 'INVALID ID', type: 0 },
+      players: []
+    }
+}
 </script>
 
 <style scoped lang="sass">
-.complete
+.complete, .incomplete
   font-size: 1.75em
-  color: mix($positive, white)
+  color: #FFF8
   background-color: $positive
 
 .incomplete
-  font-size: 1.75em
-  color: mix($negative, white)
   background-color: $negative
 
 .col-header
