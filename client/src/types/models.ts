@@ -177,6 +177,8 @@ export interface PlayerTriumphs {
 export interface BungieMember {
   id: string
   type: number
+  name: string
+  code: number
 }
 
 export interface Group {

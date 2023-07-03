@@ -27,6 +27,14 @@ onMounted(async () => {
   userStore.primaryMembershipType = membershipData.destinyMemberships.find(
     membership => membership.membershipId === userStore.primaryMembershipId
   )?.membershipType || membershipData.destinyMemberships[0].membershipType
+  userStore.name = membershipData.bungieNetUser.displayName
+  userStore.nameCode = membershipData.destinyMemberships[0].bungieGlobalDisplayNameCode || 0
+  userStore.bungieMember = {
+    id: userStore.primaryMembershipId,
+    type: userStore.primaryMembershipType,
+    name: userStore.name,
+    code: userStore.nameCode
+  }
   router.push({ path: '/' })
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md q-gutter-y-sm">
+  <q-page class="q-pa-md flex-col gap">
     <h1>Raid and Dungeon Checklist</h1>
 
     <create-group-form
@@ -13,7 +13,7 @@
       v-on:go-to-solo="goToSolo"
     />
 
-    <div class="row q-gutter-sm">
+    <div class="row gap-sm">
       <q-btn
         v-for="raid of raids"
         :label="raid.name"
