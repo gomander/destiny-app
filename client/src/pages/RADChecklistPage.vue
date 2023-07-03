@@ -5,8 +5,9 @@
     <div v-if="!groupId">
       <q-btn
         label="Create group"
-        no-caps
+        no-caps unelevated
         color="primary"
+        @click="createNewGroup"
       />
     </div>
 
@@ -78,6 +79,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
+import { createGroup } from 'src/utils/firebase'
 
 const route = useRoute()
 const router = useRouter()
@@ -116,6 +118,13 @@ const goToGroup = (e: Event) => {
 
 const goToSolo = () => {
   router.push(`/rad-checklist/${currentRaid.value.id || ''}`)
+}
+
+const createNewGroup = () => {
+  // createGroup({
+  //   creator: { id: '1111111111111111111', type: 0 },
+  //   players: []
+  // })
 }
 </script>
 
