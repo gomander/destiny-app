@@ -185,3 +185,15 @@ export interface Group {
   creator: BungieMember
   players: BungieMember[]
 }
+
+interface DarciApiError {
+  status: 'error'
+  data: { error: any }
+}
+
+interface DarciApiSuccess {
+  status: 'success'
+  data: any
+}
+
+export type DarciApiResponse = DarciApiError | DarciApiSuccess

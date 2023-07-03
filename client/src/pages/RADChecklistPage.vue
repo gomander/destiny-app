@@ -77,12 +77,13 @@ const currentRaidTriumphs = computed(
   )?.triumphs || []
 )
 
-const createNewGroup = (group: Group) => {
-  createGroup(group)
+const createNewGroup = async (group: Group) => {
+  const path = await createGroup(group)
+  goToGroup(path)
 }
 
-const goToGroup = (groupInput: string) => {
-  router.push(`/rad-checklist/${groupInput}/${currentRaid.value.id || ''}`)
+const goToGroup = (groupId: string) => {
+  router.push(`/rad-checklist/${groupId}/${currentRaid.value.id || ''}`)
 }
 
 const goToSolo = () => {

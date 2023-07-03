@@ -9,7 +9,7 @@ export const show = async (req: Request, res: Response) => {
     if (!data) {
       return res.status(404).send({
         status: 'error',
-        data: 'not found'
+        data: { error: 'not found' }
       })
     }
     res.send({
@@ -19,7 +19,7 @@ export const show = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).send({
       status: 'error',
-      data: error
+      data: { error }
     })
   }
 }
@@ -29,7 +29,7 @@ export const store = async (req: Request, res: Response) => {
 	if (!validationErrors.isEmpty()) {
 		return res.status(400).send({
 			status: 'error',
-			data: validationErrors.array()
+			data: { error: validationErrors.array() }
 		})
 	}
   try {
@@ -42,7 +42,7 @@ export const store = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).send({
       status: 'error',
-      data: error
+      data: { error }
     })
   }
 }

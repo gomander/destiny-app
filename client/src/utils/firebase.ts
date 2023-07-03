@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Group } from 'src/types/models'
+import { DarciApiResponse, Group } from 'src/types/models'
 
 export const getGroup = async (groupId: string): Promise<Group> => {
   const res = await axios.get<{ status: string, data: Group }>(
@@ -9,9 +9,9 @@ export const getGroup = async (groupId: string): Promise<Group> => {
 }
 
 export const createGroup = async (group: Group) => {
-  const res = await axios.post(
+  const res = await axios.post<DarciApiResponse>(
     `${process.env.DARCI_API_ROOT}groups`,
     group
   )
-  return res.data
+  return res.data.data.path
 }
