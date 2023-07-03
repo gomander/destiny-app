@@ -10,6 +10,7 @@ export const useUserStore = defineStore(
       bungieNetUser: {} as any,
       destinyMemberships: [] as any[],
       primaryMembershipId: '',
+      primaryMembershipType: 0,
       records: [] as TriumphPlayer[]
     }),
     persist: true
