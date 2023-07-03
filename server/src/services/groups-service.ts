@@ -10,7 +10,8 @@ export const getGroup = async (path: string) => {
 export const createGroup = async (group: CreateGroupData) => {
   const db = FirestoreDatabase()
   const path = await createUniquePath()
-  return await db.collection('groups').doc(path).set(group)
+  await db.collection('groups').doc(path).set(group)
+  return { path }
 }
 
 const createUniquePath = async () => {
