@@ -174,7 +174,7 @@ export interface PlayerTriumphs {
   triumphs: TriumphPlayer[]
 }
 
-interface BungieMember {
+export interface BungieMember {
   id: string
   type: number
 }

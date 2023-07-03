@@ -2,51 +2,16 @@
   <q-page class="q-pa-md q-gutter-y-sm">
     <h1>Raid and Dungeon Checklist</h1>
 
-    <div v-if="!groupId">
-      <q-btn
-        label="Create group"
-        no-caps unelevated
-        color="primary"
-        @click="createNewGroup"
-      />
-    </div>
+    <create-group-form
+      v-if="!groupId"
+      v-on:create-group="createNewGroup"
+    />
 
-    <q-form
-      class="row q-gutter-sm"
-      autocorrect="off"
-      autocapitalize="off"
-      autocomplete="off"
-      spellcheck="false"
-      @submit="goToGroup"
-      @reset="goToSolo"
-    >
-      <q-input
-        class="group-input"
-        type="text"
-        label="Group"
-        maxlength="7"
-        v-model="groupInput"
-        dense filled
-      />
-
-      <q-btn
-        type="submit"
-        color="primary"
-        no-caps unelevated
-        :disable="!/\w\w\w\-\w\w\w/.test(groupInput)"
-      >
-        Go
-      </q-btn>
-
-      <q-btn
-        type="reset"
-        color="primary"
-        no-caps unelevated
-        :disable="!groupId"
-      >
-        Solo
-      </q-btn>
-    </q-form>
+    <group-form
+      :groupId="groupId"
+      v-on:go-to-group="goToGroup"
+      v-on:go-to-solo="goToSolo"
+    />
 
     <div class="row q-gutter-sm">
       <q-btn
@@ -59,12 +24,12 @@
       />
     </div>
 
-    <TriumphsListSolo
+    <triumphs-list-solo
       v-if="!groupId"
       :triumphs="currentRaidTriumphs"
     />
 
-    <TriumphsListGroup
+    <triumphs-list-group
       v-else
       :title="currentRaid.name"
       :triumphs="currentRaidTriumphs"
@@ -74,12 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
+import CreateGroupForm from 'src/components/CreateGroupForm.vue'
+import GroupForm from 'src/components/GroupForm.vue'
 import { createGroup } from 'src/utils/firebase'
+import { Group } from 'src/types/models'
 
 const route = useRoute()
 const router = useRouter()
@@ -96,8 +64,6 @@ const raids = [
 ]
 
 const groupId = computed(() => route.params.id as string)
-const groupInput = ref(groupId.value)
-watch(groupId, () => groupInput.value = groupId.value)
 
 const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
 
@@ -111,20 +77,16 @@ const currentRaidTriumphs = computed(
   )?.triumphs || []
 )
 
-const goToGroup = (e: Event) => {
-  e.preventDefault()
-  router.push(`/rad-checklist/${groupInput.value}/${currentRaid.value.id || ''}`)
+const createNewGroup = (group: Group) => {
+  createGroup(group)
+}
+
+const goToGroup = (groupInput: string) => {
+  router.push(`/rad-checklist/${groupInput}/${currentRaid.value.id || ''}`)
 }
 
 const goToSolo = () => {
   router.push(`/rad-checklist/${currentRaid.value.id || ''}`)
-}
-
-const createNewGroup = () => {
-  // createGroup({
-  //   creator: { id: '1111111111111111111', type: 0 },
-  //   players: []
-  // })
 }
 </script>
 
