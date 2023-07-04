@@ -5,7 +5,10 @@ export const createGroupRules = [
     throwBadPlayerObject(creator)
     return true
   }),
-  body('players').isArray().bail().custom(players => {
+  body('players').isArray().bail().custom((players: any[]) => {
+    if (players.length < 2 || players.length > 9) {
+      throw 'players must be between 2 and 9'
+    }
     for (const player of players) {
       throwBadPlayerObject(player)
     }

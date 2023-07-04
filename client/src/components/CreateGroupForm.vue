@@ -40,7 +40,7 @@
         color="primary"
         no-caps unelevated
         @click="addPlayer"
-        :disable="!allPlayersValid"
+        :disable="!allPlayersValid || players.length > 8"
       >
         Add player
       </q-btn>
@@ -86,7 +86,12 @@ const formInvalid = computed(() => {
   const hasDuplicates = players.value.some(
     player => seen.size === seen.add(player.id).size
   )
-  return hasDuplicates || !allPlayersValid.value || players.value.length < 2
+  return (
+    hasDuplicates ||
+    !allPlayersValid.value ||
+    players.value.length < 2 ||
+    players.value.length > 9
+  )
 })
 
 const addPlayer = () => {
