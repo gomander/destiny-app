@@ -87,7 +87,8 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {
-        dark: 'auto'
+        dark: 'auto',
+        notify: { position: 'top', progress: true }
       },
 
       iconSet: 'fontawesome-v6', // Quasar icon set
@@ -101,7 +102,9 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Dialog', 'Loading', 'Notify', 'AppFullscreen'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

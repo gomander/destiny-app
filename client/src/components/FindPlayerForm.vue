@@ -40,6 +40,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { searchPlayer } from 'src/utils/api'
+import { showNotification } from 'src/utils/messenger'
 import { BungieMember } from 'src/types/models'
 
 interface Props { modelValue: BungieMember }
@@ -66,8 +67,8 @@ const disableSearch = computed(() =>
 const search = async (e: Event) => {
   e.preventDefault()
   if (disableSearch.value) return
-  const players = await searchPlayer(usernameInput.value)
-  if (!players.length) return
+  const players = await searchPlayer(usernameInput.value.trim())
+  if (!players.length) return showNotification('Player not found!')
   player.value = {
     id: players[0].membershipId,
     type: players[0].membershipType,
