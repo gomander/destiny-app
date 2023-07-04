@@ -4,7 +4,7 @@
 
     <div
       class="flex-col gap"
-      v-if="!showCreateGroupForm"
+      v-if="!groupId && !showCreateGroupForm"
     >
       <div class="flex gap-sm">
         <q-btn
@@ -20,7 +20,7 @@
       </div>
 
       <create-group-form
-        v-if="!groupId && showCreateGroupForm"
+        v-if="showCreateGroupForm"
         v-on:create-group="createNewGroup"
       />
     </div>
