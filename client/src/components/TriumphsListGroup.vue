@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, toRef, watch } from 'vue'
 import { QTableColumn } from 'quasar'
 import { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
 import {
@@ -72,21 +72,23 @@ interface Props {
   triumphs: Triumph[]
   groupId: string
 }
-
-interface Row { [k: string]: Triumph | boolean }
-
 const props = defineProps<Props>()
 
-const columns = ref<QTableColumn[]>([
-  {
+const groupId = toRef(props, 'groupId')
+
+const columns = ref<QTableColumn[]>([])
+const resetColumns = () => {
+  columns.value = [{
     name: 'triumphs',
     label: 'Triumphs',
     field: 'triumph',
     align: 'left',
     sortable: true,
     sort: (a: Triumph, b: Triumph) => a.description > b.description ? 1 : -1
-  }
-])
+  }]
+}
+resetColumns()
+interface Row { [k: string]: Triumph | boolean }
 const rows = ref<Row[]>([])
 const loading = ref(true)
 const filter = ref(null)
@@ -119,6 +121,13 @@ watch(props, () => {
   populateTableRows()
 })
 
+watch(groupId, async () => {
+  loading.value = true
+  resetColumns()
+  playerData.value = await fetchPlayerData()
+  loading.value = false
+})
+
 const playerData = ref<DestinyProfileResponse[]>([])
 const players = ref<PlayerTriumphs[]>([])
 watch(playerData, () => {
@@ -145,12 +154,16 @@ watch(playerData, () => {
 })
 
 onMounted(async () => {
-  const group = await getGroup(props.groupId)
-  playerData.value = (await Promise.all(
-    group.players.map(player => getProfileData([100, 900], player.id, player.type))
-  )).filter(data => data) as DestinyProfileResponse[]
+  playerData.value = await fetchPlayerData()
   loading.value = false
 })
+
+const fetchPlayerData = async () => {
+  const group = await getGroup(props.groupId)
+  return (await Promise.all(
+    group.players.map(player => getProfileData([100, 900], player.id, player.type))
+  )).filter(data => data) as DestinyProfileResponse[]
+}
 </script>
 
 <style scoped lang="sass">
