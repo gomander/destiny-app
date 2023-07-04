@@ -2,11 +2,11 @@
   <q-page class="q-pa-md flex-col gap">
     <h1>Raid and Dungeon Checklist</h1>
 
-    <div class="flex-col gap">
-      <div
-        class="flex gap-sm"
-        v-if="!showCreateGroupForm"
-      >
+    <div
+      class="flex-col gap"
+      v-if="!showCreateGroupForm"
+    >
+      <div class="flex gap-sm">
         <q-btn
           color="primary"
           no-caps unelevated
