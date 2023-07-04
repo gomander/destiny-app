@@ -5,17 +5,21 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from 'src/stores/user-store'
 import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from 'src/stores/auth-store'
+import { useUserStore } from 'src/stores/user-store'
 import * as api from 'src/utils/api'
 import { onMounted } from 'vue'
 import { UserMembershipData } from 'bungie-api-ts/user/interfaces'
 
+const authStore = useAuthStore()
 const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 
 onMounted(async () => {
+  if (route.query.state !== authStore.code) return
+
   const tokens = await api.getAccessTokenFromCode(route.query.code as string)
   userStore.accessToken = tokens.access_token
   userStore.membershipId = tokens.membership_id
@@ -35,6 +39,7 @@ onMounted(async () => {
     name: userStore.name,
     code: userStore.nameCode
   }
-  router.push({ path: '/' })
+
+  router.push({ path: authStore.location })
 })
 </script>
