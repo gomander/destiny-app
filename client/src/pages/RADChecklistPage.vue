@@ -47,6 +47,7 @@
 
     <triumphs-list-solo
       v-if="!groupId"
+      :title="currentRaid.name"
       :triumphs="currentRaidTriumphs"
     />
 
@@ -116,8 +117,3 @@ const goToSolo = () => {
 
 const showCreateGroupForm = ref(false)
 </script>
-
-<style scoped lang="sass">
-.group-input
-  max-width: 8em
-</style>
