@@ -2,10 +2,28 @@
   <q-page class="q-pa-md flex-col gap">
     <h1>Raid and Dungeon Checklist</h1>
 
-    <create-group-form
-      v-if="!groupId"
-      v-on:create-group="createNewGroup"
-    />
+    <div class="flex-col gap">
+      <div
+        class="flex gap-sm"
+        v-if="!showCreateGroupForm"
+      >
+        <q-btn
+          color="primary"
+          no-caps unelevated
+          @click="showCreateGroupForm = true"
+          :disable="!userStore.membershipId"
+        >
+          Create new group
+        </q-btn>
+
+        <authenticate-button v-if="!userStore.membershipId"/>
+      </div>
+
+      <create-group-form
+        v-if="!groupId && showCreateGroupForm"
+        v-on:create-group="createNewGroup"
+      />
+    </div>
 
     <group-form
       :groupId="groupId"
@@ -13,7 +31,7 @@
       v-on:go-to-solo="goToSolo"
     />
 
-    <div class="row gap-sm">
+    <div class="flex gap-sm">
       <q-btn
         v-for="raid of raids"
         :label="raid.name"
@@ -39,9 +57,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
+import { useUserStore } from 'src/stores/user-store'
+import AuthenticateButton from 'src/components/AuthenticateButton.vue'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import CreateGroupForm from 'src/components/CreateGroupForm.vue'
@@ -52,6 +72,7 @@ import { Group } from 'src/types/models'
 const route = useRoute()
 const router = useRouter()
 const gameStore = useGameStore()
+const userStore = useUserStore()
 
 const raids = [
   { name: 'Last Wish', id: 'last-wish' },
@@ -89,6 +110,8 @@ const goToGroup = (groupId: string) => {
 const goToSolo = () => {
   router.push(`/rad-checklist/${currentRaid.value.id || ''}`)
 }
+
+const showCreateGroupForm = ref(false)
 </script>
 
 <style scoped lang="sass">

@@ -25,12 +25,7 @@
     </p>
 
     <div class="row q-gutter-sm q-pb-md">
-      <q-btn
-        label="Authorize"
-        :href="authorizationURL()"
-        no-caps
-        color="primary"
-      />
+      <authenticate-button/>
 
       <q-btn
         label="Get profile data"
@@ -48,18 +43,19 @@
     </div>
 
     <p class="flavor-text">
-      These buttons do stuff but it's not used anywhere yet. For now just ignore
-      them and check out the other pages in the sidebar/hamburger menu.
+      It's necessary to authenticate with Bungie to create groups and use the
+      solo view on the raid and dungeon checklists page. To see your own
+      completion status, you must also get your profile records.
     </p>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { authorizationURL } from 'src/utils/api'
 import {
   getAuthenticatedProfileData,
   getProfileRecords
 } from 'src/services/profile-service'
+import AuthenticateButton from 'src/components/AuthenticateButton.vue'
 </script>
 
 <style scoped lang="sass">

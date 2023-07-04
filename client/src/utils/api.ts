@@ -2,11 +2,11 @@ import axios from 'axios'
 import { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
 import { UserInfoCard } from 'bungie-api-ts/user/interfaces'
 
-export const authorizationURL = () => {
+export const authorizationURL = (state: string) => {
   const queryParams = new URLSearchParams({
     client_id: BUNGIE_OAUTH_CLIENT_ID,
     response_type: 'code',
-    state: '123'
+    state
   })
   return `${BUNGIE_OAUTH_ROOT}?${queryParams}`
 }

@@ -1,23 +1,11 @@
 <template>
-  <q-btn
-    v-if="!showForm"
-    color="primary"
-    no-caps unelevated
-    @click="showForm = true"
-    :disable="!userStore.membershipId"
-  >
-    Create new group
-  </q-btn>
-
   <q-form
-    v-if="showForm"
     class="flex-col gap"
     autocorrect="off"
     autocapitalize="off"
     autocomplete="off"
     spellcheck="false"
     @submit="createGroup"
-    @reset=""
   >
     <ul class="player-list flex-col gap">
       <li
@@ -77,7 +65,6 @@ if (userStore.membershipId) {
   })
 }
 
-const showForm = ref(false)
 const allPlayersValid = computed(
   () => !players.value.find(player => !player.id)
 )
