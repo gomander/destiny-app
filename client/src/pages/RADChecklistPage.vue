@@ -3,10 +3,13 @@
     <h1>Raid and Dungeon Checklist</h1>
 
     <div
+      v-if="!groupId"
       class="flex-col gap"
-      v-if="!groupId && !showCreateGroupForm"
     >
-      <div class="flex gap-sm">
+      <div
+        v-if="!showCreateGroupForm"
+        class="flex gap-sm"
+      >
         <q-btn
           color="primary"
           no-caps unelevated
