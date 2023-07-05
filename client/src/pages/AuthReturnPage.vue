@@ -20,7 +20,6 @@ onMounted(async () => {
   if (route.query.state !== authStore.code) return
 
   const tokens = await api.getAccessTokenFromCode(route.query.code as string)
-  console.log(tokens)
   if (!tokens) return
   userStore.accessToken = tokens.access_token
   userStore.membershipId = tokens.membership_id

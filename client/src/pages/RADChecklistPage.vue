@@ -104,6 +104,7 @@ const currentRaidTriumphs = computed(
 
 const createNewGroup = async (group: Group) => {
   const path = await createGroup(group)
+  if (!path) return
   goToGroup(path)
 }
 

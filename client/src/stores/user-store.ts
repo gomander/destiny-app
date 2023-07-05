@@ -17,7 +17,7 @@ export const useUserStore = defineStore(
       records: [] as TriumphPlayer[],
       name: '',
       nameCode: 0,
-      bungieMember: { } as BungieMember
+      bungieMember: null as BungieMember | null
     }),
     persist: true
   }

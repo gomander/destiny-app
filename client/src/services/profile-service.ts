@@ -40,7 +40,6 @@ export const getProfileData = async (
 export const getProfileRecords = async () => {
   if (!userStore.membershipId) return
   const profile = await getAuthenticatedProfileData([900])
-  console.log(profile)
 
   const records = profile?.profileRecords.data
   if (!records) return

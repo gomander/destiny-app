@@ -25,6 +25,7 @@ const players = ref<BungieMember[]>([])
 
 const updatePlayers = async () => {
   const group = await getGroup(groupId.value)
+  if (!group) return
   players.value = group.players
 }
 

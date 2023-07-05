@@ -60,6 +60,7 @@ export const getDestinyProfileData = async (
   membershipType: number,
   accessToken?: string
 ) => {
+  if (!destinyMembershipId || !membershipType) return
   const headers: HeadersInit = { 'X-API-KEY': BUNGIE_API_KEY }
   if (accessToken) headers.Authorization = `Bearer ${accessToken}`
   try {

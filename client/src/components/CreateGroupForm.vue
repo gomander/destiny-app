@@ -95,6 +95,7 @@ const removePlayer = (player: BungieMember) => {
 }
 
 const createGroup = () => {
+  if (!userStore.bungieMember) return
   const group: Group = {
     creator: userStore.bungieMember,
     players: players.value.filter(player => player.id)

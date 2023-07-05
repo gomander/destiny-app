@@ -186,17 +186,17 @@ export interface Group {
   players: BungieMember[]
 }
 
-interface DarciApiError {
+export interface DarciApiError {
   status: 'error'
   data: { error: any }
 }
 
-interface DarciApiSuccess {
+export interface DarciApiSuccess<T> {
   status: 'success'
-  data: any
+  data: T
 }
 
-export type DarciApiResponse = DarciApiError | DarciApiSuccess
+export type DarciApiResponse<T> = DarciApiError | DarciApiSuccess<T>
 
 export interface BungieTokens {
   access_token: string
