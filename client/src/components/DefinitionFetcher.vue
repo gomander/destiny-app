@@ -1,22 +1,22 @@
 <template></template>
 
 <script setup lang="ts">
+import { useDefinitionsStore } from 'src/stores/definitions-store'
+import { useGameStore } from 'src/stores/game-store'
+import * as api from 'src/utils/api'
+import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
+import { filteredTriumphs } from 'src/utils/triumph-util'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
   DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
-import { useGameStore } from 'src/stores/game-store'
-import { useDefinitionsStore } from 'src/stores/definitions-store'
+import {
+  DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon
+} from 'src/types'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
   BungieWeaponStat, RaidTriumphCategories
-} from 'src/types/bungie'
-import * as api from 'src/utils/api'
-import {
-  DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon
-} from 'src/types/models'
-import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
-import { filteredTriumphs } from 'src/utils/triumph-util'
+} from 'src/types'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
 const gameStore = useGameStore()

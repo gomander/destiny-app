@@ -58,10 +58,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref, toRef, watch } from 'vue'
-import { QTableColumn } from 'quasar/dist/types/api/qtable'
-import { BungieMember, PlayerTriumphs, Triumph } from 'src/types/models'
-import { DestinyProfileResponse } from 'bungie-api-ts/destiny2/interfaces'
 import { getProfileData, mapProfileRecordsToTriumphs } from 'src/services/profile-service'
+import { QTableColumn } from 'quasar/dist/types/api/qtable'
+import { DestinyProfileResponse } from 'bungie-api-ts/destiny2/interfaces'
+import { BungieMember, PlayerTriumphs, Triumph } from 'src/types'
 
 interface Props {
   title: string

@@ -64,9 +64,9 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { AmmoType, Weapon, WeaponType } from 'src/types/models'
-import { getWeaponIconAndName, cleanUpFrameName } from 'src/utils/weapon-util'
 import { useGameStore } from 'src/stores/game-store'
+import { getWeaponIconAndName, cleanUpFrameName } from 'src/utils/weapon-util'
+import { AmmoType, Weapon, WeaponType } from 'src/types'
 
 const gameStore = useGameStore()
 

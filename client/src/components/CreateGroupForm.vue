@@ -49,7 +49,7 @@
 import { computed, ref } from 'vue'
 import { useUserStore } from 'src/stores/user-store'
 import FindPlayerForm from 'src/components/FindPlayerForm.vue'
-import { BungieMember, Group } from 'src/types/models'
+import { BungieMember, Group } from 'src/types'
 
 const emit = defineEmits(['createGroup'])
 

@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useUserStore } from 'src/stores/user-store'
-import { Triumph } from 'src/types/models'
 import TriumphsListTable from './TriumphsListTable.vue'
+import { Triumph } from 'src/types'
 
 const userStore = useUserStore()
 

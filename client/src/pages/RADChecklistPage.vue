@@ -65,13 +65,13 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import { useUserStore } from 'src/stores/user-store'
+import { createGroup } from 'src/utils/firebase'
 import AuthenticateButton from 'src/components/AuthenticateButton.vue'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import CreateGroupForm from 'src/components/CreateGroupForm.vue'
 import GroupForm from 'src/components/GroupForm.vue'
-import { createGroup } from 'src/utils/firebase'
-import { Group } from 'src/types/models'
+import { Group } from 'src/types'
 
 const route = useRoute()
 const router = useRouter()

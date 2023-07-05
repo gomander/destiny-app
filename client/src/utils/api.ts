@@ -3,7 +3,7 @@ import {
   DestinyManifest, DestinyProfileResponse, ServerResponse
 } from 'bungie-api-ts/destiny2'
 import { UserInfoCard, UserMembershipData } from 'bungie-api-ts/user/interfaces'
-import { BungieTokens } from 'src/types/models'
+import { BungieTokens } from 'src/types'
 
 export const authorizationURL = (state: string) => {
   const queryParams = new URLSearchParams({

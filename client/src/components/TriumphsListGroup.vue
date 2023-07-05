@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { onMounted, ref, toRef, watch } from 'vue'
 import { getGroup } from 'src/utils/firebase'
-import { BungieMember, Triumph } from 'src/types/models'
 import TriumphsListTable from './TriumphsListTable.vue'
+import { BungieMember, Triumph } from 'src/types'
 
 interface Props {
   title: string

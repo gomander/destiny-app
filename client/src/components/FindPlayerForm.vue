@@ -41,7 +41,7 @@
 import { computed, ref } from 'vue'
 import { searchPlayer } from 'src/utils/api'
 import { showNotification } from 'src/utils/messenger'
-import { BungieMember } from 'src/types/models'
+import { BungieMember } from 'src/types'
 
 interface Props { modelValue: BungieMember }
 const props = defineProps<Props>()

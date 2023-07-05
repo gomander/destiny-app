@@ -192,7 +192,7 @@ import { computed, ref, watch } from 'vue'
 import { useGameStore } from 'src/stores/game-store'
 import {
   DamageTypeEnum, GameMode, WeaponSlot, WeaponStats, WeaponType
-} from 'src/types/models'
+} from 'src/types'
 
 const gameStore = useGameStore()
 
