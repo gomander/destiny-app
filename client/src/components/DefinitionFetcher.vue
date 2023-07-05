@@ -39,6 +39,8 @@ getManifest().then(async () => {
 
 const getDamageTypeDefinitions = async () => {
   if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
+  if (!definitionsStore.manifest) await getManifest()
+  if (!definitionsStore.manifest) return
   const damageTypes = await api.getDestinyManifestDefinition<DestinyDamageTypeDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
   )
@@ -96,7 +98,8 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
 }
 
 const getInventoryItemDefinitions = async () => {
-  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  if (!definitionsStore.manifest) await getManifest()
+  if (!definitionsStore.manifest) return
   const items = await api.getDestinyManifestDefinition<DestinyInventoryItemDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
   )
@@ -192,7 +195,8 @@ const getInventoryItemDefinitions = async () => {
 }
 
 const getPresentationNodeDefinitions = async () => {
-  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  if (!definitionsStore.manifest) await getManifest()
+  if (!definitionsStore.manifest) return
   const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
   )
@@ -217,7 +221,8 @@ const getPresentationNodeDefinitions = async () => {
 }
 
 const getRecordDefinitions = async () => {
-  if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
+  if (!definitionsStore.manifest) await getManifest()
+  if (!definitionsStore.manifest) return
   const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
   )

@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
     state: () => ({
       accessToken: '',
       membershipId: '',
-      bungieNetUser: {} as GeneralUser,
+      bungieNetUser: null as GeneralUser | null,
       destinyMemberships: [] as GroupUserInfoCard[],
       primaryMembershipId: '',
       primaryMembershipType: 0 as BungieMembershipType,

@@ -8,7 +8,7 @@ export const useDefinitionsStore = defineStore(
   'definitions',
   {
     state: () => ({
-      manifest: {} as DestinyManifest,
+      manifest: null as DestinyManifest | null,
       damageTypeDefinitions: {} as { [k: string]: DestinyDamageTypeDefinition },
       weaponDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
       weaponFrameDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
