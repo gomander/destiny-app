@@ -2,8 +2,8 @@ import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import { useGameStore } from 'src/stores/game-store'
 import { useUserStore } from 'src/stores/user-store'
-import { TriumphPlayer } from 'src/types/models'
 import * as api from 'src/utils/api'
+import { TriumphPlayer } from 'src/types/models'
 
 const definitionsStore = useDefinitionsStore()
 const gameStore = useGameStore()
@@ -12,32 +12,28 @@ const userStore = useUserStore()
 export const getAuthenticatedProfileData = async (
   components = [100, 200, 201, 900],
   membershipId?: string,
-  membershipType = 3,
+  membershipType?: number,
   accessToken?: string
 ) => {
+  membershipId = membershipId || userStore.primaryMembershipId
+  membershipType = membershipType || userStore.destinyMemberships.find(
+    m => m.membershipId === userStore.primaryMembershipId
+  )?.membershipType
+  accessToken = accessToken || userStore.accessToken
+  if (!(membershipId && membershipType)) return
   return await api.getDestinyProfileData(
-    components,
-    membershipId || userStore.primaryMembershipId,
-    membershipType || userStore.destinyMemberships.find(
-      m => m.membershipId === userStore.primaryMembershipId
-    ).membershipType,
-    accessToken || userStore.accessToken
+    components, membershipId, membershipType, accessToken
   )
 }
 
 export const getProfileData = async (
   components = [100, 200, 201, 900],
-  membershipId?: string,
-  membershipType = 3,
+  membershipId: string,
+  membershipType: number,
   accessToken?: string
 ) => {
   return await api.getDestinyProfileData(
-    components,
-    membershipId || userStore.primaryMembershipId,
-    membershipType || userStore.destinyMemberships.find(
-      m => m.membershipId === userStore.primaryMembershipId
-    ).membershipType,
-    accessToken
+    components, membershipId, membershipType, accessToken
   )
 }
 

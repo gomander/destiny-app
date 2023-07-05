@@ -2,7 +2,8 @@
 
 <script setup lang="ts">
 import {
-  DestinyInventoryItemDefinition, DestinyPresentationNodeDefinition, DestinyRecordDefinition
+  DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
+  DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
 import { useGameStore } from 'src/stores/game-store'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
@@ -22,8 +23,9 @@ const gameStore = useGameStore()
 const definitionsStore = useDefinitionsStore()
 
 const getManifest = async () => {
-  const res = await api.getDestinyManifest()
-  definitionsStore.manifest = res.Response
+  const manifest = await api.getDestinyManifest()
+  if (!manifest) return
+  definitionsStore.manifest = manifest
 }
 
 getManifest().then(async () => {
@@ -37,12 +39,13 @@ getManifest().then(async () => {
 
 const getDamageTypeDefinitions = async () => {
   if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
-  const res = await api.getDestinyManifestDefinition(
+  const damageTypes = await api.getDestinyManifestDefinition<DestinyDamageTypeDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
   )
-  for (const key in res) {
-    if (res[key].displayProperties.name === 'Raid') continue
-    definitionsStore.damageTypeDefinitions[key] = res[key]
+  for (const key of Object.keys(damageTypes)) {
+    const damageType = damageTypes[Number(key)]
+    if (damageType.displayProperties.name === 'Raid') continue
+    definitionsStore.damageTypeDefinitions[key] = damageType
   }
 }
 
@@ -94,9 +97,9 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
 
 const getInventoryItemDefinitions = async () => {
   if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
-  const items = await api.getDestinyManifestDefinition(
+  const items = await api.getDestinyManifestDefinition<DestinyInventoryItemDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
-  ) as { [n: number]: DestinyInventoryItemDefinition }
+  )
 
   const xpHashes = xpRewardTiers.map(tier => tier.hash)
 
@@ -153,7 +156,7 @@ const getInventoryItemDefinitions = async () => {
     const item = definitionsStore.bountyDefinitions[Number(key)]
     const xpHash = item.value.itemValue.find(entry => xpHashes.includes(entry.itemHash))?.itemHash
     const xp = xpRewardTiers.find(tier => tier.hash === xpHash)?.label
-    if (!(xp && xpHash)) continue
+    if (!xp || !xpHash) continue
     gameStore.bounties.push({
       name: item.displayProperties.name,
       icon: item.displayProperties.icon,
@@ -190,9 +193,9 @@ const getInventoryItemDefinitions = async () => {
 
 const getPresentationNodeDefinitions = async () => {
   if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
-  const nodes = await api.getDestinyManifestDefinition(
+  const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
-  ) as { [n: number]: DestinyPresentationNodeDefinition }
+  )
 
   gameStore.raidTriumphs = []
 
@@ -215,9 +218,9 @@ const getPresentationNodeDefinitions = async () => {
 
 const getRecordDefinitions = async () => {
   if (!definitionsStore.manifest.jsonWorldComponentContentPaths) await getManifest()
-  const records = await api.getDestinyManifestDefinition(
+  const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
-  ) as { [n: number]: DestinyRecordDefinition }
+  )
 
   const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphHashes).flat()
 

@@ -197,3 +197,8 @@ interface DarciApiSuccess {
 }
 
 export type DarciApiResponse = DarciApiError | DarciApiSuccess
+
+export interface BungieTokens {
+  access_token: string
+  membership_id: string
+}

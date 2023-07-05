@@ -5,12 +5,11 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from 'src/stores/auth-store'
 import { useUserStore } from 'src/stores/user-store'
 import * as api from 'src/utils/api'
-import { onMounted } from 'vue'
-import { UserMembershipData } from 'bungie-api-ts/user/interfaces'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
@@ -21,10 +20,12 @@ onMounted(async () => {
   if (route.query.state !== authStore.code) return
 
   const tokens = await api.getAccessTokenFromCode(route.query.code as string)
+  console.log(tokens)
+  if (!tokens) return
   userStore.accessToken = tokens.access_token
   userStore.membershipId = tokens.membership_id
-  const membershipResponse = await api.getMembershipData(userStore.accessToken)
-  const membershipData = membershipResponse.Response as UserMembershipData
+  const membershipData = await api.getMembershipData(userStore.accessToken)
+  if (!membershipData) return
   userStore.bungieNetUser = membershipData.bungieNetUser
   userStore.destinyMemberships = membershipData.destinyMemberships
   userStore.primaryMembershipId = membershipData.primaryMembershipId || membershipData.destinyMemberships[0].membershipId
