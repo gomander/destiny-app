@@ -3,13 +3,13 @@ import groups from './groups-router'
 
 const router = express.Router()
 
-router.get('/', (_req, res) => {
+router.get('/api', (_req, res) => {
 	res.send({
 		status: 'success',
     data: 'OK'
 	})
 })
 
-router.use('/groups', groups)
+router.use('/api/groups', groups)
 
 export default router

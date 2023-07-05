@@ -2,4 +2,4 @@ cd client
 call npm run build
 cd ..
 
-firebase deploy
+firebase deploy --only hosting
