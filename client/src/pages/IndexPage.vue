@@ -16,46 +16,18 @@
     </p>
 
     <p class="intro-text">
-      DARCI.gg is currently just a playground for me to explore the Bungie API
-      and visualize data in ways that I want to see, such as the weapon tables
-      and weapon rankings. For now it's all made purely out of my own interest.
-      It is not meant to be a product for anyone else, but if you find something
-      here interesting, great! This app is still in very early development and
-      most things are still only semi-functional.
+      This app is a playground for me to explore the Bungie API. It's not meant
+      for anyone else, but if you find something here interesting, great! It is
+      still in early development and most things are still only semi-functional.
     </p>
 
-    <div class="row q-gutter-sm q-pb-md">
-      <authenticate-button/>
-
-      <q-btn
-        label="Get profile data"
-        @click="getAuthenticatedProfileData()"
-        no-caps
-        color="primary"
-      />
-
-      <q-btn
-        label="Get profile records"
-        @click="getProfileRecords()"
-        no-caps
-        color="primary"
-      />
-    </div>
-
-    <p class="flavor-text">
-      It's necessary to authenticate with Bungie to create groups and use the
-      solo view on the raid and dungeon checklists page. To see your own
-      completion status, you must also get your profile records.
+    <p class="intro-text">
+      Check out the available tools from the left-hand menu!
     </p>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import {
-  getAuthenticatedProfileData,
-  getProfileRecords
-} from 'src/services/profile-service'
-import AuthenticateButton from 'src/components/AuthenticateButton.vue'
 </script>
 
 <style scoped lang="sass">

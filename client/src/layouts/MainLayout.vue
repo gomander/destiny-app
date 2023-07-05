@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <definition-fetcher/>
 
-    <q-header elevated>
+    <q-header unelevated>
       <q-toolbar>
         <q-btn
           flat
