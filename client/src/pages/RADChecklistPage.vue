@@ -4,10 +4,7 @@
 
     <div class="row q-col-gutter-md items-stretch">
       <div class="col-grow col-lg-6">
-        <q-card
-          v-if="!groupId"
-          flat
-        >
+        <q-card flat>
           <q-card-section class="flex-col gap">
             <div class="text-h6">Create a new group</div>
             <div class="flex-col gap">
@@ -120,6 +117,7 @@ const currentRaidTriumphs = computed(
 const createNewGroup = async (group: Group) => {
   const path = await createGroup(group)
   if (!path) return
+  showCreateGroupForm.value = false
   goToGroup(path)
 }
 
