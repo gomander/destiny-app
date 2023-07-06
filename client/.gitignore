@@ -33,4 +33,4 @@ yarn-error.log*
 *.sln
 
 *.env*
-!.env.example
+!.env.template

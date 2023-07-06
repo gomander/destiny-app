@@ -7,22 +7,22 @@ import { BungieTokens } from 'src/types'
 
 export const authorizationURL = (state: string) => {
   const queryParams = new URLSearchParams({
-    client_id: BUNGIE_OAUTH_CLIENT_ID,
+    client_id: BUNGIE_CLIENT_ID,
     response_type: 'code',
     state
   })
-  return `${BUNGIE_OAUTH_ROOT}?${queryParams}`
+  return `${BUNGIE_OAUTH}?${queryParams}`
 }
 
 export const getAccessTokenFromCode = async (code: string) => {
   const body = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
-    client_id: BUNGIE_OAUTH_CLIENT_ID
+    client_id: BUNGIE_CLIENT_ID
   })
   try {
     const res = await axios.post<BungieTokens>(
-      `${BUNGIE_API_ROOT}/app/oauth/token/`,
+      `${BUNGIE_API}/app/oauth/token/`,
       body,
       {
         headers: {
@@ -40,7 +40,7 @@ export const getAccessTokenFromCode = async (code: string) => {
 export const getMembershipData = async (accessToken: string) => {
   try {
     const res = await axios.get<ServerResponse<UserMembershipData>>(
-      `${BUNGIE_API_ROOT}/User/GetMembershipsForCurrentUser/`,
+      `${BUNGIE_API}/User/GetMembershipsForCurrentUser/`,
       {
         headers: {
           'X-API-KEY': BUNGIE_API_KEY,
@@ -65,7 +65,7 @@ export const getDestinyProfileData = async (
   if (accessToken) headers.Authorization = `Bearer ${accessToken}`
   try {
     const res = await axios.get<ServerResponse<DestinyProfileResponse>>(
-      `${BUNGIE_API_ROOT}/Destiny2/${membershipType}/Profile/${destinyMembershipId}?components=${components.join(',')}`,
+      `${BUNGIE_API}/Destiny2/${membershipType}/Profile/${destinyMembershipId}?components=${components.join(',')}`,
       { headers }
     )
     return res.data.Response
@@ -77,7 +77,7 @@ export const getDestinyProfileData = async (
 export const getDestinyManifest = async () => {
   try {
     const res = await axios.get<ServerResponse<DestinyManifest>>(
-      `${BUNGIE_API_ROOT}/Destiny2/Manifest/`,
+      `${BUNGIE_API}/Destiny2/Manifest/`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
     return res.data.Response
@@ -88,7 +88,7 @@ export const getDestinyManifest = async () => {
 
 export const getDestinyManifestDefinition = async <T>(path: string) => {
   try {
-    const res = await axios.get<{ [key: number]: T }>(`${BUNGIE_WEBSITE}${path}`)
+    const res = await axios.get<{ [key: number]: T }>(`${BUNGIE}${path}`)
     return res.data
   } catch (error) {
     console.error(error)
@@ -100,7 +100,7 @@ export const searchPlayer = async (query: string) => {
   query = query.replace('#', '%23')
   try {
     const res = await axios.get<ServerResponse<UserInfoCard[]>>(
-      `${BUNGIE_API_ROOT}/Destiny2/SearchDestinyPlayer/-1/${query}`,
+      `${BUNGIE_API}/Destiny2/SearchDestinyPlayer/-1/${query}`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
     return res.data.Response
@@ -111,7 +111,7 @@ export const searchPlayer = async (query: string) => {
 }
 
 const BUNGIE_API_KEY = process.env.BUNGIE_API_KEY!
-const BUNGIE_WEBSITE = 'https://www.bungie.net'
-const BUNGIE_API_ROOT = `${BUNGIE_WEBSITE}/Platform`
-const BUNGIE_OAUTH_CLIENT_ID = process.env.BUNGIE_OAUTH_CLIENT_ID!
-const BUNGIE_OAUTH_ROOT = 'https://www.bungie.net/en/OAuth/Authorize'
+const BUNGIE = 'https://www.bungie.net'
+const BUNGIE_API = `${BUNGIE}/Platform`
+const BUNGIE_CLIENT_ID = process.env.BUNGIE_CLIENT_ID!
+const BUNGIE_OAUTH = 'https://www.bungie.net/en/OAuth/Authorize'

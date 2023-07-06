@@ -5,7 +5,7 @@ import { DarciApiResponse, Group } from 'src/types'
 export const getGroup = async (groupId: string) => {
   try {
     const res = await axios.get<DarciApiResponse<Group>>(
-      `${process.env.DARCI_API_ROOT}groups/${groupId}`
+      `${process.env.DARCI_API}/groups/${groupId}`
     )
     if (res.data.status !== 'success') throw res.data.data.error
     return res.data.data
@@ -18,7 +18,7 @@ export const getGroup = async (groupId: string) => {
 export const createGroup = async (group: Group) => {
   try {
     const res = await axios.post<DarciApiResponse<{ path: string }>>(
-      `${process.env.DARCI_API_ROOT}groups`,
+      `${process.env.DARCI_API}/groups`,
       group
     )
     if (res.data.status !== 'success') throw res.data.data.error
