@@ -1,38 +1,53 @@
 <template>
   <q-page class="q-pa-md flex-col gap">
-    <h1>Raid and Dungeon Checklist</h1>
+    <h1>Raid Triumph Checklist</h1>
 
-    <div
-      v-if="!groupId"
-      class="flex-col gap"
-    >
-      <div
-        v-if="!showCreateGroupForm"
-        class="flex gap-sm"
-      >
-        <q-btn
-          color="primary"
-          no-caps unelevated
-          @click="showCreateGroupForm = true"
-          :disable="!userStore.membershipId"
+    <div class="row q-col-gutter-md items-stretch">
+      <div class="col-grow col-lg-6">
+        <q-card
+          v-if="!groupId"
+          flat
         >
-          Create new group
-        </q-btn>
+          <q-card-section class="flex-col gap">
+            <div class="text-h6">Create a new group</div>
+            <div class="flex-col gap">
+              <div
+                v-if="!showCreateGroupForm"
+                class="flex gap-sm"
+              >
+                <q-btn
+                  color="primary"
+                  no-caps unelevated
+                  @click="showCreateGroupForm = true"
+                  :disable="!userStore.membershipId"
+                >
+                  Create new group
+                </q-btn>
 
-        <authenticate-button v-if="!userStore.membershipId"/>
+                <authenticate-button v-if="!userStore.membershipId"/>
+              </div>
+              <create-group-form
+                v-else
+                v-on:create-group="createNewGroup"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
       </div>
 
-      <create-group-form
-        v-if="showCreateGroupForm"
-        v-on:create-group="createNewGroup"
-      />
+      <div class="col-grow col-lg-6">
+        <q-card flat>
+          <q-card-section class="flex-col gap">
+            <div class="text-h6">View an existing group</div>
+            <group-form
+              :groupId="groupId"
+              v-on:go-to-group="goToGroup"
+              v-on:go-to-solo="goToSolo"
+            />
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
-
-    <group-form
-      :groupId="groupId"
-      v-on:go-to-group="goToGroup"
-      v-on:go-to-solo="goToSolo"
-    />
 
     <div class="flex gap-sm">
       <q-btn

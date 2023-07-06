@@ -1,6 +1,6 @@
 <template>
   <q-form
-    class="row q-gutter-sm"
+    class="flex gap-sm"
     autocorrect="off"
     autocapitalize="off"
     autocomplete="off"
