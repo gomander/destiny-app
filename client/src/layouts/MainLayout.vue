@@ -14,7 +14,7 @@
         />
 
         <q-toolbar-title>
-          DARCI
+          <span class="toolbar-title">DARCI</span> <span class="version">v{{ version }}</span>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -53,6 +53,8 @@ import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const userStore = useUserStore()
 
+const version = process.env.VERSION
+
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Home',
@@ -73,10 +75,10 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/unsunset-weapons'
   },
   {
-    title: 'Bounty Calculator',
-    caption: 'Bounties to XP and levels',
-    icon: 'fas fa-calculator',
-    link: '/bounty-calculator'
+    title: 'Raid Checklists',
+    caption: 'Visualize player progress',
+    icon: 'fas fa-table-cells',
+    link: '/rad-checklist'
   },
   {
     title: 'Weapon Ranking',
@@ -85,11 +87,11 @@ const essentialLinks: EssentialLinkProps[] = [
     link: '/weapon-ranking'
   },
   {
-    title: 'RAD Checklists',
-    caption: 'Visualize player progress',
-    icon: 'fas fa-table-cells',
-    link: '/rad-checklist'
-  }
+    title: 'Bounty Calculator',
+    caption: 'Bounties to XP and levels',
+    icon: 'fas fa-calculator',
+    link: '/bounty-calculator'
+  },
   // {
   //   title: 'Historical Power',
   //   caption: 'Levels by season',
@@ -104,3 +106,11 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
+
+<style scoped lang="sass">
+.toolbar-title
+  font-weight: 600
+.version
+  color: #fff8
+  font-size: 50%
+</style>
