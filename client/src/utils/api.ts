@@ -2,7 +2,9 @@ import axios from 'axios'
 import {
   DestinyManifest, DestinyProfileResponse, ServerResponse
 } from 'bungie-api-ts/destiny2'
-import { UserInfoCard, UserMembershipData } from 'bungie-api-ts/user/interfaces'
+import {
+  UserInfoCard, UserMembershipData, UserSearchResponse
+} from 'bungie-api-ts/user/interfaces'
 import { BungieTokens } from 'src/types'
 
 export const authorizationURL = (state: string) => {
@@ -97,13 +99,44 @@ export const getDestinyManifestDefinition = async <T>(path: string) => {
 }
 
 export const searchPlayer = async (query: string) => {
-  query = query.replace('#', '%23')
+  query = query.trim().replace('#', '%23')
   try {
     const res = await axios.get<ServerResponse<UserInfoCard[]>>(
       `${BUNGIE_API}/Destiny2/SearchDestinyPlayer/-1/${query}`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
     return res.data.Response
+  } catch (error) {
+    console.error(error)
+  }
+  return []
+}
+
+export const searchPlayersByName = async (query: string) => {
+  const [name, code] = query.trim().split('#')
+  const body = { displayName: name, displayNameCode: code }
+  try {
+    const res = await axios.post<ServerResponse<UserInfoCard[]>>(
+      `${BUNGIE_API}/Destiny2/SearchDestinyPlayerByBungieName/-1`,
+      body,
+      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+    )
+    return res.data.Response
+  } catch (error) {
+    console.error(error)
+  }
+  return []
+}
+
+export const searchUsersByName = async (query: string) => {
+  query = query.trim().replace('#', '%23')
+  try {
+    const res = await axios.post<ServerResponse<UserSearchResponse>>(
+      `${BUNGIE_API}/User/Search/GlobalName/0`,
+      { displayNamePrefix: query },
+      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+    )
+    return res.data.Response.searchResults
   } catch (error) {
     console.error(error)
   }

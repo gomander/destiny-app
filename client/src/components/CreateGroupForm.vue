@@ -1,6 +1,6 @@
 <template>
   <q-form
-    class="flex-col gap"
+    class="flex-col gap min-width"
     autocorrect="off"
     autocapitalize="off"
     autocomplete="off"
@@ -19,12 +19,17 @@
           no-caps unelevated
           @click="removePlayer(player)"
           icon="fas fa-x"
-        />
+        >
+          <q-tooltip>
+            Remove player
+          </q-tooltip>
+        </q-btn>
       </li>
     </ul>
 
     <div class="flex gap-sm">
       <q-btn
+        class="col"
         color="primary"
         no-caps unelevated
         @click="addPlayer"
@@ -34,6 +39,7 @@
       </q-btn>
 
       <q-btn
+        class="col"
         type="submit"
         color="primary"
         no-caps unelevated
@@ -55,7 +61,7 @@ const emit = defineEmits(['createGroup'])
 
 const userStore = useUserStore()
 
-const players = ref<BungieMember[]>([])
+const players = ref<(BungieMember | null)[]>([])
 if (userStore.membershipId) {
   players.value.push({
     id: userStore.primaryMembershipId,
@@ -66,12 +72,12 @@ if (userStore.membershipId) {
 }
 
 const allPlayersValid = computed(
-  () => !players.value.find(player => !player.id)
+  () => players.value.filter(player => player).length === players.value.length
 )
 const formInvalid = computed(() => {
   const seen = new Set()
   const hasDuplicates = players.value.some(
-    player => seen.size === seen.add(player.id).size
+    player => seen.size === seen.add(player?.id).size
   )
   return (
     hasDuplicates ||
@@ -82,15 +88,10 @@ const formInvalid = computed(() => {
 })
 
 const addPlayer = () => {
-  players.value.push({
-    id: '',
-    type: 0,
-    name: '',
-    code: 0
-  })
+  players.value.push(null)
 }
 
-const removePlayer = (player: BungieMember) => {
+const removePlayer = (player: BungieMember | null) => {
   players.value = players.value.filter(p => p !== player)
 }
 
@@ -98,7 +99,7 @@ const createGroup = () => {
   if (!userStore.bungieMember) return
   const group: Group = {
     creator: userStore.bungieMember,
-    players: players.value.filter(player => player.id)
+    players: players.value.filter(player => player) as BungieMember[]
   }
   emit('createGroup', group)
 }
@@ -107,4 +108,7 @@ const createGroup = () => {
 <style scoped lang="sass">
 .player-list
   list-style-type: none
+
+.min-width
+  width: fit-content
 </style>
