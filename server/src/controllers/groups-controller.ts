@@ -5,7 +5,7 @@ import { createGroup, getGroup } from '../services/groups-service'
 
 export const show = async (req: Request, res: Response) => {
   try {
-    const data = await getGroup(req.params.groupId)
+    const data = await getGroup(req.params.groupId.toLowerCase())
     if (!data) {
       return res.status(404).send({
         status: 'error',
