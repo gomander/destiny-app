@@ -1,3 +1,5 @@
+import { DestinyObjectiveProgress } from "bungie-api-ts/destiny2"
+
 export enum DamageTypeEnum {
   Kinetic = 'kinetic',
   Void = 'void',
@@ -157,7 +159,7 @@ export interface Triumph {
 
 export interface TriumphPlayer extends Triumph {
   complete: boolean
-  objectives: any
+  objectives: DestinyObjectiveProgress[]
 }
 
 export interface TriumphCategory {

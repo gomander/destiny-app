@@ -65,7 +65,6 @@ module.exports = configure(function (/* ctx */) {
       env: (() => {
         const env = require('dotenv-flow').config().parsed
         env.VERSION = require('./package.json').version
-        console.log(env.VERSION)
         return env
       })(),
       // rawDefine: {}

@@ -20,20 +20,47 @@
             height="32"
           />
           <div>
-            <h3 class="triumph-name">{{ value.name }}</h3>
+            <div class="flex gap-sm">
+              <h3 class="triumph-name">{{ value.name }}</h3>
+              <!-- <span
+                v-if="value.hash"
+                class="required-text"
+              >
+                (required)
+              </span> -->
+            </div>
             <span class="triumph-description">{{ value.description }}</span>
           </div>
         </div>
       </q-td>
     </template>
 
-    <template v-slot:body-cell="{ value }">
-      <q-td
-        class="text-center"
-        :class="value ? 'complete' : 'incomplete'"
-      >
-        <i v-if="value" class="fa-solid fa-check"/>
-        <i v-else class="fa-solid fa-xmark"/>
+    <template v-slot:body-cell="{ value }: { value: TriumphPlayer }">
+      <q-td class="no-padding full-height">
+        <div class="row full-height triumph-completion">
+          <div
+            v-for="objective in value.objectives"
+            class="col full-height objective"
+            :class="objective.complete ? 'complete' : 'incomplete'"
+          >
+            <div class="absolute-full"></div>
+          </div>
+
+          <div class="flex flex-center absolute-full completion-icon">
+            <i
+              v-if="value.complete"
+              class="fa-solid fa-check"
+            />
+            <i
+              v-else-if="!value.objectives.find(obj => obj.complete)"
+              class="fa-solid fa-xmark"
+            />
+            <span v-else>
+              {{ value.objectives.filter(obj => obj.complete).length }} /
+              {{ value.objectives.length }}
+            </span>
+          </div>
+        </div>
       </q-td>
     </template>
 
@@ -58,10 +85,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref, toRef, watch } from 'vue'
-import { getProfileData, mapProfileRecordsToTriumphs } from 'src/services/profile-service'
+import {
+  getProfileData, mapProfileRecordsToTriumphs
+} from 'src/services/profile-service'
 import { QTableColumn } from 'quasar/dist/types/api/qtable'
 import { DestinyProfileResponse } from 'bungie-api-ts/destiny2/interfaces'
-import { BungieMember, PlayerTriumphs, Triumph } from 'src/types'
+import { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from 'src/types'
 
 interface Props {
   title: string
@@ -82,7 +111,7 @@ const resetColumns = () => {
   }]
 }
 resetColumns()
-interface Row { [k: string]: Triumph | boolean }
+interface Row { [k: string]: Triumph | TriumphPlayer | false }
 const rows = ref<Row[]>([])
 const loading = ref(true)
 const filter = ref(null)
@@ -105,7 +134,7 @@ const populateTableRows = () => {
     for (const player of players.value) {
       row[player.id] = player.triumphs.find(
         t => t.hash === triumph.hash
-      )?.complete || false
+      ) || false
     }
     rows.value.push(row)
   }
@@ -141,7 +170,13 @@ watch(playerData, () => {
       label: newPlayer.name,
       field: newPlayer.id,
       align: 'center',
-      sortable: true
+      sortable: true,
+      sort: (a: TriumphPlayer, b: TriumphPlayer) => {
+        return (
+          a.objectives.filter(obj => obj.complete).length / a.objectives.length -
+          b.objectives.filter(obj => obj.complete).length / b.objectives.length
+        )
+      }
     })
     return newPlayer
   }).filter(player => player) as PlayerTriumphs[]
@@ -162,13 +197,18 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="sass">
-.complete, .incomplete
-  font-size: 1.75em
-  color: #FFF8
+.complete
   background-color: $positive
 
 .incomplete
   background-color: $negative
+
+.completion-icon
+  font-size: 1.5em
+  color: #FFF8
+
+.objective
+  border: 0.1em solid #FFF1
 
 .col-header
   font-size: 150%
@@ -188,4 +228,7 @@ onMounted(async () => {
 
   &-description
     white-space: normal
+
+.required-text
+  opacity: 50%
 </style>
