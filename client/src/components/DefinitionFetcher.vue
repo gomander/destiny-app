@@ -11,11 +11,9 @@ import {
   DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
 import {
-  DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon
-} from 'src/types'
-import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
-  BungieWeaponStat, RaidTriumphCategories
+  BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon,
+  RaidTitleTriumphCategories, RaidTriumphCategories
 } from 'src/types'
 import { xpRewardTiers } from 'src/data/xp-modifiers'
 
@@ -206,7 +204,17 @@ const getPresentationNodeDefinitions = async () => {
   for (const key of Object.keys(nodes)) {
     const node = nodes[Number(key)]
 
-    if (Object.values(RaidTriumphCategories).includes(node.hash)) {
+    if (Object.values(RaidTitleTriumphCategories).includes(node.hash)) {
+      definitionsStore.presentationNodeDefinitions[key] = node
+      gameStore.raidTriumphs.push({
+        name: node.displayProperties.name + ' Title',
+        hash: node.hash,
+        triumphHashes: node.children.records.map(
+          record => record.recordHash
+        ).filter(record => !filteredTriumphs.includes(record)),
+        triumphs: []
+      })
+    } else if (Object.values(RaidTriumphCategories).includes(node.hash)) {
       definitionsStore.presentationNodeDefinitions[key] = node
       gameStore.raidTriumphs.push({
         name: node.displayProperties.name,
@@ -235,12 +243,18 @@ const getRecordDefinitions = async () => {
     if (triumphList.includes(record.hash)) {
       definitionsStore.recordDefinitions[key] = record
 
-      const raidName = gameStore.raidTriumphs.find(entry => entry.triumphHashes.includes(record.hash))?.name
+      const required = !!gameStore.raidTriumphs.find(
+        entry => entry.triumphHashes.includes(record.hash) && entry.name.includes('Title')
+      ) || false
+      const raidName = gameStore.raidTriumphs.find(
+        entry => entry.triumphHashes.includes(record.hash) && (required === entry.name.includes('Title'))
+      )?.name
       gameStore.raidTriumphs.find(entry => entry.name === raidName)?.triumphs.push({
         name: record.displayProperties.name,
         description: record.displayProperties.description,
         icon: record.displayProperties.icon,
-        hash: record.hash
+        hash: record.hash,
+        required
       })
     }
   }

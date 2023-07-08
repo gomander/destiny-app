@@ -22,12 +22,12 @@
           <div>
             <div class="flex gap-sm">
               <h3 class="triumph-name">{{ value.name }}</h3>
-              <!-- <span
-                v-if="value.hash"
+              <span
+                v-if="!value.required"
                 class="required-text"
               >
-                (required)
-              </span> -->
+                (optional)
+              </span>
             </div>
             <span class="triumph-description">{{ value.description }}</span>
           </div>
@@ -230,5 +230,6 @@ onMounted(async () => {
     white-space: normal
 
 .required-text
+  font-weight: 300
   opacity: 50%
 </style>

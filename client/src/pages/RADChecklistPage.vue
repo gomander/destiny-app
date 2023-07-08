@@ -109,9 +109,9 @@ const currentRaid = computed(() =>
   { name: '', id: '' }
 )
 const currentRaidTriumphs = computed(
-  () => gameStore.raidTriumphs.find(
-    entry => entry.name === currentRaid.value.name
-  )?.triumphs || []
+  () => gameStore.raidTriumphs.filter(
+    entry => entry.name.includes(currentRaid.value.name)
+  ).flatMap(entry => entry.triumphs) || []
 )
 
 const createNewGroup = async (group: Group) => {

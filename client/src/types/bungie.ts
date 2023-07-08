@@ -78,17 +78,20 @@ export enum BungieWeaponStat {
 
 export enum RaidTriumphCategories {
   LastWish = 1525933460,
-  LastWishTitle = 1486062207,
   GardenOfSalvation = 615240848,
-  GardenOfSalvationTitle = 1827854727,
   DeepStoneCrypt = 1726708384,
-  DeepStoneCryptTitle = 2960810718,
   VaultOfGlass = 132375837,
-  VaultOfGlassTitle = 3734352323,
   VowOfTheDisciple = 3779087602,
-  VowOfTheDiscipleTitle = 2886738008,
   KingsFall = 3596566041,
-  KingsFallTitle = 2613142083,
   RootOfNightmares = 4114450368,
-  RootOfNightmaresTitle = 1976056830,
+}
+
+export enum RaidTitleTriumphCategories {
+  LastWish = 1486062207,
+  GardenOfSalvation = 1827854727,
+  DeepStoneCrypt = 2960810718,
+  VaultOfGlass = 3734352323,
+  VowOfTheDisciple = 2886738008,
+  KingsFall = 2613142083,
+  RootOfNightmares = 1976056830,
 }

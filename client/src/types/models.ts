@@ -155,6 +155,7 @@ export interface Triumph {
   description: string
   icon?: string
   hash: number
+  required: boolean
 }
 
 export interface TriumphPlayer extends Triumph {
