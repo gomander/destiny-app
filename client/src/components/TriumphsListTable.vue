@@ -12,7 +12,10 @@
     flat bordered
   >
     <template v-slot:body-cell-triumphs="{ value }: { value: Triumph }">
-      <q-td class="triumph">
+      <q-td
+        class="triumph"
+        @click="sortByTriumphCompletion(value)"
+      >
         <div class="triumph-data">
           <img
             :src="'https://bungie.net' + value.icon"
@@ -131,6 +134,26 @@ const filterMethod = (rows: readonly Row[], query: string) => {
   })
 }
 
+const sortByTriumphCompletion = (triumph: Triumph) => {
+  columns.value = columns.value.sort((a, b) => {
+    if (a.name === 'triumphs' || b.name === 'triumphs') return 0
+    const playerAObjectives = players.value.find(
+      player => player.id === a.name
+    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives
+    const playerBObjectives = players.value.find(
+      player => player.id === b.name
+    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives
+    if (!playerAObjectives || !playerBObjectives) return 0
+    const playerACompletion = playerAObjectives.filter(
+      obj => obj.complete
+    ).length / playerAObjectives.length
+    const playerBCompletion = playerBObjectives.filter(
+      obj => obj.complete
+    ).length / playerBObjectives.length
+    return playerACompletion - playerBCompletion
+  })
+}
+
 const populateTableRows = () => {
   if (!props.triumphs) return
   rows.value = []
@@ -220,6 +243,7 @@ onMounted(async () => {
 
 .triumph
   max-width: 30em
+  cursor: pointer
 
   &-data
     display: flex
