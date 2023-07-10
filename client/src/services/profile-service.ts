@@ -59,7 +59,8 @@ export const mapProfileRecordsToTriumphs = (
 
     const triumph = triumphList.find(triumph => triumph.hash === Number(key))
     if (triumph) {
-      const definition = definitionsStore.recordDefinitions[key]
+      const definition = definitionsStore.recordDefinitions.get(key)
+      if (!definition) continue
       triumphs.push({
         name: definition.displayProperties.name,
         description: definition.displayProperties.description,
@@ -73,7 +74,8 @@ export const mapProfileRecordsToTriumphs = (
           record.intervalObjectives &&
           !record.intervalObjectives.find(objective => !objective.complete)
         ),
-        objectives: record.objectives || record.intervalObjectives
+        objectives: record.objectives || record.intervalObjectives,
+        required: false
       })
     }
   }

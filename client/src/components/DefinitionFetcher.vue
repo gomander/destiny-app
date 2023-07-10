@@ -30,9 +30,10 @@ getManifest().then(async () => {
   await getDamageTypeDefinitions()
   await Promise.all([
     getInventoryItemDefinitions(),
+    getRecordDefinitions(),
     getPresentationNodeDefinitions()
   ])
-  await getRecordDefinitions()
+  fillTriumphCategories()
 })
 
 const getDamageTypeDefinitions = async () => {
@@ -199,32 +200,9 @@ const getPresentationNodeDefinitions = async () => {
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
   )
 
-  gameStore.raidTriumphs = []
-
   for (const key of Object.keys(nodes)) {
     const node = nodes[Number(key)]
-
-    if (Object.values(RaidTitleTriumphCategories).includes(node.hash)) {
-      definitionsStore.presentationNodeDefinitions[key] = node
-      gameStore.raidTriumphs.push({
-        name: node.displayProperties.name + ' Title',
-        hash: node.hash,
-        triumphHashes: node.children.records.map(
-          record => record.recordHash
-        ).filter(record => !filteredTriumphs.includes(record)),
-        triumphs: []
-      })
-    } else if (Object.values(RaidTriumphCategories).includes(node.hash)) {
-      definitionsStore.presentationNodeDefinitions[key] = node
-      gameStore.raidTriumphs.push({
-        name: node.displayProperties.name,
-        hash: node.hash,
-        triumphHashes: node.children.records.map(
-          record => record.recordHash
-        ).filter(record => !filteredTriumphs.includes(record)),
-        triumphs: []
-      })
-    }
+    definitionsStore.presentationNodeDefinitions.set(key, node)
   }
 }
 
@@ -235,28 +213,61 @@ const getRecordDefinitions = async () => {
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
   )
 
-  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphHashes).flat()
-
   for (const key of Object.keys(records)) {
     const record = records[Number(key)]
+    definitionsStore.recordDefinitions.set(key, record)
+  }
+}
 
-    if (triumphList.includes(record.hash)) {
-      definitionsStore.recordDefinitions[key] = record
-
-      const required = !!gameStore.raidTriumphs.find(
-        entry => entry.triumphHashes.includes(record.hash) && entry.name.includes('Title')
-      ) || false
-      const raidName = gameStore.raidTriumphs.find(
-        entry => entry.triumphHashes.includes(record.hash) && (required === entry.name.includes('Title'))
-      )?.name
-      gameStore.raidTriumphs.find(entry => entry.name === raidName)?.triumphs.push({
+const fillTriumphCategories = () => {
+  if (
+    !definitionsStore.presentationNodeDefinitions.size ||
+    !definitionsStore.recordDefinitions.size
+  ) return
+  const raidTriumphCategories = Object.values(RaidTriumphCategories)
+  const raidTitleTriumphCategories = Object.values(RaidTitleTriumphCategories)
+  gameStore.raidTriumphs = []
+  definitionsStore.presentationNodeDefinitions.forEach((node, hash) => {
+    if (raidTitleTriumphCategories.includes(Number(hash))) {
+      gameStore.raidTriumphs.push({
+        name: node.displayProperties.name,
+        hash: node.hash,
+        triumphHashes: node.children.records.map(
+          record => record.recordHash
+        ).filter(record => !filteredTriumphs.includes(record)),
+        triumphs: []
+      })
+    }
+  })
+  definitionsStore.presentationNodeDefinitions.forEach((node, hash) => {
+    if (raidTriumphCategories.includes(Number(hash))) {
+      const titleCategory = gameStore.raidTriumphs.find(
+        category => category.name === node.displayProperties.name
+      )
+      if (!titleCategory) return
+      titleCategory.triumphHashes = [...new Set([
+        titleCategory.triumphHashes,
+        node.children.records.map(
+          records => records.recordHash
+        ).filter(record => !filteredTriumphs.includes(record))
+      ].flat())]
+    }
+  })
+  gameStore.raidTriumphs.forEach(triumphCategory => {
+    triumphCategory.triumphHashes.forEach(hash => {
+      const record = definitionsStore.recordDefinitions.get(String(hash))
+      if (!record) return
+      const required = !!definitionsStore.presentationNodeDefinitions.get(
+        String(triumphCategory.hash)
+      )?.children.records.find(r => r.recordHash === record.hash)
+      triumphCategory.triumphs.push({
         name: record.displayProperties.name,
         description: record.displayProperties.description,
         icon: record.displayProperties.icon,
         hash: record.hash,
-        required
+        required: required
       })
-    }
-  }
+    })
+  })
 }
 </script>
