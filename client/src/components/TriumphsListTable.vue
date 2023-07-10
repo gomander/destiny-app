@@ -148,18 +148,16 @@ const sortByTriumphCompletion = (triumph: Triumph) => {
     if (a.name === 'triumphs' || b.name === 'triumphs') return 0
     const playerAObjectives = players.value.find(
       player => player.id === a.name
-    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives
+    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
+      obj => obj.complete
+    ).length
     const playerBObjectives = players.value.find(
       player => player.id === b.name
-    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives
+    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
+      obj => obj.complete
+    ).length
     if (!playerAObjectives || !playerBObjectives) return 0
-    const playerACompletion = playerAObjectives.filter(
-      obj => obj.complete
-    ).length / playerAObjectives.length
-    const playerBCompletion = playerBObjectives.filter(
-      obj => obj.complete
-    ).length / playerBObjectives.length
-    return playerACompletion - playerBCompletion
+    return playerAObjectives - playerBObjectives
   })
 }
 
