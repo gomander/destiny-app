@@ -80,6 +80,20 @@
       </q-input>
     </template>
 
+    <template v-slot:bottom>
+      <div class="row justify-between items-center full-width">
+        <q-checkbox
+          label="Include optional"
+          dense
+          v-model="includeOptional"
+        />
+
+        <div>
+          Showing {{ rows.length }} triumphs{{ players.length > 1 ? ` for ${players.length } players` : '' }}
+        </div>
+      </div>
+    </template>
+
     <template v-slot:no-data>
       {{ title ? 'Fetching data from Bungie...' : 'Select a raid' }}
     </template>
@@ -114,24 +128,19 @@ const resetColumns = () => {
   }]
 }
 resetColumns()
-interface Row { [k: string]: Triumph | TriumphPlayer | false }
+interface Row {
+  triumph: Triumph
+  [k: string]: Triumph | TriumphPlayer | false
+}
 const rows = ref<Row[]>([])
 const loading = ref(true)
 const filter = ref(null)
 const filterMethod = (rows: readonly Row[], query: string) => {
   const lowerQuery = query.toLowerCase()
-  if (query === 'required' || query === '!optional') {
-    return rows.filter(row => (row.triumph as Triumph).required)
-  } else if (query === 'optional' || query === '!required') {
-    return rows.filter(row => !(row.triumph as Triumph).required)
-  }
-  return rows.filter((row: Row) => {
-    const triumph = row.triumph as Triumph
-    return (
-      triumph.name.toLowerCase().includes(lowerQuery) ||
-      triumph.description.toLowerCase().includes(lowerQuery)
-    )
-  })
+  return rows.filter((row: Row) =>
+    row.triumph.name.toLowerCase().includes(lowerQuery) ||
+    row.triumph.description.toLowerCase().includes(lowerQuery)
+  )
 }
 
 const sortByTriumphCompletion = (triumph: Triumph) => {
@@ -154,10 +163,16 @@ const sortByTriumphCompletion = (triumph: Triumph) => {
   })
 }
 
+const includeOptional = ref(true)
+watch(includeOptional, () => {
+  populateTableRows()
+})
+
 const populateTableRows = () => {
   if (!props.triumphs) return
   rows.value = []
   for (const triumph of props.triumphs) {
+    if (!includeOptional.value && !triumph.required) continue
     const row: Row = { triumph }
     for (const player of players.value) {
       row[player.id] = player.triumphs.find(
@@ -166,6 +181,9 @@ const populateTableRows = () => {
     }
     rows.value.push(row)
   }
+  rows.value.sort((a, b) =>
+    Number(b.triumph.required) - Number(a.triumph.required)
+  )
 }
 
 watch(props, () => {
