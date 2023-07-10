@@ -117,6 +117,11 @@ const loading = ref(true)
 const filter = ref(null)
 const filterMethod = (rows: readonly Row[], query: string) => {
   const lowerQuery = query.toLowerCase()
+  if (query === 'required' || query === '!optional') {
+    return rows.filter(row => (row.triumph as Triumph).required)
+  } else if (query === 'optional' || query === '!required') {
+    return rows.filter(row => !(row.triumph as Triumph).required)
+  }
   return rows.filter((row: Row) => {
     const triumph = row.triumph as Triumph
     return (
