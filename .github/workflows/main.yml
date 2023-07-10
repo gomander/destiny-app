@@ -35,3 +35,30 @@ jobs:
           expires: 30d
           channelId: live
           projectId: destiny-app-23bc8
+  server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install NPM packages
+        run: cd server; npm i
+      - name: Create env file
+        run: echo '${{ secrets.ENV_FILE_PROD }}' > server/.env.prod
+      - name: Add COMMIT_HASH to env file
+        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> server/.env.prod
+      - name: Build server
+        run: cd server; npm run build
+      - name: Prepare authorization with Google Cloud
+        id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS_PROD }}'
+      - name: Set up Google Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v1'
+      - name: Deploy to production environment
+        run: cd server; ./deploy-prod.sh
