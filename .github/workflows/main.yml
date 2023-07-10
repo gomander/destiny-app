@@ -19,6 +19,8 @@ jobs:
         run: echo '${{ secrets.ENV_FILE_PROD }}' > client/.env.prod
       - name: Add COMMIT_HASH to env file
         run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> client/.env.prod
+      - name: Build client
+        run: cd client; npm run build
       - name: Prepare authorization with Google Cloud
         id: 'auth'
         uses: 'google-github-actions/auth@v1'
