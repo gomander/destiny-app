@@ -8,19 +8,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useUserStore } from 'src/stores/user-store'
-import TriumphsListTable from './TriumphsListTable.vue'
-import { Triumph } from 'src/types'
-
-const userStore = useUserStore()
+import TriumphsListTable from 'src/components/TriumphsListTable.vue'
+import { BungieMember, Triumph } from 'src/types'
 
 interface Props {
   title: string
   triumphs: Triumph[]
+  player: BungieMember | null
 }
 const props = defineProps<Props>()
 
-const players = computed(
-  () => userStore.bungieMember ? [userStore.bungieMember] : []
-)
+const players = computed(() => props.player ? [props.player] : [])
 </script>

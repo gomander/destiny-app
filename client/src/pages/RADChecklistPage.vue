@@ -3,8 +3,28 @@
     <h1>Raid Triumph Checklist</h1>
 
     <div class="row q-col-gutter-md items-stretch">
-      <div class="col-grow col-lg-6">
-        <q-card flat>
+      <div class="col-grow col-lg-4">
+        <q-card
+          class="full-height"
+          flat
+        >
+          <q-card-section class="flex-col gap">
+            <div class="text-h6">Lookup user</div>
+            <div class="flex gap">
+              <find-player-form v-model="player"/>
+              <authenticate-button
+                v-if="!userStore.membershipId"
+                tooltip="Authenticate to automatically see your own triumphs"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="col-grow col-lg-4">
+        <q-card
+          class="full-height"
+          flat
+        >
           <q-card-section class="flex-col gap">
             <div class="text-h6">Create a new group</div>
             <div class="flex-col gap">
@@ -19,9 +39,11 @@
                   :disable="!userStore.membershipId"
                 >
                   Create new group
-                </q-btn>
 
-                <authenticate-button v-if="!userStore.membershipId"/>
+                  <q-tooltip v-if="!userStore.membershipId">
+                    Authenticate with Bungie to create a group
+                  </q-tooltip>
+                </q-btn>
               </div>
               <create-group-form
                 v-else
@@ -32,8 +54,11 @@
         </q-card>
       </div>
 
-      <div class="col-grow col-lg-6">
-        <q-card flat>
+      <div class="col-grow col-lg-4">
+        <q-card
+          class="full-height"
+          flat
+        >
           <q-card-section class="flex-col gap">
             <div class="text-h6">View an existing group</div>
             <group-form
@@ -46,21 +71,24 @@
       </div>
     </div>
 
-    <div class="flex gap-sm">
-      <q-btn
-        v-for="raid of raids"
-        :label="raid.name"
-        no-caps unelevated
-        color="primary"
-        :to="`${path}/${raid.id}`"
-        :disable="route.path.includes(raid.id)"
-      />
-    </div>
+    <q-card flat>
+      <q-card-section class="flex gap-sm">
+        <q-btn
+          v-for="raid of raids"
+          :label="raid.name"
+          no-caps unelevated
+          color="primary"
+          :to="`${path}/${raid.id}`"
+          :disable="route.path.includes(raid.id)"
+        />
+      </q-card-section>
+    </q-card>
 
     <triumphs-list-solo
       v-if="!groupId"
       :title="currentRaid.name"
       :triumphs="currentRaidTriumphs"
+      :player="player"
     />
 
     <triumphs-list-group
@@ -73,17 +101,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from 'src/stores/game-store'
 import { useUserStore } from 'src/stores/user-store'
 import { createGroup } from 'src/utils/firebase'
 import AuthenticateButton from 'src/components/AuthenticateButton.vue'
-import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
-import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import CreateGroupForm from 'src/components/CreateGroupForm.vue'
+import FindPlayerForm from 'src/components/FindPlayerForm.vue'
 import GroupForm from 'src/components/GroupForm.vue'
-import { Group } from 'src/types'
+import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
+import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
+import { BungieMember, Group } from 'src/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -130,4 +159,7 @@ const goToSolo = () => {
 }
 
 const showCreateGroupForm = ref(false)
+
+const player = ref<BungieMember | null>(userStore.bungieMember)
+watch(player, () => goToSolo())
 </script>

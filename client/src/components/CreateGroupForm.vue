@@ -12,7 +12,10 @@
         v-for="(player, i) of players"
         class="row gap-sm"
       >
-        <find-player-form v-model="players[i]"/>
+        <find-player-form
+          v-model="players[i]"
+          disable-on-find
+        />
 
         <q-btn
           color="negative"

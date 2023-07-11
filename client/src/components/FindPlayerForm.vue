@@ -16,11 +16,15 @@
       maxlength="30"
       debounce="500"
       dense filled
-      :readonly="playerFound"
+      :readonly="inputFinalized"
       class="find-player-input"
     >
+      <q-tooltip>
+        Must be an exact match on the name or the name#code, case insensitive
+      </q-tooltip>
+
       <q-menu
-        v-if="!playerFound"
+        v-if="!inputFinalized"
         v-model="showMenu"
         fit auto-close no-focus
       >
@@ -41,7 +45,7 @@
     </q-input>
 
     <q-btn
-      v-if="!playerFound"
+      v-if="!inputFinalized"
       type="submit"
       color="primary"
       no-caps unelevated
@@ -54,7 +58,7 @@
     </q-btn>
 
     <q-btn
-      v-if="playerFound"
+      v-if="inputFinalized"
       color="positive"
       no-caps unelevated
       icon="fas fa-check"
@@ -73,7 +77,10 @@ import { searchPlayer, searchUsersByName } from 'src/utils/api'
 import { showNotification } from 'src/utils/messenger'
 import { BungieMember } from 'src/types'
 
-interface Props { modelValue: BungieMember | null }
+interface Props {
+  modelValue: BungieMember | null
+  disableOnFind?: boolean
+}
 const props = defineProps<Props>()
 const emit = defineEmits(['update:modelValue'])
 
@@ -94,10 +101,11 @@ watch(player, () => {
   showMenu.value = false
 })
 
+const inputFinalized = computed(() => playerFound.value && props.disableOnFind)
 const disableSearch = computed(() =>
   input.value.length < 3 ||
   !/^.+\#\d{1,4}$/.test(input.value) ||
-  playerFound.value
+  inputFinalized.value
 )
 
 const search = async (e: Event) => {

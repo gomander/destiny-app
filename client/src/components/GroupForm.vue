@@ -11,28 +11,26 @@
     <q-input
       class="group-input"
       type="text"
-      label="Group"
+      placeholder="Group ID"
       maxlength="7"
       v-model="groupInput"
       dense filled
-    />
+    >
+      <q-tooltip>
+        Group IDs are 7 characters long with a dash in the middle, like abc-123
+      </q-tooltip>
+    </q-input>
 
     <q-btn
       type="submit"
       color="primary"
       no-caps unelevated
       :disable="!/\w\w\w\-\w\w\w/.test(groupInput) || groupInput === groupId"
+      icon="fas fa-search"
     >
-      Go
-    </q-btn>
-
-    <q-btn
-      type="reset"
-      color="primary"
-      no-caps unelevated
-      :disable="!groupId"
-    >
-      Solo
+      <q-tooltip>
+        Search
+      </q-tooltip>
     </q-btn>
   </q-form>
 </template>

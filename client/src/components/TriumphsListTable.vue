@@ -9,7 +9,7 @@
     :loading="loading"
     :filter="filter"
     :filter-method="filterMethod"
-    flat bordered
+    flat
   >
     <template v-slot:body-cell-triumphs="{ value }: { value: Triumph }">
       <q-td
@@ -179,9 +179,6 @@ const populateTableRows = () => {
     }
     rows.value.push(row)
   }
-  rows.value.sort((a, b) =>
-    Number(b.triumph.required) - Number(a.triumph.required)
-  )
 }
 
 watch(props, () => {
