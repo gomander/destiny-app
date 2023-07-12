@@ -151,12 +151,13 @@ const sortByTriumphCompletion = (triumph: Triumph) => {
     )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
       obj => obj.complete
     ).length
+    if (playerAObjectives === undefined) return 0
     const playerBObjectives = players.value.find(
       player => player.id === b.name
     )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
       obj => obj.complete
     ).length
-    if (!playerAObjectives || !playerBObjectives) return 0
+    if (playerBObjectives === undefined) return 0
     return playerAObjectives - playerBObjectives
   })
 }
