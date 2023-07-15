@@ -82,11 +82,18 @@
 
     <template v-slot:bottom>
       <div class="row justify-between items-center full-width">
-        <q-checkbox
-          label="Include optional"
-          dense
-          v-model="includeOptional"
-        />
+        <div class="flex gap">
+          <q-checkbox
+            label="Include optional"
+            dense
+            v-model="includeOptional"
+          />
+          <q-checkbox
+            label="Hide completed"
+            dense
+            v-model="hideCompleted"
+          />
+        </div>
 
         <div>
           Showing {{ rows.length }} triumphs{{ players.length > 1 ? ` for ${players.length } players` : '' }}
@@ -167,6 +174,11 @@ watch(includeOptional, () => {
   populateTableRows()
 })
 
+const hideCompleted = ref(false)
+watch(hideCompleted, () => {
+  populateTableRows()
+})
+
 const populateTableRows = () => {
   if (!props.triumphs) return
   rows.value = []
@@ -177,6 +189,17 @@ const populateTableRows = () => {
       row[player.id] = player.triumphs.find(
         t => t.hash === triumph.hash
       ) || false
+    }
+    if (hideCompleted.value) {
+      const completedStatuses = Object.values(row).map(triumph =>
+        typeof triumph === 'object' && 'complete' in triumph
+          ? triumph.complete
+          : triumph
+      )
+      if (
+        !completedStatuses.includes(false) &&
+        !completedStatuses.includes(undefined)
+      ) continue
     }
     rows.value.push(row)
   }

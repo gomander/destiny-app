@@ -159,7 +159,7 @@ export interface Triumph {
 }
 
 export interface TriumphPlayer extends Triumph {
-  complete: boolean
+  complete: boolean | undefined
   objectives: DestinyObjectiveProgress[]
 }
 
