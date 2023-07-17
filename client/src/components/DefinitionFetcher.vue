@@ -127,7 +127,7 @@ const getInventoryItemDefinitions = async () => {
       item.itemType === 26 && // bounty
       item.value.itemValue.filter(entry => xpHashes.includes(entry.itemHash)) // XP, XP+, or XP++
     ) {
-      definitionsStore.bountyDefinitions[key] = item
+      definitionsStore.bountyDefinitions.set(key, item)
     }
   }
 
@@ -154,11 +154,10 @@ const getInventoryItemDefinitions = async () => {
 
   gameStore.bounties = []
 
-  for (const key in definitionsStore.bountyDefinitions) {
-    const item = definitionsStore.bountyDefinitions[Number(key)]
+  definitionsStore.bountyDefinitions.forEach(item => {
     const xpHash = item.value.itemValue.find(entry => xpHashes.includes(entry.itemHash))?.itemHash
     const xp = xpRewardTiers.find(tier => tier.hash === xpHash)?.label
-    if (!xp || !xpHash) continue
+    if (!xp || !xpHash) return
     gameStore.bounties.push({
       name: item.displayProperties.name,
       icon: item.displayProperties.icon,
@@ -166,7 +165,7 @@ const getInventoryItemDefinitions = async () => {
       xp,
       xpHash
     })
-  }
+  })
 
   gameStore.weaponFrames = []
 

@@ -12,7 +12,7 @@ export const useDefinitionsStore = defineStore(
       damageTypeDefinitions: {} as { [k: string]: DestinyDamageTypeDefinition },
       weaponDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
       weaponFrameDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
-      bountyDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
+      bountyDefinitions: new Map<string, DestinyInventoryItemDefinition>(),
       presentationNodeDefinitions: new Map<string, DestinyPresentationNodeDefinition>(),
       recordDefinitions: new Map<string, DestinyRecordDefinition>()
     }),
