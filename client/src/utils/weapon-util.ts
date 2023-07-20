@@ -144,6 +144,9 @@ const oldDupes = [
   4094657108, // Techeun Force
   686951703, // The Supremacy
   2545083870, // Apex Predator
+  // Solstice
+  1856262127, // Something New
+  2591111628, // Compass Rose
 ]
 
 export const isOldDuplicate = (hash: number) => {
