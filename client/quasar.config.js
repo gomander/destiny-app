@@ -73,7 +73,18 @@ module.exports = configure(function (/* ctx */) {
       polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        const version = require('./package.json').version
+        if (!viteConf.build.rollupOptions) {
+          viteConf.build.rollupOptions = {
+            output: {}
+          }
+        }
+        const output = viteConf.build.rollupOptions.output
+        output.entryFileNames = `assets/[name]-v${version}.js`
+        output.chunkFileNames = `assets/[name]-v${version}.js`
+        output.assetFileNames = `assets/[name]-v${version}.[ext]`
+      },
       // viteVuePluginOptions: {},
 
 
