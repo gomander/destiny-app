@@ -45,12 +45,15 @@
         class="col"
       />
 
-      <q-input
+      <q-select
         v-model="frame"
         filled
         dense
         label="Frame"
         class="col"
+        :options="frames"
+        option-label="name"
+        option-value="hash"
       />
     </div>
 
@@ -226,9 +229,11 @@ const gameMode = ref<GameMode>('pvp')
 const weaponType = ref<WeaponType>(WeaponType.AutoRifle)
 const damageType = ref<DamageTypeEnum | null>(null)
 const slot = ref<WeaponSlot | null>(null)
-const frame = ref<string | null>(null)
+const frame = ref<{ name: string, hash: number } | null>(null)
 const weightMode = ref<'default' | 'manual'>('default')
 const weights = ref<WeaponStats>({ ...PVP_STAT_MODIFIERS })
+
+watch(weaponType, () => frame.value = null)
 
 watch(gameMode, () => {
   if (weightMode.value === 'default') {
@@ -280,14 +285,26 @@ const damageTypes = [
   { label: 'Arc', value: DamageTypeEnum.Arc }
 ]
 
+const frames = computed(() => {
+  const frames = weapons.value.map(
+    weapon => ({ name: weapon.frame, hash: weapon.frameHash })
+  )
+  return Array.from(new Set(frames.map(frame => frame.hash))).map(
+    hash => frames.find(frame => hash === frame.hash)
+  )
+})
+
 const weapons = computed(() => gameStore.weapons.filter(weapon =>
   weapon.weaponType === weaponType.value &&
   (!damageType.value || weapon.damageType === damageType.value) &&
-  (!slot.value || weapon.slot === slot.value) &&
-  (!frame.value || weapon.frame === frame.value)
+  (!slot.value || weapon.slot === slot.value)
 ))
 
-const weaponsWithScores = computed(() => weapons.value.map(weapon => (
+const weaponsToDisplay = computed(() => weapons.value.filter(
+  weapon => !frame.value || weapon.frameHash === frame.value.hash)
+)
+
+const weaponsWithScores = computed(() => weaponsToDisplay.value.map(weapon => (
   { weapon, score: createScore(weapon.stats!, weights.value) }
 )).sort((a, b) => b.score - a.score))
 
