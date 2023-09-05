@@ -11,24 +11,24 @@
     "build": "cross-env NODE_ENV=prod quasar build"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.5",
-    "axios": "^1.4.0",
-    "dotenv-flow": "^3.2.0",
+    "@quasar/extras": "^1.16.6",
+    "axios": "^1.5.0",
+    "dotenv-flow": "^3.3.0",
     "pinia": "^2.1.6",
     "pinia-plugin-persistedstate": "^3.2.0",
-    "quasar": "^2.12.4",
+    "quasar": "^2.12.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.4.3",
-    "@types/dotenv-flow": "^3.2.0",
-    "@types/node": "^20.5.0",
+    "@quasar/app-vite": "^1.5.0",
+    "@types/dotenv-flow": "^3.3.1",
+    "@types/node": "^20.5.9",
     "@vue/devtools": "^6.5.0",
     "autoprefixer": "^10.4.15",
     "bungie-api-ts": "^5.0.0",
     "cross-env": "^7.0.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": "^20 || ^18 || ^16 || ^14.19",
