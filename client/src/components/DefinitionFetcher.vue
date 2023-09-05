@@ -51,7 +51,10 @@ const getDamageTypeDefinitions = async () => {
 }
 
 const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
-  const frameHash = swapUniqueFrames(item.sockets?.socketEntries[0].singleInitialItemHash!)
+  const frameHash = swapUniqueFrames(
+    item.sockets?.socketEntries[0].singleInitialItemHash!,
+    item.itemSubType
+  )
   const weapon: Weapon = {
     name: item.displayProperties.name,
     damageType: BungieDamageType[item.defaultDamageType] as DamageTypeEnum,
