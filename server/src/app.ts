@@ -1,5 +1,4 @@
-import * as env from 'dotenv-flow'
-env.config()
+import 'dotenv-flow/config'
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
