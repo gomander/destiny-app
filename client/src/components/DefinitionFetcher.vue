@@ -8,7 +8,7 @@ import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { filteredTriumphs } from 'src/utils/triumph-util'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
-  DestinyPresentationNodeDefinition, DestinyRecordDefinition
+  DestinyItemSubType, DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
@@ -69,19 +69,19 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
   }
   if (
     [
-      BungieItemSubType['auto rifle'],
-      BungieItemSubType['shotgun'],
-      BungieItemSubType['machine gun'],
-      BungieItemSubType['hand cannon'],
-      BungieItemSubType['fusion rifle'],
-      BungieItemSubType['sniper rifle'],
-      BungieItemSubType['pulse rifle'],
-      BungieItemSubType['scout rifle'],
-      BungieItemSubType['sidearm'],
-      BungieItemSubType['linear fusion rifle'],
-      BungieItemSubType['submachine gun'],
-      BungieItemSubType['trace rifle']
-    ].includes(item.itemSubType as unknown as BungieItemSubType)
+      DestinyItemSubType.AutoRifle,
+      DestinyItemSubType.Shotgun,
+      DestinyItemSubType.Machinegun,
+      DestinyItemSubType.HandCannon,
+      DestinyItemSubType.FusionRifle,
+      DestinyItemSubType.SniperRifle,
+      DestinyItemSubType.PulseRifle,
+      DestinyItemSubType.ScoutRifle,
+      DestinyItemSubType.Sidearm,
+      DestinyItemSubType.FusionRifleLine,
+      DestinyItemSubType.SubmachineGun,
+      DestinyItemSubType.TraceRifle
+    ].includes(item.itemSubType)
   ) {
     weapon.stats = {
       range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)!.value,
