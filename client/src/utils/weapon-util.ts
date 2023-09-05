@@ -69,6 +69,7 @@ export const swapUniqueFrames = (frameHash: number) => {
     case 1282254042: return 1294026524 // Together Forever -> Adaptive (Drang)
     case 2213377102: return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
     case 3054949324: return 3983457027 // Shot Package -> Aggressive (Felwinter's Lie)
+    case 3468089894: return 3983457027 // Aggressive -> Aggressive (Deadpan Delivery)
     case 216781713: return 3419274965 // Häkke Precision -> Precision (rocket launchers)
     case 31057037: return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
     case 3364911712: return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
@@ -125,6 +126,8 @@ const oldDupes = [
   2307365, // The Inquisitor (Adept)
   3624844116, // Unwavering Duty
   2759251821, // Unwavering Duty (Adept)
+  2351180975, // Igneous Hammer
+  2527666306, // Igneous Hammer (Adept)
   // Nightfall
   4281371574, 772231794, // Hung Jury SR4
   681067419, 4074251943, // Hung Jury SR4 (Adept)
