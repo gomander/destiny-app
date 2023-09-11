@@ -4,4 +4,5 @@ export const filteredTriumphs = [
   922211732, // Day at the Pyramid
   2579096068, // Regicide
   3025362184, // Horticulturist
+  1417273794, // Superior Swordplay
 ]
