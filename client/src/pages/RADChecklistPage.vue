@@ -127,6 +127,7 @@ const raids = [
   { name: 'Vow of the Disciple', id: 'vow-of-the-disciple' },
   { name: 'King\'s Fall', id: 'kings-fall' },
   { name: 'Root of Nightmares', id: 'root-of-nightmares' },
+  { name: 'Crota\'s End', id: 'crotas-end' }
 ]
 
 const groupId = computed(() => route.params.id as string)

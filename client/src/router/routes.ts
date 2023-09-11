@@ -62,6 +62,10 @@ const routes: RouteRecordRaw[] = [
             path: 'root-of-nightmares',
             component: () => import('components/rad-checklists/RootOfNightmares.vue')
           },
+          {
+            path: 'crotas-end',
+            component: () => import('components/rad-checklists/CrotasEnd.vue')
+          },
         ]
       }
     ]
