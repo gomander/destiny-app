@@ -9,7 +9,7 @@ import { BungieTokens } from 'src/types'
 
 export const authorizationURL = (state: string) => {
   const queryParams = new URLSearchParams({
-    client_id: BUNGIE_CLIENT_ID,
+    client_id: BUNGIE_OAUTH_CLIENT_ID,
     response_type: 'code',
     state
   })
@@ -20,7 +20,7 @@ export const getAccessTokenFromCode = async (code: string) => {
   const body = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
-    client_id: BUNGIE_CLIENT_ID
+    client_id: BUNGIE_OAUTH_CLIENT_ID
   })
   try {
     const res = await axios.post<BungieTokens>(
@@ -146,5 +146,5 @@ export const searchUsersByName = async (query: string) => {
 const BUNGIE_API_KEY = process.env.BUNGIE_API_KEY!
 const BUNGIE = 'https://www.bungie.net'
 const BUNGIE_API = `${BUNGIE}/Platform`
-const BUNGIE_CLIENT_ID = process.env.BUNGIE_CLIENT_ID!
+const BUNGIE_OAUTH_CLIENT_ID = process.env.BUNGIE_OAUTH_CLIENT_ID!
 const BUNGIE_OAUTH = 'https://www.bungie.net/en/OAuth/Authorize'
