@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "darci-gg",
     "public": "client/dist/spa",
     "ignore": [
       "firebase.json",
