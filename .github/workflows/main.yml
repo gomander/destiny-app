@@ -34,7 +34,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.GCP_CREDENTIALS_PROD }}'
           expires: 30d
           channelId: live
-          projectId: destiny-app-23bc8
+          projectId: darci-gg
   server:
     runs-on: ubuntu-latest
     timeout-minutes: 5

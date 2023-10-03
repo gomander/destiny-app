@@ -1,4 +1,4 @@
-set PROJECT_ID=destiny-app-23bc8
+set PROJECT_ID=darci-gg
 
 call gcloud builds submit dist --tag gcr.io/%PROJECT_ID%/api ^
   --project %PROJECT_ID%
