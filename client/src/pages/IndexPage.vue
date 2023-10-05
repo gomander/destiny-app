@@ -2,7 +2,10 @@
   <q-page class="q-pa-md">
     <h1>Welcome to DARCI.gg</h1>
 
-    <p class="flavor-text">
+    <p
+      class="flavor-text text-caption"
+      :class="$q.dark.isActive ? 'text-grey-4' : 'text-grey-8'"
+    >
       Thank you for using the Data Analysis, Reconnaissance, and Cooperative
       Intelligence device. You may call me Darci.
     </p>
@@ -36,5 +39,4 @@ p
   max-width: 60em
 .flavor-text
   font-size: 100%
-  color: darken(white, 20%)
 </style>

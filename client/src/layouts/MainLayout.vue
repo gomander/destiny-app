@@ -14,7 +14,7 @@
         />
 
         <q-toolbar-title>
-          <span class="toolbar-title">DARCI</span>
+          <span class="text-weight-bold">DARCI</span>
           <span class="version">v{{ version }}</span>
         </q-toolbar-title>
       </q-toolbar>
@@ -24,6 +24,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      :width="275"
     >
       <q-list>
         <q-item-label header>
@@ -120,10 +121,8 @@ function toggleLeftDrawer() {
 </script>
 
 <style scoped lang="sass">
-.toolbar-title
-  font-weight: 600
 .version
-  color: #fff8
-  font-size: 50%
+  opacity: 80%
+  font-size: 60%
   margin-left: 0.5em
 </style>

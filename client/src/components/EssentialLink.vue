@@ -4,7 +4,7 @@
     tag="router-link"
     :to="link"
     :active="exact ? $route.fullPath === link : $route.fullPath.includes(link)"
-    active-class="text-primary"
+    :active-class="$q.dark.isActive ? 'text-info' : 'text-primary'"
   >
     <q-item-section
       v-if="icon"
@@ -14,7 +14,7 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label class="text-weight-medium">{{ title }}</q-item-label>
       <q-item-label caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
