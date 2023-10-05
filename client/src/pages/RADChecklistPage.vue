@@ -113,30 +113,22 @@ import GroupForm from 'src/components/GroupForm.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
 import { BungieMember, Group } from 'src/types'
+import raids from 'src/data/raids'
 
 const route = useRoute()
 const router = useRouter()
 const gameStore = useGameStore()
 const userStore = useUserStore()
 
-const raids = [
-  { name: 'Last Wish', id: 'last-wish' },
-  { name: 'Garden of Salvation', id: 'garden-of-salvation' },
-  { name: 'Deep Stone Crypt', id: 'deep-stone-crypt' },
-  { name: 'Vault of Glass', id: 'vault-of-glass' },
-  { name: 'Vow of the Disciple', id: 'vow-of-the-disciple' },
-  { name: 'King\'s Fall', id: 'kings-fall' },
-  { name: 'Root of Nightmares', id: 'root-of-nightmares' },
-  { name: 'Crota\'s End', id: 'crotas-end' }
-]
-
 const groupId = computed(() => route.params.id as string)
+const raidId = computed(() => route.params.raid as string)
 
-const path = computed(() => `/rad-checklist${groupId.value ? `/${groupId.value}` : ''}`)
+const path = computed(() =>
+  `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`
+)
 
 const currentRaid = computed(() =>
-  raids.find(raid => raid.id === route.path.split('/').at(-1)) ||
-  { name: '', id: '' }
+  raids.find(raid => raid.id === raidId.value) || { name: '', id: '' }
 )
 const currentRaidTriumphs = computed(
   () => gameStore.raidTriumphs.filter(
@@ -152,11 +144,11 @@ const createNewGroup = async (group: Group) => {
 }
 
 const goToGroup = (groupId: string) => {
-  router.push(`/rad-checklist/${groupId}/${currentRaid.value.id || ''}`)
+  router.push(`/checklists/raids/${groupId}/${currentRaid.value.id}`)
 }
 
 const goToSolo = () => {
-  router.push(`/rad-checklist/${currentRaid.value.id || ''}`)
+  router.push(`/checklists/raids/${currentRaid.value.id}`)
 }
 
 const showCreateGroupForm = ref(false)

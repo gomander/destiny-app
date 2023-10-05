@@ -3,6 +3,8 @@
     clickable
     tag="router-link"
     :to="link"
+    :active="exact ? $route.fullPath === link : $route.fullPath.includes(link)"
+    active-class="text-primary"
   >
     <q-item-section
       v-if="icon"
@@ -20,14 +22,16 @@
 
 <script setup lang="ts">
 export interface EssentialLinkProps {
-  title: string;
-  caption?: string;
-  link?: string;
-  icon?: string;
+  title: string
+  caption?: string
+  link?: string
+  icon?: string
+  exact?: boolean
 }
 withDefaults(defineProps<EssentialLinkProps>(), {
   caption: '',
   link: '/',
   icon: '',
+  exact: false
 })
 </script>

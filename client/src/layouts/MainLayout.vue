@@ -25,9 +25,7 @@
       bordered
     >
       <q-list>
-        <q-item-label
-          header
-        >
+        <q-item-label header>
           {{ userStore.bungieNetUser?.uniqueName }}
         </q-item-label>
 
@@ -60,32 +58,46 @@ const essentialLinks: EssentialLinkProps[] = [
     title: 'Home',
     caption: '',
     icon: 'fas fa-house',
-    link: '/'
+    link: '/',
+    exact: true
+  },
+  {
+    title: 'Legendary Weapons',
+    caption: 'By type, frame, and element',
+    icon: 'fas fa-gun',
+    link: '/weapons',
+    exact: true
   },
   {
     title: 'Craftable Weapons',
     caption: 'By type, frame, and element',
     icon: 'fas fa-hammer',
-    link: '/craftable-weapons'
-  },
-  {
-    title: 'Unsunset Weapons',
-    caption: 'By type, frame, and element',
-    icon: 'fas fa-gun',
-    link: '/unsunset-weapons'
+    link: '/weapons/craftable'
   },
   {
     title: 'Raid Checklists',
     caption: 'Visualize player progress',
     icon: 'fas fa-table-cells',
-    link: '/rad-checklist'
+    link: '/checklists/raids'
   },
   {
     title: 'Weapon Ranking',
     caption: 'Judge base stats',
     icon: 'fas fa-ranking-star',
-    link: '/weapon-ranking'
+    link: '/weapons/ranking'
   },
+  // {
+  //   title: 'Exotic Weapons',
+  //   caption: 'Paywalls and ornaments',
+  //   icon: '',
+  //   link: '/weapons/exotic'
+  // },
+  // {
+  //   title: 'Exotic Armor',
+  //   caption: 'Paywalls and ornaments',
+  //   icon: 'fas fa-shield-halved',
+  //   link: '/armor'
+  // },
   {
     title: 'Bounty Calculator',
     caption: 'Bounties to XP and levels',
