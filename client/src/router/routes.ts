@@ -14,7 +14,11 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/UnsunsetWeaponsPage.vue')
+            component: () => import('pages/LegendaryWeaponsPage.vue')
+          },
+          {
+            path: 'legendary',
+            component: () => import('pages/LegendaryWeaponsPage.vue')
           },
           {
             path: 'craftable',
@@ -49,9 +53,6 @@ const routes: RouteRecordRaw[] = [
       }
     ],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

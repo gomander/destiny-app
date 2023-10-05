@@ -1,6 +1,7 @@
-export const levels = [
+const levels = [
   {
-    name: 'Destiny 2',
+    year: 'Destiny 2 (1)',
+    name: 'The Red War',
     season: 1,
     base: 10,
     soft: 260,
@@ -8,6 +9,7 @@ export const levels = [
     pinnacle: 305
   },
   {
+    year: 'Destiny 2 (1)',
     name: 'Curse of Osiris',
     season: 2,
     base: 10,
@@ -16,6 +18,7 @@ export const levels = [
     pinnacle: 335
   },
   {
+    year: 'Destiny 2 (1)',
     name: 'Warmind',
     season: 3,
     base: 10,
@@ -24,6 +27,7 @@ export const levels = [
     pinnacle: 385
   },
   {
+    year: 'Forsaken (2)',
     name: 'Season of the Outlaw',
     season: 4,
     base: 340,
@@ -32,6 +36,7 @@ export const levels = [
     pinnacle: null
   },
   {
+    year: 'Forsaken (2)',
     name: 'Season of the Forge',
     season: 5,
     base: 340,
@@ -40,6 +45,7 @@ export const levels = [
     pinnacle: null
   },
   {
+    year: 'Forsaken (2)',
     name: 'Season of the Drifter',
     season: 6,
     base: 340,
@@ -48,6 +54,7 @@ export const levels = [
     pinnacle: null
   },
   {
+    year: 'Forsaken (2)',
     name: 'Season of Opulence',
     season: 7,
     base: 340,
@@ -56,6 +63,7 @@ export const levels = [
     pinnacle: null
   },
   {
+    year: 'Shadowkeep (3)',
     name: 'Season of the Undying',
     season: 8,
     base: 750,
@@ -64,6 +72,7 @@ export const levels = [
     pinnacle: 960
   },
   {
+    year: 'Shadowkeep (3)',
     name: 'Season of Dawn',
     season: 9,
     base: 750,
@@ -72,6 +81,7 @@ export const levels = [
     pinnacle: 970
   },
   {
+    year: 'Shadowkeep (3)',
     name: 'Season of the Worthy',
     season: 10,
     base: 750,
@@ -80,6 +90,7 @@ export const levels = [
     pinnacle: 1010
   },
   {
+    year: 'Shadowkeep (3)',
     name: 'Season of Arrivals',
     season: 11,
     base: 750,
@@ -88,6 +99,7 @@ export const levels = [
     pinnacle: 1060
   },
   {
+    year: 'Beyond Light (4)',
     name: 'Season of the Hunt',
     season: 12,
     base: 1050,
@@ -96,6 +108,7 @@ export const levels = [
     pinnacle: 1260
   },
   {
+    year: 'Beyond Light (4)',
     name: 'Season of the Chosen',
     season: 13,
     base: 1050,
@@ -104,6 +117,7 @@ export const levels = [
     pinnacle: 1310
   },
   {
+    year: 'Beyond Light (4)',
     name: 'Season of the Splicer',
     season: 14,
     base: 1050,
@@ -112,6 +126,7 @@ export const levels = [
     pinnacle: 1320
   },
   {
+    year: 'Beyond Light (4)',
     name: 'Season of the Lost',
     season: 15,
     base: 1050,
@@ -120,6 +135,7 @@ export const levels = [
     pinnacle: 1330
   },
   {
+    year: 'Witch Queen (5)',
     name: 'Season of the Risen',
     season: 16,
     base: 1350,
@@ -128,6 +144,7 @@ export const levels = [
     pinnacle: 1560
   },
   {
+    year: 'Witch Queen (5)',
     name: 'Season of the Haunted',
     season: 17,
     base: 1350,
@@ -136,6 +153,7 @@ export const levels = [
     pinnacle: 1570
   },
   {
+    year: 'Witch Queen (5)',
     name: 'Season of Plunder',
     season: 18,
     base: 1350,
@@ -144,6 +162,7 @@ export const levels = [
     pinnacle: 1580
   },
   {
+    year: 'Witch Queen (5)',
     name: 'Season of the Seraph',
     season: 19,
     base: 1350,
@@ -152,11 +171,68 @@ export const levels = [
     pinnacle: 1590
   },
   {
-    name: 'Season of ???',
+    year: 'Lightfall (6)',
+    name: 'Season of Defiance',
     season: 20,
     base: 1600,
     soft: 1750,
     powerful: 1800,
     pinnacle: 1810
   },
+  {
+    year: 'Lightfall (6)',
+    name: 'Season of the Deep',
+    season: 21,
+    base: 1600,
+    soft: 1750,
+    powerful: 1800,
+    pinnacle: 1810
+  },
+  {
+    year: 'Lightfall (6)',
+    name: 'Season of the Witch',
+    season: 22,
+    base: 1600,
+    soft: 1750,
+    powerful: 1800,
+    pinnacle: 1810
+  },
+  {
+    year: 'Lightfall (6)',
+    name: 'Season of ???',
+    season: 23,
+    base: 1600,
+    soft: null,
+    powerful: null,
+    pinnacle: null
+  },
+  {
+    year: 'The Final Shape (7)',
+    name: 'Echoes',
+    season: 24,
+    base: null,
+    soft: null,
+    powerful: null,
+    pinnacle: null
+  },
+  {
+    year: 'The Final Shape (7)',
+    name: 'Revenant',
+    season: 25,
+    base: null,
+    soft: null,
+    powerful: null,
+    pinnacle: null
+  },
+  {
+    year: 'The Final Shape (7)',
+    name: 'Heresy',
+    season: 26,
+    base: null,
+    soft: null,
+    powerful: null,
+    pinnacle: null
+  },
 ]
+
+export default levels

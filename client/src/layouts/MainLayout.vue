@@ -29,7 +29,7 @@
           {{ userStore.bungieNetUser?.uniqueName }}
         </q-item-label>
 
-        <EssentialLink
+        <essential-link
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
@@ -65,8 +65,7 @@ const essentialLinks: EssentialLinkProps[] = [
     title: 'Legendary Weapons',
     caption: 'By type, frame, and element',
     icon: 'fas fa-gun',
-    link: '/weapons',
-    exact: true
+    link: '/weapons/legendary'
   },
   {
     title: 'Craftable Weapons',
@@ -104,12 +103,12 @@ const essentialLinks: EssentialLinkProps[] = [
     icon: 'fas fa-calculator',
     link: '/bounty-calculator'
   },
-  // {
-  //   title: 'Historical Power',
-  //   caption: 'Levels by season',
-  //   icon: 'fas fa-clock-rotate-left',
-  //   link: '/historical-power'
-  // }
+  {
+    title: 'Historical Power',
+    caption: 'Levels by season',
+    icon: 'fas fa-clock-rotate-left',
+    link: '/historical-power'
+  }
 ]
 
 const leftDrawerOpen = ref(false)

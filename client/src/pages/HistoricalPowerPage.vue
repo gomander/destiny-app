@@ -13,13 +13,19 @@
 </template>
 
 <script setup lang="ts">
-import { levels } from 'src/data/power-levels'
+import levels from 'src/data/power-levels'
 
 const columns = [
   {
     name: 'year',
     label: 'Year',
     field: 'year',
+    sortable: false
+  },
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
     sortable: false
   },
   {
@@ -54,18 +60,7 @@ const columns = [
   }
 ]
 
-const rows: any = []
-
-for (const season of levels) {
-  rows.push({
-    year: null,
-    season: season.season,
-    base: season.base,
-    soft: season.soft,
-    powerful: season.powerful,
-    pinnacle: season.pinnacle
-  })
-}
+const rows = structuredClone(levels)
 
 rows.reverse()
 </script>
