@@ -109,7 +109,9 @@ const button = (label: string, color = 'primary') => {
 const cancelButton = { label: 'Cancel', flat: '', noCaps: '' }
 const closeNotifyButton = { icon: 'fas fa-times', color: 'white' }
 
-const dialogHtml = (message: string, type: string) => {
+type DialogType = 'error' | 'warning' | 'question' | 'info'
+
+const dialogHtml = (message: string, type: DialogType) => {
   const { icon, color } = dialogIcon(type)
   return `
     <div class="row no-wrap q-gutter-md items-center">
@@ -124,18 +126,15 @@ const dialogHtml = (message: string, type: string) => {
 }
 
 
-const dialogIcon = (type: string) => {
-  if (type === 'error') {
-    return { icon: 'fas fa-exclamation-circle', color: 'negative' }
+const dialogIcon = (type: DialogType) => {
+  switch (type) {
+    case 'error':
+      return { icon: 'fas fa-exclamation-circle', color: 'negative' }
+    case 'warning':
+      return { icon: 'fas fa-question-circle', color: 'warning' }
+    case 'question':
+      return { icon: 'fas fa-question-circle', color: 'primary' }
+    case 'info':
+      return { icon: 'fas fa-info-circle', color: 'primary' }
   }
-  if (type === 'warning') {
-    return { icon: 'fas fa-question-circle', color: 'warning' }
-  }
-  if (type === 'question') {
-    return { icon: 'fas fa-question-circle', color: 'primary' }
-  }
-  if (type === 'info') {
-    return { icon: 'fas fa-info-circle', color: 'primary' }
-  }
-  return { icon: 'fas fa-exclamation-circle', color: 'negative' }
 }
