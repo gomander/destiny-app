@@ -6,6 +6,7 @@ import {
   UserInfoCard, UserMembershipData, UserSearchResponse
 } from 'bungie-api-ts/user/interfaces'
 import { BungieTokens } from 'src/types'
+import { showError } from 'src/utils/messenger'
 
 export const authorizationURL = (state: string) => {
   const queryParams = new URLSearchParams({
@@ -35,7 +36,7 @@ export const getAccessTokenFromCode = async (code: string) => {
     )
     return res.data
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
 }
 
@@ -52,7 +53,7 @@ export const getMembershipData = async (accessToken: string) => {
     )
     return res.data.Response
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
 }
 
@@ -72,7 +73,7 @@ export const getDestinyProfileData = async (
     )
     return res.data.Response
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
 }
 
@@ -84,7 +85,7 @@ export const getDestinyManifest = async () => {
     )
     return res.data.Response
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
 }
 
@@ -93,7 +94,7 @@ export const getDestinyManifestDefinition = async <T>(path: string) => {
     const res = await axios.get<{ [key: number]: T }>(`${BUNGIE}${path}`)
     return res.data
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
   return {}
 }
@@ -107,7 +108,7 @@ export const searchPlayer = async (query: string) => {
     )
     return res.data.Response
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
   return []
 }
@@ -123,7 +124,7 @@ export const searchPlayersByName = async (query: string) => {
     )
     return res.data.Response
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
   return []
 }
@@ -138,7 +139,7 @@ export const searchUsersByName = async (query: string) => {
     )
     return res.data.Response.searchResults
   } catch (error) {
-    console.error(error)
+    showError(error)
   }
   return []
 }

@@ -10,7 +10,6 @@ export const getGroup = async (groupId: string) => {
     if (res.data.status !== 'success') throw res.data.data.error
     return res.data.data
   } catch (error) {
-    console.error(error)
     showError(error)
   }
 }
@@ -24,7 +23,6 @@ export const createGroup = async (group: Group) => {
     if (res.data.status !== 'success') throw res.data.data.error
     return res.data.data.path
   } catch (error) {
-    console.error(error)
     showError(error)
   }
 }
