@@ -1,7 +1,5 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <definition-fetcher/>
-
     <q-header unelevated>
       <q-toolbar>
         <q-btn
@@ -42,6 +40,8 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <definition-fetcher />
   </q-layout>
 </template>
 
