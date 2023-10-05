@@ -14,7 +14,8 @@
         />
 
         <q-toolbar-title>
-          <span class="toolbar-title">DARCI</span> <span class="version">v{{ version }}</span>
+          <span class="toolbar-title">DARCI</span>
+          <span class="version">v{{ version }}</span>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -124,4 +125,5 @@ function toggleLeftDrawer() {
 .version
   color: #fff8
   font-size: 50%
+  margin-left: 0.5em
 </style>
