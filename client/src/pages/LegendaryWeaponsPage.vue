@@ -1,8 +1,11 @@
 <template>
   <q-page class="items-center justify-evenly q-pa-md q-gutter-y-md">
-    <h1>Unsunset Weapons</h1>
+    <h1>Legendary Weapons</h1>
 
-    <p>A 1080p landscape display is recommended for this page.</p>
+    <p>
+      Smaller displays may have to scroll horizontally and/or close the
+      navigation drawer to see all the data.
+    </p>
 
     <section
       class="q-gutter-y-md"
