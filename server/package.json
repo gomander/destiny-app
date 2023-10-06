@@ -1,6 +1,6 @@
 {
   "name": "darci-server",
-  "version": "28",
+  "version": "29",
   "description": "Express backend for DARCI.gg",
   "author": "Gunnar Omander <gunnar@gomander.dev>",
   "private": true,
