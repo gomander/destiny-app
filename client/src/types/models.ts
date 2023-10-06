@@ -1,4 +1,6 @@
-import { DestinyObjectiveProgress } from "bungie-api-ts/destiny2"
+import {
+  DestinyClass, DestinyItemSubType, DestinyObjectiveProgress, TierType
+} from 'bungie-api-ts/destiny2'
 
 export enum DamageTypeEnum {
   Kinetic = 'kinetic',
@@ -187,6 +189,17 @@ export interface BungieMember {
 export interface Group {
   creator: BungieMember
   players: BungieMember[]
+}
+
+export interface Armor {
+  name: string
+  icon: string
+  hash: number
+  slot: DestinyItemSubType
+  class: DestinyClass
+  rarity: TierType
+  ornaments: number[]
+  seasonIcon: string
 }
 
 export interface DarciApiError {

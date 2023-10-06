@@ -8,7 +8,9 @@ import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { filteredTriumphs } from 'src/utils/triumph-util'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
-  DestinyItemSubType, DestinyPresentationNodeDefinition, DestinyRecordDefinition
+  DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
+  DestinyRecordDefinition,
+TierType
 } from 'bungie-api-ts/destiny2'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
@@ -102,6 +104,9 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
 const getInventoryItemDefinitions = async () => {
   if (!definitionsStore.manifest) await getManifest()
   if (!definitionsStore.manifest) return
+
+  if (gameStore.manifestVersion === definitionsStore.manifest.version) return
+
   const items = await api.getDestinyManifestDefinition<DestinyInventoryItemDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
   )
@@ -111,14 +116,14 @@ const getInventoryItemDefinitions = async () => {
   for (const key of Object.keys(items)) {
     const item = items[Number(key)]
     if (
-      item.itemType === 19 && // mod
+      item.itemType === DestinyItemType.Mod &&
       item.itemCategoryHashes?.includes(2237038328) // intrinsic
     ) {
       definitionsStore.weaponFrameDefinitions[key] = item
     }
 
     if (
-      item.itemType === 3 && // weapon
+      item.itemType === DestinyItemType.Weapon &&
       item.itemCategoryHashes?.includes(1) && // weapon
       item.quality?.currentVersion === item.quality!.versions.length - 1 && // newest version
       item.quality.versions[item.quality.currentVersion].powerCapHash === 2759499571 // 999990
@@ -127,13 +132,22 @@ const getInventoryItemDefinitions = async () => {
     }
 
     if (
-      item.itemType === 26 && // bounty
+      item.itemType === DestinyItemType.Bounty &&
       item.value.itemValue.filter(entry => xpHashes.includes(entry.itemHash)) // XP, XP+, or XP++
     ) {
       definitionsStore.bountyDefinitions.set(key, item)
     }
+
+    if (
+      item.itemType === DestinyItemType.Armor &&
+      item.inventory?.tierType === TierType.Exotic &&
+      item.collectibleHash // newest version
+    ) {
+      definitionsStore.armorDefinitions.set(key, item)
+    }
   }
 
+  gameStore.manifestVersion = definitionsStore.manifest.version
   gameStore.weapons = []
   gameStore.craftableWeapons = []
 
@@ -193,6 +207,21 @@ const getInventoryItemDefinitions = async () => {
       hash: damageType.hash
     })
   }
+
+  gameStore.armor = []
+
+  definitionsStore.armorDefinitions.forEach(item => {
+    gameStore.armor.push({
+      name: item.displayProperties.name,
+      icon: 'https://www.bungie.net' + item.displayProperties.icon,
+      hash: item.hash,
+      slot: item.itemSubType,
+      class: item.classType,
+      rarity: item.inventory!.tierType,
+      ornaments: [],
+      seasonIcon: item.iconWatermark
+    })
+  })
 }
 
 const getPresentationNodeDefinitions = async () => {

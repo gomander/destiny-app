@@ -31,6 +31,19 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
+        path: 'armor',
+        children: [
+          {
+            path: '',
+            component: () => import('pages/ExoticArmorPage.vue')
+          },
+          {
+            path: 'exotic',
+            component: () => import('pages/ExoticArmorPage.vue')
+          }
+        ]
+      },
+      {
         path: 'checklists',
         children: [
           {

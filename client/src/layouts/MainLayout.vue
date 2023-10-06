@@ -93,12 +93,12 @@ const essentialLinks: EssentialLinkProps[] = [
   //   icon: '',
   //   link: '/weapons/exotic'
   // },
-  // {
-  //   title: 'Exotic Armor',
-  //   caption: 'Paywalls and ornaments',
-  //   icon: 'fas fa-shield-halved',
-  //   link: '/armor'
-  // },
+  {
+    title: 'Exotic Armor',
+    caption: 'Paywalls and ornaments',
+    icon: 'fas fa-shield-halved',
+    link: '/armor/exotic'
+  },
   {
     title: 'Bounty Calculator',
     caption: 'Bounties to XP and levels',

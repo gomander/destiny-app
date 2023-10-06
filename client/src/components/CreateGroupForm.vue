@@ -109,9 +109,6 @@ const createGroup = () => {
 </script>
 
 <style scoped lang="sass">
-.player-list
-  list-style-type: none
-
 .min-width
   width: fit-content
 </style>

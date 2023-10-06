@@ -14,7 +14,8 @@ export const useDefinitionsStore = defineStore(
       weaponFrameDefinitions: {} as { [k: string]: DestinyInventoryItemDefinition },
       bountyDefinitions: new Map<string, DestinyInventoryItemDefinition>(),
       presentationNodeDefinitions: new Map<string, DestinyPresentationNodeDefinition>(),
-      recordDefinitions: new Map<string, DestinyRecordDefinition>()
+      recordDefinitions: new Map<string, DestinyRecordDefinition>(),
+      armorDefinitions: new Map<string, DestinyInventoryItemDefinition>()
     }),
     persist: false
   }
