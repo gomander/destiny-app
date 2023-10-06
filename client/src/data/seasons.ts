@@ -1,43 +1,43 @@
 interface AnnualRelease {
   title: string
-  year: number
+  value: number
   subdivisions: number
 }
 
 const annualReleases = new Map<number, AnnualRelease>([
   [1, {
     title: 'Destiny 2',
-    year: 1,
+    value: 1,
     subdivisions: 3
   }],
   [2, {
     title: 'Forsaken',
-    year: 2,
+    value: 2,
     subdivisions: 4
   }],
   [3, {
     title: 'Shadowkeep',
-    year: 3,
+    value: 3,
     subdivisions: 4
   }],
   [4, {
     title: 'Beyond Light',
-    year: 4,
+    value: 4,
     subdivisions: 4
   }],
   [5, {
     title: 'Witch Queen',
-    year: 5,
+    value: 5,
     subdivisions: 4
   }],
   [6, {
     title: 'Lightfall',
-    year: 6,
+    value: 6,
     subdivisions: 4
   }],
   [7, {
     title: 'The Final Shape',
-    year: 7,
+    value: 7,
     subdivisions: 3
   }]
 ])

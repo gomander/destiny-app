@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import levels from 'src/data/power-levels'
+import seasons from 'src/data/seasons'
 
 const columns = [
   {
@@ -60,7 +60,15 @@ const columns = [
   }
 ]
 
-const rows = structuredClone(levels)
-
-rows.reverse()
+const rows = Array.from(seasons).filter(
+  season => typeof season[0] === 'number'
+).map(season => season[1]).map(season => ({
+  year: `${season.year?.title} - ${season.year?.value}`,
+  name: season.title,
+  season: season.value,
+  base: season.power?.base,
+  soft: season.power?.soft,
+  powerful: season.power?.powerful,
+  pinnacle: season.power?.hard
+})).reverse()
 </script>
