@@ -104,7 +104,8 @@ const oldDupes = [
   // 2222560548, // IKELOS_SMG_v1.0.2
   // Festival of the Lost
   528834068, // Braytech Werewolf
-  2261046232, // Jurassic Green
+  2261046232, 2603335652, // Jurassic Green
+  1280894514, // Mechabre
   // Iron Banner
   540880995, // Dark Decider
   1532276803, // Allied Demand
