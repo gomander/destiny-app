@@ -202,6 +202,12 @@ export interface Armor {
   seasonIcon: string
 }
 
+export interface Ornament {
+  name: string
+  icon: string
+  hash: number
+}
+
 export interface DarciApiError {
   status: 'error'
   data: { error: any }

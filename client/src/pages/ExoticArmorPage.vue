@@ -25,7 +25,16 @@
             :src="armor.icon"
             :alt="armor.name"
             :title="armor.name"
-            class="exotic"
+            class="exotic q-mr-sm"
+          />
+
+          <img
+            v-for="ornament in armor.ornaments"
+            :key="ornament"
+            :src="getOrnament(ornament)?.icon"
+            alt=""
+            :title="getOrnament(ornament)?.name"
+            class="exotic q-ml-sm"
           />
         </li>
       </ul>
@@ -60,6 +69,10 @@ const filterArmor = (
 )?.value || 0 ) - (seasonsArray.find(
   season => season.icons.includes(b.seasonIcon)
 )?.value || 0))
+
+const getOrnament = (hash: number) => {
+  return gameStore.ornaments.find(ornament => ornament.hash === hash)
+}
 </script>
 
 <style scoped lang="sass">

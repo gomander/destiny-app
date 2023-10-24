@@ -8,9 +8,8 @@ import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { filteredTriumphs } from 'src/utils/triumph-util'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
-  DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
-  DestinyRecordDefinition,
-TierType
+  DestinyItemSubType, DestinyItemType, DestinyPlugSetDefinition,
+  DestinyPresentationNodeDefinition, DestinyRecordDefinition, TierType
 } from 'bungie-api-ts/destiny2'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
@@ -29,7 +28,10 @@ const getManifest = async () => {
 }
 
 getManifest().then(async () => {
-  await getDamageTypeDefinitions()
+  await Promise.all([
+    getDamageTypeDefinitions(),
+    getPlugSetDefinitions()
+  ])
   await Promise.all([
     getInventoryItemDefinitions(),
     getRecordDefinitions(),
@@ -145,6 +147,18 @@ const getInventoryItemDefinitions = async () => {
     ) {
       definitionsStore.armorDefinitions.set(key, item)
     }
+
+    if (
+      item.itemType === DestinyItemType.Mod &&
+      item.itemSubType === DestinyItemSubType.Ornament &&
+      item.inventory?.tierType === TierType.Exotic
+    ) {
+      gameStore.ornaments.push({
+        name: item.displayProperties.name,
+        icon: 'https://www.bungie.net' + item.displayProperties.icon,
+        hash: item.hash
+      })
+    }
   }
 
   gameStore.manifestVersion = definitionsStore.manifest.version
@@ -211,6 +225,21 @@ const getInventoryItemDefinitions = async () => {
   gameStore.armor = []
 
   definitionsStore.armorDefinitions.forEach(item => {
+    const ornaments: number[] = []
+    const cosmeticSocketIndexes = item.sockets?.socketCategories.find(
+      category => category.socketCategoryHash === 1926152773
+    )?.socketIndexes || []
+    if (cosmeticSocketIndexes.length > 1) {
+      ornaments.push(
+        ...definitionsStore.plugSetDefinitions.get(
+          String(
+            item.sockets?.socketEntries[
+              cosmeticSocketIndexes[1]
+            ].reusablePlugSetHash
+          )
+        )?.reusablePlugItems.map(item => item.plugItemHash).slice(1) || []
+      )
+    }
     gameStore.armor.push({
       name: item.displayProperties.name,
       icon: 'https://www.bungie.net' + item.displayProperties.icon,
@@ -218,7 +247,7 @@ const getInventoryItemDefinitions = async () => {
       slot: item.itemSubType,
       class: item.classType,
       rarity: item.inventory!.tierType,
-      ornaments: [],
+      ornaments,
       seasonIcon: item.iconWatermark
     })
   })
@@ -300,5 +329,17 @@ const fillTriumphCategories = () => {
       })
     })
   })
+}
+
+const getPlugSetDefinitions = async () => {
+  if (!definitionsStore.manifest) await getManifest()
+  if (!definitionsStore.manifest) return
+  const plugSets = await api.getDestinyManifestDefinition<DestinyPlugSetDefinition>(
+    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPlugSetDefinition
+  )
+  for (const key of Object.keys(plugSets)) {
+    const plugSet = plugSets[Number(key)]
+    definitionsStore.plugSetDefinitions.set(key, plugSet)
+  }
 }
 </script>
