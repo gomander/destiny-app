@@ -3,6 +3,9 @@ import {
   DestinyManifest, DestinyProfileResponse, ServerResponse
 } from 'bungie-api-ts/destiny2'
 import {
+  GetGroupsForMemberResponse, GroupMember, SearchResultOfGroupMember
+} from 'bungie-api-ts/groupv2'
+import {
   UserInfoCard, UserMembershipData, UserSearchResponse
 } from 'bungie-api-ts/user/interfaces'
 import { BungieTokens } from 'src/types'
@@ -138,6 +141,38 @@ export const searchUsersByName = async (query: string) => {
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
     return res.data.Response.searchResults
+  } catch (error) {
+    showError(error)
+  }
+  return []
+}
+
+export const getClanMembers = async (clanId: string, page = 1) => {
+  const members: GroupMember[] = []
+  try {
+    const res = await axios.get<ServerResponse<SearchResultOfGroupMember>>(
+      `${BUNGIE_API}/GroupV2/${clanId}/Members/${page}`,
+      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+    )
+    members.push(...res.data.Response.results)
+    if (res.data.Response.hasMore) {
+      members.push(...await getClanMembers(clanId, page + 1))
+    }
+  } catch (error) {
+    showError(error)
+  }
+  return members
+}
+
+export const getPlayerGroups = async (
+  membershipId: string, membershipType: number
+) => {
+  try {
+    const res = await axios.get<ServerResponse<GetGroupsForMemberResponse>>(
+      `${BUNGIE_API}/GroupV2/User/${membershipType}/${membershipId}`,
+      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+    )
+    return res.data.Response.results
   } catch (error) {
     showError(error)
   }
