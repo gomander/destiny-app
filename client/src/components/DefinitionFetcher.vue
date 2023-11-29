@@ -234,7 +234,7 @@ const getInventoryItemDefinitions = async () => {
         ...definitionsStore.plugSetDefinitions.get(
           String(
             item.sockets?.socketEntries[
-              cosmeticSocketIndexes[1]
+              cosmeticSocketIndexes.at(-1)!
             ].reusablePlugSetHash
           )
         )?.reusablePlugItems.map(item => item.plugItemHash).slice(1) || []
