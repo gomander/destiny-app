@@ -115,11 +115,13 @@ const oldDupes = [
   3169616514, // Bite of the Fox
   1972985595, // Swarm of the Raven
   4009352833, // Roar of the Bear
+  108221785, // Riiswalker
   // The Dawning
-  1506719573, // Cold Front
-  1030895163, // Glacioclasm
-  66875353, // Avalanche
-  3400256755, // Zephyr
+  1506719573, 2814093983, // Cold Front
+  1030895163, 3573686365, // Glacioclasm
+  66875353, 495940989, // Avalanche
+  3400256755, 396910433, // Zephyr
+  2812100428, // Stay Frosty
   // Trials of Osiris
   1574601402, // Whistler's Whim
   711889599, // Whistler's Whim (Adept)
@@ -135,6 +137,8 @@ const oldDupes = [
   2759251821, // Unwavering Duty (Adept)
   2351180975, // Igneous Hammer
   2527666306, // Igneous Hammer (Adept)
+  3164743584, // Eye of Sol
+  3637570176, // Eye of Sol (Adept)
   // Nightfall
   4281371574, 772231794, // Hung Jury SR4
   681067419, 4074251943, // Hung Jury SR4 (Adept)
@@ -145,6 +149,8 @@ const oldDupes = [
   555148853, // Wendigo GL3 (Adept)
   47772649, // THE SWARM
   3836861464, // THE SWARM (Adept)
+  2065081837, // Uzume RR4
+  852228780, // Uzume RR4 (Adept)
   // Last Wish
   601592879, // Age-Old Bond
   2721249463, // Tyranny of Heaven
@@ -157,6 +163,14 @@ const oldDupes = [
   // Solstice
   1856262127, // Something New
   2591111628, // Compass Rose
+  // Dreaming City
+  640114618, // Tigerspite
+  334171687, // Waking Vigil
+  3242168339, // Vouchsafe
+  346136302, // Retold Tale
+  3297863558, // Twilight Oath
+  3740842661, // Sleepless
+  1644160541, // Abide the Return
 ]
 
 export const isOldDuplicate = (hash: number) => {

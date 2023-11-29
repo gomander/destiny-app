@@ -424,15 +424,17 @@ const seasons = new Map<HasIcon, SeasonalRelease>([
     }
   }],
   [23, {
-    title: 'Season of [Redacted]',
+    title: 'Season of the Wish',
     value: 23,
-    icons: [],
+    icons: [
+      '/common/destiny2_content/icons/a2fb48090c8bc0e5785975fab9596ab5.png'
+    ],
     year: annualReleases.get(6),
     power: {
       base: 1600,
-      soft: null,
-      powerful: null,
-      hard: null
+      soft: 1750,
+      powerful: 1800,
+      hard: 1810
     }
   }],
   [24, {
