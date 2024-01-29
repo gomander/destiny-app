@@ -20,6 +20,7 @@
           </q-card-section>
         </q-card>
       </div>
+
       <div class="col-grow col-lg-4">
         <q-card
           class="full-height"
@@ -78,7 +79,7 @@
           :label="raid.name"
           no-caps unelevated
           color="primary"
-          :to="`${path}/${raid.id}/${urlPlayers?.map(player => player.replace('#', '%23')).join('/')}`"
+          :to="getButtonLink(raid.id)"
           :disable="route.path.includes(raid.id)"
         />
       </q-card-section>
@@ -134,6 +135,10 @@ const urlPlayers = computed(() => route.params.players as string[] | undefined)
 const path = computed(() =>
   `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`
 )
+
+const getButtonLink = (raidId: string) => {
+  return `${path.value}/${raidId}${urlPlayers.value ? `/${urlPlayers.value?.map(player => player.replace('#', '%23')).join('/')}` : ''}`
+}
 
 const currentRaid = computed(() =>
   raids.find(raid => raid.id === raidId.value) || { name: '', id: '' }

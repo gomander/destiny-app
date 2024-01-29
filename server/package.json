@@ -17,21 +17,24 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/cors": "^2.8.14",
-    "@types/express": "^4.17.18",
-    "@types/morgan": "^1.9.6",
-    "@types/node": "^20.8.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.11.10",
     "cross-env": "^7.0.3",
-    "nodemon": "^3.0.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@google-cloud/firestore": "^6.8.0",
+    "@google-cloud/firestore": "^7.2.0",
     "cors": "^2.8.5",
-    "dotenv-flow": "^4.0.0",
+    "dotenv-flow": "^4.1.0",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "20"
   }
 }
