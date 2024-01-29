@@ -62,7 +62,7 @@
           <q-card-section class="flex-col gap">
             <div class="text-h6">View an existing group</div>
             <group-form
-              :groupId="groupId"
+              :groupId="groupId ?? ''"
               v-on:go-to-group="goToGroup"
               v-on:go-to-solo="goToSolo"
             />
@@ -78,24 +78,31 @@
           :label="raid.name"
           no-caps unelevated
           color="primary"
-          :to="`${path}/${raid.id}`"
+          :to="`${path}/${raid.id}/${urlPlayers?.map(player => player.replace('#', '%23')).join('/')}`"
           :disable="route.path.includes(raid.id)"
         />
       </q-card-section>
     </q-card>
 
-    <triumphs-list-solo
-      v-if="!groupId"
-      :title="currentRaid.name"
-      :triumphs="currentRaidTriumphs"
-      :player="player"
-    />
-
     <triumphs-list-group
-      v-else
+      v-if="groupId"
       :title="currentRaid.name"
       :triumphs="currentRaidTriumphs"
       :groupId="groupId"
+    />
+
+    <triumphs-list-group
+      v-else-if="urlPlayers?.length"
+      :title="currentRaid.name"
+      :triumphs="currentRaidTriumphs"
+      :players="urlPlayers"
+    />
+
+    <triumphs-list-solo
+      v-else
+      :title="currentRaid.name"
+      :triumphs="currentRaidTriumphs"
+      :player="player"
     />
   </q-page>
 </template>
@@ -120,8 +127,9 @@ const router = useRouter()
 const gameStore = useGameStore()
 const userStore = useUserStore()
 
-const groupId = computed(() => route.params.id as string)
-const raidId = computed(() => route.params.raid as string)
+const groupId = computed(() => route.params.id as string | undefined)
+const raidId = computed(() => route.params.raid as string | undefined)
+const urlPlayers = computed(() => route.params.players as string[] | undefined)
 
 const path = computed(() =>
   `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`

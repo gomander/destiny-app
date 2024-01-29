@@ -102,27 +102,18 @@ export const getDestinyManifestDefinition = async <T>(path: string) => {
   return {}
 }
 
-export const searchPlayer = async (query: string) => {
-  query = query.trim().replace('#', '%23')
-  try {
-    const res = await axios.get<ServerResponse<UserInfoCard[]>>(
-      `${BUNGIE_API}/Destiny2/SearchDestinyPlayer/-1/${query}`,
-      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
-    )
-    return res.data.Response
-  } catch (error) {
-    showError(error)
+export const searchPlayersByBungieName = async (query: string) => {
+  if (!query.trim() || !/#\d{1,4}$/.test(query)) {
+    return []
   }
-  return []
-}
-
-export const searchPlayersByName = async (query: string) => {
-  const [name, code] = query.trim().split('#')
-  const body = { displayName: name, displayNameCode: code }
+  const [displayName, displayNameCode] = query.trim().split('#')
+  if (!displayName || !Number(displayNameCode)) {
+    return []
+  }
   try {
     const res = await axios.post<ServerResponse<UserInfoCard[]>>(
       `${BUNGIE_API}/Destiny2/SearchDestinyPlayerByBungieName/-1`,
-      body,
+      { displayName, displayNameCode: Number(displayNameCode) },
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
     return res.data.Response
@@ -162,6 +153,11 @@ export const getClanMembers = async (clanId: string, page = 1) => {
     showError(error)
   }
   return members
+}
+
+export const getPlayerByBungieName = async (bungieName: string) => {
+  const response = await searchPlayersByBungieName(bungieName)
+  return response.at(0) ?? null
 }
 
 export const getPlayerGroups = async (

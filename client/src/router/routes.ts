@@ -44,10 +44,14 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: 'checklists',
+        path: 'checklists/raids',
         children: [
           {
-            path: `raids/:id(\\w\\w\\w-\\w\\w\\w)?/:raid(${raidsSelector})?`,
+            path: `:id(\\w\\w\\w-\\w\\w\\w)?/:raid(${raidsSelector})?`,
+            component: () => import('pages/RADChecklistPage.vue')
+          },
+          {
+            path: `:raid(${raidsSelector})?/:players+`,
             component: () => import('pages/RADChecklistPage.vue')
           }
         ]

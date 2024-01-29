@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { searchPlayer, searchUsersByName } from 'src/utils/api'
+import { searchPlayersByBungieName, searchUsersByName } from 'src/utils/api'
 import { showNotification } from 'src/utils/messenger'
 import { BungieMember } from 'src/types'
 
@@ -111,7 +111,7 @@ const disableSearch = computed(() =>
 const search = async (e: Event) => {
   e.preventDefault()
   if (disableSearch.value) return
-  const players = await searchPlayer(input.value.trim())
+  const players = await searchPlayersByBungieName(input.value.trim())
   if (!players.length) return showNotification('Player not found!')
   player.value = {
     id: players[0].membershipId,
@@ -131,7 +131,7 @@ const options = ref<BungieMember[]>([])
 
 const getOptions = async (query: string) => {
   if (query.includes('#')) {
-    const results = await searchPlayer(query)
+    const results = await searchPlayersByBungieName(query)
     return results.map(result => ({
       id: result.membershipId,
       type: result.membershipType,
