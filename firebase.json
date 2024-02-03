@@ -23,20 +23,6 @@
         }
       },
       {
-        "source": "/test",
-        "run": {
-          "serviceId": "app",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/test/**",
-        "run": {
-          "serviceId": "app",
-          "region": "us-central1"
-        }
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
