@@ -96,7 +96,8 @@ const oldDupes = [
   1561006927, // Seventh Seraph Carbine
   3037520408, // Seventh Seraph Officer Revolver
   // Guardian Games
-  294129361, // The Title
+  294129361, 3559361670, // The Title
+  1389546626, // Taraxippos
   // IKELOS v1.0.2
   // 1096206669, // IKELOS_SG_v1.0.2
   // 1200824700, // IKELOS_HC_v1.0.2
@@ -116,6 +117,7 @@ const oldDupes = [
   1972985595, // Swarm of the Raven
   4009352833, // Roar of the Bear
   108221785, // Riiswalker
+  3717177717, // Multimach CCX
   // The Dawning
   1506719573, 2814093983, // Cold Front
   1030895163, 3573686365, // Glacioclasm
@@ -139,6 +141,8 @@ const oldDupes = [
   2527666306, // Igneous Hammer (Adept)
   3164743584, // Eye of Sol
   3637570176, // Eye of Sol (Adept)
+  1907698332, // The Summoner
+  3514144928, // The Summoner (Adept)
   // Nightfall
   4281371574, 772231794, // Hung Jury SR4
   681067419, 4074251943, // Hung Jury SR4 (Adept)
@@ -171,6 +175,8 @@ const oldDupes = [
   3297863558, // Twilight Oath
   3740842661, // Sleepless
   1644160541, // Abide the Return
+  // Crucible
+  1402766122, // Retrofuturist
 ]
 
 export const isOldDuplicate = (hash: number) => {
