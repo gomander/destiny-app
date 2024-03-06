@@ -34,3 +34,5 @@ yarn-error.log*
 
 *.env*
 !.env.template
+
+quasar.config.js.temporary.compiled.*
