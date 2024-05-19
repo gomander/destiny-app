@@ -177,6 +177,19 @@ const oldDupes = [
   1644160541, // Abide the Return
   // Crucible
   1402766122, // Retrofuturist
+  // Into the Light
+  2499720827, // Midnight Coup
+  3757612024, // Luna's Howl
+  2533990645, // Blast Furnace
+  3851176026, // Elsie's Rifle
+  205225492, // Hung Jury SR4
+  3098328572, // The Recluse
+  4043921923, // The Mountaintop
+  2480074702, // Forbearance
+  570866107, // Succession
+  2228325504, // Edge Transit
+  211732170, // Hammerhead
+  243425374, // Falling Guillotine
 ]
 
 export const isOldDuplicate = (hash: number) => {
