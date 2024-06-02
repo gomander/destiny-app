@@ -204,10 +204,10 @@ const PVE_STAT_MODIFIERS: WeaponStats = {
   stability: 1,
   handling: 1,
   reloadSpeed: 3,
-  zoom: 2,
+  zoom: 0,
   aimAssistance: 1,
   airborneEffectiveness: 1,
-  recoilDirection: 3,
+  recoilDirection: 2,
   magazine: 4,
   inventorySize: 5
 }
@@ -217,7 +217,7 @@ const PVP_STAT_MODIFIERS: WeaponStats = {
   stability: 3,
   handling: 2,
   reloadSpeed: 1,
-  zoom: 8,
+  zoom: 1,
   aimAssistance: 4,
   airborneEffectiveness: 2,
   recoilDirection: 1,

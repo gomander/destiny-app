@@ -443,10 +443,10 @@ const seasons = new Map<HasIcon, SeasonalRelease>([
     icons: [],
     year: annualReleases.get(7),
     power: {
-      base: null,
-      soft: null,
-      powerful: null,
-      hard: null
+      base: 1900,
+      soft: 1950,
+      powerful: 1990,
+      hard: 2000
     }
   }],
   [25, {
