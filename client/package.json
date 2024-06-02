@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "dotenv-flow": "^4.1.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
@@ -22,15 +22,15 @@
   },
   "devDependencies": {
     "@quasar/app-vite": "^2.0.0-beta.14",
-    "@types/node": "^20.12.12",
-    "@vue/devtools": "^7.2.0",
+    "@types/node": "^20.13.0",
+    "@vue/devtools": "^7.2.1",
     "autoprefixer": "^10.4.19",
     "bungie-api-ts": "^5.1.0",
     "cross-env": "^7.0.3",
     "typescript": "^5.4.5"
   },
   "engines": {
-    "node": "^20",
+    "node": ">=20",
     "pnpm": ">=8"
   }
 }
