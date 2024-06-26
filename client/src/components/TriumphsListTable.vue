@@ -42,7 +42,7 @@
       <q-td class="no-padding full-height">
         <div class="row full-height triumph-completion">
           <div
-            v-for="objective in value.objectives"
+            v-for="objective in value.objectives || [{ complete: value.complete }]"
             class="col full-height objective"
             :class="objective.complete ? 'complete' : 'incomplete'"
           >
@@ -53,11 +53,11 @@
             <i
               v-if="value.complete"
               class="fa-solid fa-check"
-            />
+            ></i>
             <i
-              v-else-if="!value.objectives.find(obj => obj.complete)"
+              v-else-if="!value.objectives?.find(obj => obj.complete)"
               class="fa-solid fa-xmark"
-            />
+            ></i>
             <span v-else>
               {{ value.objectives.filter(obj => obj.complete).length }} /
               {{ value.objectives.length }}
