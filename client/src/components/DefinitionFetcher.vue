@@ -88,16 +88,16 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
     ].includes(item.itemSubType)
   ) {
     weapon.stats = {
-      range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)!.value,
-      stability: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.stability)!.value,
-      handling: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.handling)!.value,
-      reloadSpeed: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.reloadSpeed)!.value,
-      zoom: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.zoom)!.value,
-      aimAssistance: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.aimAssistance)!.value,
-      airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)!.value,
-      recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)!.value,
-      magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)!.value,
-      inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)!.value,
+      range: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.range)?.value || 0,
+      stability: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.stability)?.value || 0,
+      handling: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.handling)?.value || 0,
+      reloadSpeed: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.reloadSpeed)?.value || 0,
+      zoom: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.zoom)?.value || 0,
+      aimAssistance: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.aimAssistance)?.value || 0,
+      airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)?.value || 0,
+      recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)?.value || 0,
+      magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)?.value || 0,
+      inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)?.value || 0,
     }
   }
   return weapon
@@ -127,8 +127,7 @@ const getInventoryItemDefinitions = async () => {
     if (
       item.itemType === DestinyItemType.Weapon &&
       item.itemCategoryHashes?.includes(1) && // weapon
-      item.quality?.currentVersion === item.quality!.versions.length - 1 && // newest version
-      item.quality.versions[item.quality.currentVersion].powerCapHash === 2759499571 // 999990
+      item.quality?.currentVersion === item.quality!.versions.length - 1 // newest version
     ) {
       definitionsStore.weaponDefinitions[key] = item
     }
