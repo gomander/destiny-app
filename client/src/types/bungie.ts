@@ -85,6 +85,7 @@ export enum RaidTriumphCategories {
   KingsFall = 3596566041,
   RootOfNightmares = 4114450368,
   CrotasEnd = 2782956855,
+  SalvationsEdge = 2657827258,
 }
 
 export enum RaidTitleTriumphCategories {
@@ -96,4 +97,5 @@ export enum RaidTitleTriumphCategories {
   KingsFall = 2613142083,
   RootOfNightmares = 1976056830,
   CrotasEnd = 238107129,
+  SalvationsEdge = 334829503,
 }

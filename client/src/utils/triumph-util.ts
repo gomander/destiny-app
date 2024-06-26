@@ -5,4 +5,5 @@ export const filteredTriumphs = [
   2579096068, // Regicide
   3025362184, // Horticulturist
   1417273794, // Superior Swordplay
+  3975049489, // Paragon
 ]
