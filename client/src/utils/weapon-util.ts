@@ -95,6 +95,17 @@ const oldDupes = [
   // Seventh Seraph
   1561006927, // Seventh Seraph Carbine
   3037520408, // Seventh Seraph Officer Revolver
+  // Opulence
+  2429822977, // Austringer
+  79075821, // Drang (Baroque)
+  174192097, // CALUS Mini-Tool
+  // Undying
+  2138599001, // Optative
+  1167153950, // Adhortative
+  2314999489, // Imperative
+  2663204025, // Subjunctive
+  // Dawn
+  272324184, // Patron of Lost Causes
   // Guardian Games
   294129361, 3559361670, // The Title
   1389546626, // Taraxippos
@@ -108,16 +119,27 @@ const oldDupes = [
   2261046232, 2603335652, // Jurassic Green
   1280894514, // Mechabre
   // Iron Banner
-  540880995, // Dark Decider
-  1532276803, // Allied Demand
-  2488587246, // The Hero's Burden
+  2014642399, // The Forward Path
+  1942069133, 540880995, // Dark Decider
+  3649055823, 4292849692, // Crimil's Dagger
+  1189790632, // The Steady Hand
+  701922966, // Finite Impactor
+  4425887, // The Time-Worn Spire
+  622058944, // Jorum's Claw
+  3890960908, 1161561386, // The Guiding Sight
+  1280933460, // Claws of the Wolf
+  3424403076, // The Fool's Remedy
+  982229638, 1532276803, // Allied Demand
+  2909905776, 1865351684, 2488587246, // The Hero's Burden
   1999697514, // The Wizened Rebuke
   487361141, // Gunnora's Axe
   3169616514, // Bite of the Fox
   1972985595, // Swarm of the Raven
   4009352833, // Roar of the Bear
   108221785, // Riiswalker
-  3717177717, // Multimach CCX
+  4265183314, 3717177717, // Multimach CCX
+  2189073092, // Lethal Abundance
+  3434944005, 888872889, // Point of the Stag
   // The Dawning
   1506719573, 2814093983, // Cold Front
   1030895163, 3573686365, // Glacioclasm
@@ -143,8 +165,30 @@ const oldDupes = [
   3637570176, // Eye of Sol (Adept)
   1907698332, // The Summoner
   3514144928, // The Summoner (Adept)
+  3682803680, // Shayura's Wrath
+  // Trials of the Nine
+  1503609584, // The Last Breath
+  1909527966, // Prosecutor
+  2850415209, // Judgment
+  325519402, // Darkest Before
+  3854037061, // A Swift Verdict
+  2094938673, // Adjudicator
+  // Vanguard
+  1644162710, // Origin Story
+  3393130645, // Positive Outlook
+  2171006181, // Service Revolver
+  339163900, // Nightshade
+  1960218487, 3040742682, // Nameless Midnight
+  1927800278, // Eternal Blazon
+  819358961, // Spoiler Alert
   // Nightfall
-  4281371574, 772231794, // Hung Jury SR4
+  1457979868, // Duty Bound
+  4238497225, // D.F.A.
+  2633186522, // Shadow Price
+  233423981, 1821529912, // Warden's Law
+  1071542914, // Horror's Least
+  805677041, // Buzzard
+  4281371574, 772231794, 3832743906, // Hung Jury SR4
   681067419, 4074251943, // Hung Jury SR4 (Adept)
   40394833, // The Militia's Birthright
   2378101424, // The Militia's Birthright (Adept)
@@ -155,6 +199,7 @@ const oldDupes = [
   3836861464, // THE SWARM (Adept)
   2065081837, // Uzume RR4
   852228780, // Uzume RR4 (Adept)
+  192784503, // Pre Astyanax IV
   // Last Wish
   601592879, // Age-Old Bond
   2721249463, // Tyranny of Heaven
@@ -165,7 +210,7 @@ const oldDupes = [
   686951703, // The Supremacy
   2545083870, // Apex Predator
   // Solstice
-  1856262127, // Something New
+  1856262127, 3240434620, // Something New
   2591111628, // Compass Rose
   // Dreaming City
   640114618, // Tigerspite
@@ -176,7 +221,14 @@ const oldDupes = [
   3740842661, // Sleepless
   1644160541, // Abide the Return
   // Crucible
+  1048266744, // Better Devils
   1402766122, // Retrofuturist
+  468276817, // Nature of the Beast
+  153979396, // Luna's Howl
+  1674742470, // Autumn Wind
+  962412079, // Last Perdition
+  4193877020, // Does Not Compute
+  3535742959, // Randy's Throwing Knife
   // Into the Light
   2499720827, // Midnight Coup
   3757612024, // Luna's Howl
@@ -190,6 +242,54 @@ const oldDupes = [
   2228325504, // Edge Transit
   211732170, // Hammerhead
   243425374, // Falling Guillotine
+  // Leviathan
+  1128225405, // Midnight Coup
+  // Gambit
+  4077196130, // Trust
+  324382200, // Breakneck
+  1584643826, // Hush
+  // Reckoning
+  3116356268, // Spare Rations
+  2744715540, // Bug-Out Bag
+  // EDZ
+  3762467078, // Scathelocke
+  // Titan
+  2145476623, // Annual Skate
+  // Nessus
+  3762467076, // Uriel's Gift
+  1911843791, // Last Hope
+  // Io
+  3762467079, // Valakadyn
+  // Mercury
+  3285365666, // Jack Queen King 3
+  2091737595, // Traveler's Judgment 5
+  161537637, // Infinite Paths 8
+  // Dead Orbit
+  582335600, // Dire Promise
+  2625782213, // Contingency Plan
+  48361212, // Controlling Vision
+  1459443448, // Escape Velocity
+  // Future War Cult
+  3854359821, // The Number
+  408440598, // True Prophecy
+  1342668638, // Pleiades Corrector
+  2581162758, // Enigma's Draw
+  293505772, // The Vision
+  1339362514, // Stochastic Variable
+  // New Monarchy
+  1760543913, // Legal Action II
+  625672050, // Jian 7 Rifle
+  1531295694, // Adverse Possession IX
+  // World
+  3778520450, // Halfdan-D
+  1706536806, // The Old Fashioned
+  3860697509, // Pribina-D
+  1291586825, // Eystein-D
+  1178397319, // Battle Scar
+  925326394, // Black Scorpion-4sr
+  1200414607, // The Showrunner
+  566976653, // Antiope-D
+  2517599010, // Death Adder
 ]
 
 export const isOldDuplicate = (hash: number) => {
