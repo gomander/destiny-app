@@ -440,7 +440,10 @@ const seasons = new Map<HasIcon, SeasonalRelease>([
   [24, {
     title: 'Echoes',
     value: 24,
-    icons: [],
+    icons: [
+      '/common/destiny2_content/icons/e3ea0bd2e889b605614276876667759c.png', // The Final Shape
+      '/common/destiny2_content/icons/0337ec21962f67c7c493fedb447c4a9b.png' // Echoes
+    ],
     year: annualReleases.get(7),
     power: {
       base: 1900,
