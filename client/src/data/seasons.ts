@@ -427,7 +427,8 @@ const seasons = new Map<HasIcon, SeasonalRelease>([
     title: 'Season of the Wish',
     value: 23,
     icons: [
-      '/common/destiny2_content/icons/a2fb48090c8bc0e5785975fab9596ab5.png'
+      '/common/destiny2_content/icons/a2fb48090c8bc0e5785975fab9596ab5.png', // Wish
+      '/common/destiny2_content/icons/d5a3f4d7d20fefc781fea3c60bde9434.png' // Into the Light
     ],
     year: annualReleases.get(6),
     power: {

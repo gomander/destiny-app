@@ -76,6 +76,7 @@ export const swapUniqueFrames = (
     case 31057037: return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
     case 3364911712: return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
     case 895140517: return 1636108362 // Precision -> Precision (shotguns)
+    case 2189829540: return 1294026524 // Adaptive -> Adaptive (Rose)
     case 3468089894: // Aggressive -> Aggressive
       switch (subType) {
         case DestinyItemSubType.Shotgun: return 3983457027
