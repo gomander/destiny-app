@@ -49,9 +49,8 @@ async function getManifest() {
   }
 }
 
-const getDamageTypeDefinitions = async () => {
+async function getDamageTypeDefinitions() {
   if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
-  if (!definitionsStore.manifest) await getManifest()
   if (!definitionsStore.manifest) return
   const damageTypes = await api.getDestinyManifestDefinition<DestinyDamageTypeDefinition>(
     definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyDamageTypeDefinition
@@ -63,7 +62,7 @@ const getDamageTypeDefinitions = async () => {
   }
 }
 
-const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
+function createWeapon(item: DestinyInventoryItemDefinition): Weapon {
   const frameHash = swapUniqueFrames(
     item.sockets?.socketEntries[0].singleInitialItemHash!,
     item.itemSubType

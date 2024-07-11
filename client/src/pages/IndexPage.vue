@@ -6,22 +6,20 @@
       class="flavor-text text-caption"
       :class="$q.dark.isActive ? 'text-grey-4' : 'text-grey-8'"
     >
-      Thank you for using the Data Analysis, Reconnaissance, and Cooperative
-      Intelligence device. You may call me Darci.
+      Thank you for using the Data Analysis, Reconnaissance, and Cooperative Intelligence device.
+      You may call me Darci.
     </p>
 
     <p class="intro-text">
-      Hi, my name is Gunnar, and I'm a full-time web dev student. My free time
-      is split between working on
-      <a href="https://wheelofnames.com" target="_blank">Wheel of Names</a>,
-      playing games (mostly Destiny 2), and some fun little side projects like
-      this one.
+      Hi! I'm Gunnar, a full-stack web developer. My free time is split between working on
+      <a href="https://wheelofnames.com" target="_blank">Wheel of Names</a>, playing games (mostly
+      Destiny 2), and some fun little side projects like this one.
     </p>
 
     <p class="intro-text">
-      This app is a playground for me to explore the Bungie API. It's not meant
-      for anyone else, but if you find something here interesting, great! It is
-      still in early development and most things are still only semi-functional.
+      This app is a playground for me to explore the Bungie API. It's not meant for anyone else, but
+      if you find something here interesting, great! It is still in early development and most
+      things are still only semi-functional.
     </p>
 
     <p class="intro-text">
