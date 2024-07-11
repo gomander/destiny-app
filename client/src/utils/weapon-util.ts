@@ -266,6 +266,7 @@ const oldDupes = [
   // Leviathan
   1128225405, // Midnight Coup
   // Black Armory
+  3843477312, // Blast Furnace
   603242241, // Hammerhead
   // Gambit
   4077196130, // Trust
