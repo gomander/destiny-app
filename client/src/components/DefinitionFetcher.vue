@@ -1,11 +1,13 @@
 <template></template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useDefinitionsStore } from 'src/stores/definitions-store'
 import { useGameStore } from 'src/stores/game-store'
 import * as api from 'src/utils/api'
 import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
 import { filteredTriumphs } from 'src/utils/triumph-util'
+import { showError } from 'src/utils/messenger'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
   DestinyItemSubType, DestinyItemType, DestinyPlugSetDefinition,
@@ -21,24 +23,31 @@ import { xpRewardTiers } from 'src/data/xp-modifiers'
 const gameStore = useGameStore()
 const definitionsStore = useDefinitionsStore()
 
-const getManifest = async () => {
-  const manifest = await api.getDestinyManifest()
-  if (!manifest) return
-  definitionsStore.manifest = manifest
-}
-
-getManifest().then(async () => {
-  await Promise.all([
-    getDamageTypeDefinitions(),
-    getPlugSetDefinitions()
-  ])
-  await Promise.all([
-    getInventoryItemDefinitions(),
-    getRecordDefinitions(),
-    getPresentationNodeDefinitions()
-  ])
-  fillTriumphCategories()
+onMounted(async () => {
+  try {
+    await getManifest()
+    await Promise.all([
+      getDamageTypeDefinitions(),
+      getPlugSetDefinitions()
+    ])
+    await Promise.all([
+      getInventoryItemDefinitions(),
+      getRecordDefinitions(),
+      getPresentationNodeDefinitions()
+    ])
+    fillTriumphCategories()
+  } catch (error) {
+    showError(error)
+  }
 })
+
+async function getManifest() {
+  try {
+    definitionsStore.manifest = await api.getDestinyManifest()
+  } catch (error) {
+    showError(error)
+  }
+}
 
 const getDamageTypeDefinitions = async () => {
   if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
@@ -103,8 +112,7 @@ const createWeapon = (item: DestinyInventoryItemDefinition): Weapon => {
   return weapon
 }
 
-const getInventoryItemDefinitions = async () => {
-  if (!definitionsStore.manifest) await getManifest()
+async function getInventoryItemDefinitions() {
   if (!definitionsStore.manifest) return
 
   if (gameStore.manifestVersion === definitionsStore.manifest.version) return
@@ -167,7 +175,7 @@ const getInventoryItemDefinitions = async () => {
   for (const key in definitionsStore.weaponDefinitions) {
     const item = definitionsStore.weaponDefinitions[Number(key)]
     if (
-      item.inventory?.tierTypeName === 'Legendary' &&
+      item.inventory?.tierType === TierType.Superior &&
       !/^.+ \((?!Baroque)\w+\)$/.test(item.displayProperties.name) && // adept
       !isOldDuplicate(item.hash)
     ) {
@@ -252,33 +260,37 @@ const getInventoryItemDefinitions = async () => {
   })
 }
 
-const getPresentationNodeDefinitions = async () => {
-  if (!definitionsStore.manifest) await getManifest()
+async function getPresentationNodeDefinitions() {
   if (!definitionsStore.manifest) return
-  const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
-    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
-  )
-
-  for (const key of Object.keys(nodes)) {
-    const node = nodes[Number(key)]
-    definitionsStore.presentationNodeDefinitions.set(key, node)
+  try {
+    const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
+      definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPresentationNodeDefinition
+    )
+    for (const key of Object.keys(nodes)) {
+      const node = nodes[Number(key)]
+      definitionsStore.presentationNodeDefinitions.set(key, node)
+    }
+  } catch (error) {
+    showError(error)
   }
 }
 
-const getRecordDefinitions = async () => {
-  if (!definitionsStore.manifest) await getManifest()
+async function getRecordDefinitions() {
   if (!definitionsStore.manifest) return
-  const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
-    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
-  )
-
-  for (const key of Object.keys(records)) {
-    const record = records[Number(key)]
-    definitionsStore.recordDefinitions.set(key, record)
+  try {
+    const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
+      definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyRecordDefinition
+    )
+    for (const key of Object.keys(records)) {
+      const record = records[Number(key)]
+      definitionsStore.recordDefinitions.set(key, record)
+    }
+  } catch (error) {
+    showError(error)
   }
 }
 
-const fillTriumphCategories = () => {
+function fillTriumphCategories() {
   if (
     !definitionsStore.presentationNodeDefinitions.size ||
     !definitionsStore.recordDefinitions.size
@@ -330,15 +342,18 @@ const fillTriumphCategories = () => {
   })
 }
 
-const getPlugSetDefinitions = async () => {
-  if (!definitionsStore.manifest) await getManifest()
+async function getPlugSetDefinitions() {
   if (!definitionsStore.manifest) return
-  const plugSets = await api.getDestinyManifestDefinition<DestinyPlugSetDefinition>(
-    definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPlugSetDefinition
-  )
-  for (const key of Object.keys(plugSets)) {
-    const plugSet = plugSets[Number(key)]
-    definitionsStore.plugSetDefinitions.set(key, plugSet)
+  try {
+    const plugSets = await api.getDestinyManifestDefinition<DestinyPlugSetDefinition>(
+      definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPlugSetDefinition
+    )
+    for (const key of Object.keys(plugSets)) {
+      const plugSet = plugSets[Number(key)]
+      definitionsStore.plugSetDefinitions.set(key, plugSet)
+    }
+  } catch (error) {
+    showError(error)
   }
 }
 </script>

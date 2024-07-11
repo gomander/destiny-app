@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { searchPlayersByBungieName, searchUsersByName } from 'src/utils/api'
-import { showNotification } from 'src/utils/messenger'
+import { showError, showNotification } from 'src/utils/messenger'
 import { BungieMember } from 'src/types'
 
 interface Props {
@@ -130,27 +130,32 @@ const showMenu = ref(false)
 const options = ref<BungieMember[]>([])
 
 const getOptions = async (query: string) => {
-  if (query.includes('#')) {
-    const results = await searchPlayersByBungieName(query)
-    return results.map(result => ({
-      id: result.membershipId,
-      type: result.membershipType,
-      name: result.bungieGlobalDisplayName,
-      code: result.bungieGlobalDisplayNameCode || 0
-    }))
-  }
-  const results = await searchUsersByName(query)
-  return results.map(result => {
-    const primaryMembership = result.destinyMemberships.find(
-      membership => membership.applicableMembershipTypes.length > 0
-    ) || result.destinyMemberships[0]
-    return {
-      id: primaryMembership?.membershipId || '',
-      type: primaryMembership?.membershipType || 0,
-      name: result.bungieGlobalDisplayName,
-      code: result.bungieGlobalDisplayNameCode || 0
+  try {
+    if (query.includes('#')) {
+      const results = await searchPlayersByBungieName(query)
+      return results.map(result => ({
+        id: result.membershipId,
+        type: result.membershipType,
+        name: result.bungieGlobalDisplayName,
+        code: result.bungieGlobalDisplayNameCode || 0
+      }))
     }
-  }).filter(player => player.code)
+    const results = await searchUsersByName(query)
+    return results.map(result => {
+      const primaryMembership = result.destinyMemberships.find(
+        membership => membership.applicableMembershipTypes.length > 0
+      ) || result.destinyMemberships[0]
+      return {
+        id: primaryMembership?.membershipId || '',
+        type: primaryMembership?.membershipType || 0,
+        name: result.bungieGlobalDisplayName,
+        code: result.bungieGlobalDisplayNameCode || 0
+      }
+    }).filter(player => player.code)
+  } catch (error) {
+    showError(error)
+    return []
+  }
 }
 
 watch(input, async () => {

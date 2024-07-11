@@ -12,6 +12,7 @@ import { getGroup } from 'src/utils/firebase'
 import { getPlayerByBungieName } from 'src/utils/api'
 import TriumphsListTable from './TriumphsListTable.vue'
 import { BungieMember, Triumph } from 'src/types'
+import { showError } from 'src/utils/messenger'
 
 interface Props {
   title: string
@@ -28,9 +29,14 @@ const players = ref<BungieMember[]>([])
 const updatePlayers = async () => {
   if (!groupId.value) {
     const playersArray = await Promise.all(
-      props.players?.map(
-        name => getPlayerByBungieName(name)
-      ) || []
+      props.players?.map(name => {
+        try {
+          return getPlayerByBungieName(name)
+        } catch (error) {
+          showError(error)
+          return null
+        }
+      }) || []
     )
     players.value = []
     for (const player of playersArray) {
