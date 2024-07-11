@@ -31,6 +31,7 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
       WeaponType.Glaive,
       WeaponType.GrenadeLauncher,
       WeaponType.Shotgun,
+      WeaponType.Sidearm,
       WeaponType.SniperRifle,
       WeaponType.TraceRifle
     ]
@@ -72,9 +73,9 @@ export const swapUniqueFrames = (
     case 1282254042: return 1294026524 // Together Forever -> Adaptive (Drang)
     case 2213377102: return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
     case 3054949324: return 3983457027 // Shot Package -> Aggressive (Felwinter's Lie)
-    case 216781713: return 3419274965 // Häkke Precision -> Precision (rocket launchers)
-    case 31057037: return 3449390870 // Omolon Adaptive -> Adaptive (sidearms)
-    case 3364911712: return 3920852688 // VEIST Rapid-Fire -> Rapid-Fire (scout rifles)
+    case 216781713: return 3419274965 // Precision -> Precision (rocket launchers)
+    case 31057037: return 3449390870 // Adaptive -> Adaptive (sidearms)
+    case 3364911712: return 3920852688 // Rapid-Fire -> Rapid-Fire (scout rifles)
     case 895140517: return 1636108362 // Precision -> Precision (shotguns)
     case 2189829540: return 1294026524 // Adaptive -> Adaptive (Rose)
     case 3468089894: // Aggressive -> Aggressive
@@ -84,12 +85,6 @@ export const swapUniqueFrames = (
       }
     default: return frameHash
   }
-}
-
-export const cleanUpFrameName = (frame: string) => {
-  return frame
-    .replace('Frame', '')
-    .replace('Glaive', '')
 }
 
 const oldDupes = [
@@ -254,6 +249,7 @@ const oldDupes = [
   3993415705, // The Mountaintop
   3190698551, // Wishbringer
   4174481098, // Steel Sybil Z-14
+  3354242550, // The Recluse
   // Into the Light
   2499720827, // Midnight Coup
   3757612024, // Luna's Howl
@@ -278,6 +274,7 @@ const oldDupes = [
   // Reckoning
   3116356268, // Spare Rations
   2744715540, // Bug-Out Bag
+  299665907, // Outlast
   755130877, // Last Man Standing
   1115104187, // Sole Survivor
   715338174, // Just in Case

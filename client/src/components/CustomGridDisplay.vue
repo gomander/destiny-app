@@ -18,11 +18,11 @@
       v-for="column of frames"
       ref="columnHeaderRefs"
     >
-      <div>
+      <div v-if="column">
         <img
-          :src="'https://www.bungie.net' + column?.icon"
-          :alt="cleanUpFrameName(column!.name)"
-          :title="cleanUpFrameName(column!.name) + '\n\n' + column?.description"
+          :src="'https://www.bungie.net' + column.icon"
+          :alt="column.name"
+          :title="column.name + '\n\n' + column.description"
         />
       </div>
     </div>
@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useGameStore } from 'src/stores/game-store'
-import { getWeaponIconAndName, cleanUpFrameName } from 'src/utils/weapon-util'
+import { getWeaponIconAndName } from 'src/utils/weapon-util'
 import { AmmoType, Weapon, WeaponType } from 'src/types'
 
 const gameStore = useGameStore()
