@@ -47,16 +47,13 @@
       :style="style"
     >
       <div v-for="weapon of cellWeapons[i]">
-        <a
-          :href="`https://d2foundry.gg/w/${weapon.hash}`"
-          target="_blank"
-        >
-          <img
-            :src="weapon.icon"
-            :alt="weapon.name"
-            :title="weapon.name"
-          />
+        <a :href="`https://d2foundry.gg/w/${weapon.hash}`" target="_blank">
+          <img :src="weapon.icon" :alt="weapon.name" />
         </a>
+
+        <q-tooltip class="text-body2">
+          {{ weapon.name }}
+        </q-tooltip>
       </div>
     </div>
   </div>
