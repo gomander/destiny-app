@@ -1,7 +1,7 @@
 FROM node:22-slim
-WORKDIR /usr/src/app
-COPY package*.json .
-RUN npm i --omit=dev
+WORKDIR /app
 COPY . .
+RUN npm i -g pnpm
+RUN pnpm install --frozen-lockfile --prod
 USER node
-CMD [ "npm", "run", "start" ]
+CMD ["pnpm", "start"]
