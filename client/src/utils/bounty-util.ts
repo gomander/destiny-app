@@ -1,4 +1,4 @@
-import { ghostMods } from 'src/data/xp-modifiers'
+import { ghostMods } from '../data/xp-modifiers'
 
 const XP_PER_LEVEL = 100000
 const SEASON_PASS_BONUS = 0.2

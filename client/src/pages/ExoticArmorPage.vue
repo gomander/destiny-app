@@ -31,9 +31,9 @@
           <img
             v-for="ornament in armor.ornaments"
             :key="ornament"
-            :src="getOrnament(ornament)?.icon"
+            :src="getOrnament(ornament)?.icon || ''"
             alt=""
-            :title="getOrnament(ornament)?.name"
+            :title="getOrnament(ornament)?.name || ''"
             class="exotic q-ml-sm"
           />
         </li>
@@ -43,9 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import { useGameStore } from 'src/stores/game-store'
+import { useGameStore } from '../stores/game-store'
 import { DestinyClass, DestinyItemSubType } from 'bungie-api-ts/destiny2'
-import seasons from 'src/data/seasons'
+import seasons from '../data/seasons'
 
 const gameStore = useGameStore()
 

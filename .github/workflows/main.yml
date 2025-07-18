@@ -9,16 +9,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Install Node.js 20
+      - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - name: Install NPM packages
         run: cd client; npm i
       - name: Create env file
-        run: echo '${{ secrets.ENV_FILE_PROD }}' > client/.env.prod
+        run: echo '${{ secrets.ENV_FILE_PROD }}' > client/.env
       - name: Add COMMIT_HASH to env file
-        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> client/.env.prod
+        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> client/.env
       - name: Build client
         run: cd client; npm run build
       - name: Prepare authorization with Google Cloud

@@ -1,7 +1,7 @@
-FROM node:20-slim
+FROM node:22-slim
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install -g npm
+COPY package*.json .
 RUN npm i --omit=dev
-COPY . ./
+COPY . .
+USER node
 CMD [ "npm", "run", "start" ]

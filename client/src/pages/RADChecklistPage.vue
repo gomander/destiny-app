@@ -111,17 +111,17 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useGameStore } from 'src/stores/game-store'
-import { useUserStore } from 'src/stores/user-store'
-import { createGroup } from 'src/utils/firebase'
+import { useGameStore } from '../stores/game-store'
+import { useUserStore } from '../stores/user-store'
+import { createGroup } from '../utils/firebase'
 import AuthenticateButton from 'src/components/AuthenticateButton.vue'
 import CreateGroupForm from 'src/components/CreateGroupForm.vue'
 import FindPlayerForm from 'src/components/FindPlayerForm.vue'
 import GroupForm from 'src/components/GroupForm.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
-import { BungieMember, Group } from 'src/types'
-import raids from 'src/data/raids'
+import { BungieMember, Group } from '../types'
+import raids from '../data/raids'
 
 const route = useRoute()
 const router = useRouter()

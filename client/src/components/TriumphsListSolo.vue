@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import TriumphsListTable from 'src/components/TriumphsListTable.vue'
-import { BungieMember, Triumph } from 'src/types'
+import { BungieMember, Triumph } from '../types'
 
 interface Props {
   title: string

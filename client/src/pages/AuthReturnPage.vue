@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from 'src/stores/auth-store'
-import { useUserStore } from 'src/stores/user-store'
-import * as api from 'src/utils/api'
-import { showError } from 'src/utils/messenger'
+import { useAuthStore } from '../stores/auth-store'
+import { useUserStore } from '../stores/user-store'
+import * as api from '../utils/api'
+import { showError } from '../utils/messenger'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()

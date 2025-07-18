@@ -1,9 +1,9 @@
-import { useDefinitionsStore } from 'src/stores/definitions-store'
-import { useGameStore } from 'src/stores/game-store'
-import { useUserStore } from 'src/stores/user-store'
-import * as api from 'src/utils/api'
+import { useDefinitionsStore } from '../stores/definitions-store'
+import { useGameStore } from '../stores/game-store'
+import { useUserStore } from '../stores/user-store'
+import * as api from '../utils/api'
 import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
-import { TriumphPlayer } from 'src/types'
+import { TriumphPlayer } from '../types'
 
 const definitionsStore = useDefinitionsStore()
 const gameStore = useGameStore()

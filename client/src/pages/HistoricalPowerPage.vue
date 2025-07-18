@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import seasons from 'src/data/seasons'
+import seasons from '../data/seasons'
 
 const columns = [
   {

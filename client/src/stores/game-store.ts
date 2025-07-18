@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import {
   Armor, Bounty, DamageType, Ornament, TriumphCategory, Weapon, WeaponFrame
-} from 'src/types'
+} from '../types'
 
 export const useGameStore = defineStore(
   'game',

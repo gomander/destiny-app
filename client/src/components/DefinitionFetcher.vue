@@ -2,12 +2,12 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useDefinitionsStore } from 'src/stores/definitions-store'
-import { useGameStore } from 'src/stores/game-store'
-import * as api from 'src/utils/api'
-import { isOldDuplicate, swapUniqueFrames } from 'src/utils/weapon-util'
-import { filteredTriumphs } from 'src/utils/triumph-util'
-import { showError } from 'src/utils/messenger'
+import { useDefinitionsStore } from '../stores/definitions-store'
+import { useGameStore } from '../stores/game-store'
+import * as api from '../utils/api'
+import { isOldDuplicate, swapUniqueFrames } from '../utils/weapon-util'
+import { filteredTriumphs } from '../utils/triumph-util'
+import { showError } from '../utils/messenger'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
   DestinyItemSubType, DestinyItemType, DestinyPlugSetDefinition,
@@ -17,8 +17,8 @@ import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
   BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon,
   RaidTitleTriumphCategories, RaidTriumphCategories
-} from 'src/types'
-import { xpRewardTiers } from 'src/data/xp-modifiers'
+} from '../types'
+import { xpRewardTiers } from '../data/xp-modifiers'
 
 const gameStore = useGameStore()
 const definitionsStore = useDefinitionsStore()

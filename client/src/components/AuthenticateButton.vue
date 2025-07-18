@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from 'src/stores/auth-store'
-import { authorizationURL } from 'src/utils/api'
+import { useAuthStore } from '../stores/auth-store'
+import { authorizationURL } from '../utils/api'
 
 interface Props { tooltip?: string }
 const props = defineProps<Props>()
