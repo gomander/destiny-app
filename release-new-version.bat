@@ -3,7 +3,7 @@ git pull
 git checkout master
 
 cd client
-pnpm version major
+call pnpm version major
 cd ..
 for /f "delims=" %%i in ('
   node -e "console.log(require('./client/package.json').version.split('.')[0])"
