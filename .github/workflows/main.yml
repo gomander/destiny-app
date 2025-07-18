@@ -9,29 +9,28 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Install Node.js 20
+      - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - name: Install NPM packages
         run: cd client; npm i
       - name: Create env file
-        run: echo '${{ secrets.ENV_FILE_PROD }}' > client/.env.prod
+        run: echo '${{ secrets.ENV_FILE_PROD }}' > client/.env
       - name: Add COMMIT_HASH to env file
-        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> client/.env.prod
+        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> client/.env
       - name: Build client
         run: cd client; npm run build
       - name: Prepare authorization with Google Cloud
-        id: 'auth'
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS_PROD }}'
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_PROD }}
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
       - name: Deploy to production environment
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          firebaseServiceAccount: '${{ secrets.GCP_CREDENTIALS_PROD }}'
+          firebaseServiceAccount: ${{ secrets.GCP_CREDENTIALS_PROD }}
           expires: 30d
           channelId: live
           projectId: darci-gg
@@ -41,24 +40,15 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Install Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install NPM packages
-        run: cd server; npm i
       - name: Create env file
-        run: echo '${{ secrets.ENV_FILE_PROD }}' > server/.env.prod
+        run: echo '${{ secrets.ENV_FILE_PROD }}' > server/.env
       - name: Add COMMIT_HASH to env file
-        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> server/.env.prod
-      - name: Build server
-        run: cd server; npm run build
+        run: echo "COMMIT_HASH=$(git rev-parse --short=4 HEAD)" >> server/.env
       - name: Prepare authorization with Google Cloud
-        id: 'auth'
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS_PROD }}'
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_PROD }}
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
       - name: Deploy to production environment
-        run: cd server; ./deploy-prod.sh
+        run: cd server; gcloud run deploy api --source . --platform managed --region us-central1 --allow-unauthenticated --min-instances 0 --max-instances 2 --project darci-gg

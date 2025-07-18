@@ -79,9 +79,9 @@
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-import { calculateXp } from 'src/utils/bounty-util'
+import { calculateXp } from '../utils/bounty-util'
 import BountyTable from 'src/components/BountyTable.vue'
-import { ghostMods, sharedWisdomTiers } from 'src/data/xp-modifiers'
+import { ghostMods, sharedWisdomTiers } from '../data/xp-modifiers'
 
 const state = reactive({
   characterCount: 3,

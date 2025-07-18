@@ -9,10 +9,12 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 import { configure } from 'quasar/wrappers'
-import env from 'dotenv-flow'
-const envConfig = env.config()
+import dotenv from 'dotenv'
+import { version } from './package.json'
 
-export default configure(function (/* ctx */) {
+const VERSION = version.split('.')[0]
+
+export default configure((/* ctx */) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
@@ -36,10 +38,6 @@ export default configure(function (/* ctx */) {
     ],
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
-      target: {
-        browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
-        node: 'node20'
-      },
       vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
@@ -47,32 +45,35 @@ export default configure(function (/* ctx */) {
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
       // publicPath: '/',
       // analyze: true,
-      env: (() => {
-        const env = envConfig.parsed
-        env.VERSION = require('./package.json').version
-        return env
-      })(),
+      env: { ...dotenv.config().parsed, VERSION },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
       polyfillModulePreload: true,
       // distDir
       extendViteConf (viteConf) {
-        const version = require('./package.json').version
-        if (!viteConf.build.rollupOptions) {
-          viteConf.build.rollupOptions = {
-            output: {}
+        viteConf.build ??= {}
+        viteConf.build.rollupOptions ??= {}
+        viteConf.build.rollupOptions.output ??= {}
+        const { output } = viteConf.build.rollupOptions
+        if (Array.isArray(output)) {
+          for (const o of output) {
+            o.entryFileNames = `assets/[name]-v${VERSION}.js`
+            o.chunkFileNames = `assets/[name]-v${VERSION}.js`
           }
+        } else {
+          output.entryFileNames = `assets/[name]-v${VERSION}.js`
+          output.chunkFileNames = `assets/[name]-v${VERSION}.js`
         }
-        const output = viteConf.build.rollupOptions.output
-        output.entryFileNames = `assets/[name]-v${version}.js`
-        output.chunkFileNames = `assets/[name]-v${version}.js`
-        output.assetFileNames = `assets/[name]-v${version}.[ext]`
       },
       // viteVuePluginOptions: {},
       // vitePlugins: [
       //   [ 'package-name', { ..options.. } ]
       // ]
+      typescript: {
+        strict: true,
+        vueShim: true
+      }
     },
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {

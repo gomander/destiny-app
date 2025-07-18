@@ -1,7 +1,7 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
-import { CreateGroupData } from '../types'
-import { createGroup, getGroup } from '../services/groups-service'
+import type { CreateGroupData } from '../types.ts'
+import { createGroup, getGroup } from '../services/groups-service.ts'
 
 export const show = async (req: Request, res: Response) => {
   try {

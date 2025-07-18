@@ -1,6 +1,6 @@
 import express from 'express'
-import { show, store } from '../controllers/groups-controller'
-import { createGroupRules } from '../rules/group-rules'
+import { show, store } from '../controllers/groups-controller.ts'
+import { createGroupRules } from '../rules/group-rules.ts'
 
 const router = express.Router()
 

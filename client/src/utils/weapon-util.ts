@@ -1,7 +1,7 @@
 import { DestinyItemSubType } from 'bungie-api-ts/destiny2'
 import {
   AmmoType, DestinyIcon, ExplicitWeaponType, WeaponType
-} from 'src/types'
+} from '../types'
 
 export const capitalizeText = (s: string) => {
   return s.toLowerCase()

@@ -1,8 +1,8 @@
-import 'dotenv-flow/config'
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import routes from './routes'
+import routes from './routes/index.ts'
 
 const app = express()
 app.use(cors({ origin: /localhost/ }))

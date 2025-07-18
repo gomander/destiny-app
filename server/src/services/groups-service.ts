@@ -1,5 +1,5 @@
-import FirestoreDatabase from '../firestore-database'
-import { CreateGroupData } from '../types'
+import FirestoreDatabase from '../firestore-database.ts'
+import type { CreateGroupData } from '../types.ts'
 
 export const getGroup = async (path: string) => {
   const db = FirestoreDatabase()

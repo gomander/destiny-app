@@ -35,8 +35,8 @@
       <div>
         <img
           :src="'https://www.bungie.net' + row?.icon"
-          :alt="row?.name"
-          :title="row?.name"
+          :alt="row?.name || ''"
+          :title="row?.name || ''"
         />
       </div>
     </div>
@@ -61,9 +61,9 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { useGameStore } from 'src/stores/game-store'
-import { getWeaponIconAndName } from 'src/utils/weapon-util'
-import { AmmoType, Weapon, WeaponType } from 'src/types'
+import { useGameStore } from '../stores/game-store'
+import { getWeaponIconAndName } from '../utils/weapon-util'
+import { AmmoType, Weapon, WeaponType } from '../types'
 
 const gameStore = useGameStore()
 

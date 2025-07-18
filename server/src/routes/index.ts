@@ -1,5 +1,5 @@
 import express from 'express'
-import groups from './groups-router'
+import groups from './groups-router.ts'
 
 const router = express.Router()
 

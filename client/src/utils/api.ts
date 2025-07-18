@@ -8,8 +8,8 @@ import {
 import {
   UserInfoCard, UserMembershipData, UserSearchResponse,
   UserSearchResponseDetail
-} from 'bungie-api-ts/user/interfaces'
-import { BungieTokens } from 'src/types'
+} from 'bungie-api-ts/user'
+import { BungieTokens } from '../types'
 
 export function authorizationURL(state: string): string {
   const queryParams = new URLSearchParams({

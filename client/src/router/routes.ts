@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import raids from 'src/data/raids'
+import raids from '../data/raids'
 
 const raidsSelector = raids.map(raid => raid.id).join('|')
 

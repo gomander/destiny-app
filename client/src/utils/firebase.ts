@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { showError } from 'src/utils/messenger'
-import { DarciApiResponse, Group } from 'src/types'
+import { showError } from './messenger'
+import { DarciApiResponse, Group } from '../types'
 
 export const getGroup = async (groupId: string) => {
   try {
