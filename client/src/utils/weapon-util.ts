@@ -33,7 +33,8 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
       WeaponType.Shotgun,
       WeaponType.Sidearm,
       WeaponType.SniperRifle,
-      WeaponType.TraceRifle
+      WeaponType.TraceRifle,
+      WeaponType.PulseRifle
     ]
   }
   if (ammoType === AmmoType.Heavy) {
@@ -42,7 +43,8 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
       WeaponType.LinearFusionRifle,
       WeaponType.MachineGun,
       WeaponType.RocketLauncher,
-      WeaponType.Sword
+      WeaponType.Sword,
+      WeaponType.Bow
     ]
   }
 }
@@ -111,17 +113,19 @@ const oldDupes = [
   // Arrivals
   614426548, // Falling Guillotine
   // Guardian Games
-  294129361, 3559361670, // The Title
-  1389546626, // Taraxippos
+  294129361, 3559361670, 655712834, // The Title
+  1389546626, 3007479950, // Taraxippos
+  657927352, // Hullabaloo
   // IKELOS v1.0.2
   // 1096206669, // IKELOS_SG_v1.0.2
   // 1200824700, // IKELOS_HC_v1.0.2
   // 1253087083, // IKELOS_SR_v1.0.2
   // 2222560548, // IKELOS_SMG_v1.0.2
   // Festival of the Lost
-  528834068, // Braytech Werewolf
-  2261046232, 2603335652, // Jurassic Green
-  1280894514, // Mechabre
+  528834068, 2869466318, // Braytech Werewolf
+  2261046232, 2603335652, 3103255595, // Jurassic Green
+  1280894514, 3871226707, // Mechabre
+  413901114, // Acosmic
   // Iron Banner
   2014642399, // The Forward Path
   1942069133, 540880995, // Dark Decider
@@ -147,33 +151,29 @@ const oldDupes = [
   1870979911, // Orewing's Maul
   3434507093, // Occluded Finality
   432716552, // Shining Sphere
+  829330711, // Peacebond
   // The Dawning
   1506719573, 2814093983, // Cold Front
-  1030895163, 3573686365, // Glacioclasm
-  66875353, 495940989, // Avalanche
-  3400256755, 396910433, // Zephyr
-  2812100428, // Stay Frosty
+  1030895163, 3573686365, 2728851518, // Glacioclasm
+  66875353, 495940989, 4220529694, // Avalanche
+  3400256755, 396910433, 1911078836, // Zephyr
+  2812100428, 1891321753, // Stay Frosty
+  2680976411, // Albedo Wing
   // Trials of Osiris
   1574601402, // Whistler's Whim
-  711889599, // Whistler's Whim (Adept)
-  3102421004, // Exalted Truth
-  3920882229, // Exalted Truth (Adept)
+  3102421004, 548809020, // Exalted Truth
   3658188704, // The Messenger
-  1173780905, // The Messenger (Adept)
   1697682876, // Astral Horizon
-  532746994, // Astral Horizon (Adept)
-  2185327324, // The Inquisitor
-  2307365, // The Inquisitor (Adept)
-  3624844116, // Unwavering Duty
-  2759251821, // Unwavering Duty (Adept)
+  2185327324, 2653171212, // The Inquisitor
+  3624844116, 906840740, // Unwavering Duty
   2351180975, // Igneous Hammer
-  2527666306, // Igneous Hammer (Adept)
   3164743584, 1401300690, // Eye of Sol
-  3637570176, // Eye of Sol (Adept)
   1907698332, // The Summoner
-  3514144928, // The Summoner (Adept)
   3682803680, // Shayura's Wrath
   4248997900, // Incisor
+  2638190703, // Aisha's Embrace
+  2345794502, // Forgiveness
+  958384347, // Tomorrow's Answer
   // Trials of the Nine
   1503609584, // The Last Breath
   1909527966, // Prosecutor
@@ -193,6 +193,7 @@ const oldDupes = [
   3582424018, // Deadpan Delivery
   2290863050, 4083045006, // Persuader
   3551104348, // Double-Edged Answer
+  4146702548, // Outrageous Fortune
   // Nightfall
   1457979868, // Duty Bound
   4238497225, // D.F.A.
@@ -202,20 +203,16 @@ const oldDupes = [
   580961571, // Loaded Question
   805677041, // Buzzard
   4281371574, 772231794, 3832743906, // Hung Jury SR4
-  681067419, 4074251943, // Hung Jury SR4 (Adept)
   3745974521, 40394833, // The Militia's Birthright
-  2378101424, // The Militia's Birthright (Adept)
   4117693024, 1094005544, // Mindbender's Ambition
   578459533, 3183283212, // Wendigo GL3
-  555148853, // Wendigo GL3 (Adept)
   47772649, // THE SWARM
-  3836861464, // THE SWARM (Adept)
   2065081837, 2450917538, // Uzume RR4
-  852228780, // Uzume RR4 (Adept)
-  192784503, // Pre Astyanax IV
+  192784503, 2932922810, // Pre Astyanax IV
   1151688091, // Undercurrent
   990416096, // Silicon Neuroma
   1929278169, // BrayTech Osprey
+  1289000550, // PLUG ONE.1
   // Last Wish
   601592879, // Age-Old Bond
   2721249463, // Tyranny of Heaven
@@ -229,6 +226,9 @@ const oldDupes = [
   1856262127, 3240434620, // Something New
   2591111628, 233896077, // Compass Rose
   3256453690, // Crowning Duologue
+  591672323, // Fortunate Star
+  2965080304, // Yeartide Apex
+  3977654524, // Festival Flight
   // Dreaming City
   640114618, // Tigerspite
   334171687, // Waking Vigil
@@ -250,6 +250,7 @@ const oldDupes = [
   3190698551, // Wishbringer
   4174481098, // Steel Sybil Z-14
   3354242550, // The Recluse
+  2050789284, // Stars in Shadow
   // Into the Light
   2499720827, // Midnight Coup
   3757612024, // Luna's Howl
@@ -272,6 +273,7 @@ const oldDupes = [
   4077196130, // Trust
   324382200, // Breakneck
   1584643826, // Hush
+  2712244741, // Bygones
   // Reckoning
   3116356268, // Spare Rations
   2744715540, // Bug-Out Bag
@@ -346,6 +348,57 @@ const oldDupes = [
   // Class swords
   1180270694, // Crown-Splitter
   1180270692, // Quickfang
+  // Rite of the Nine
+  2129814338, // Prosecutor
+  1773934241, // Judgment
+  3681280908, // Relentless
+  14929251, // Long Arm
+  1460079227, // Liminal Vigil
+  4193602194, // No Survivors
+  1685406703, // Greasy Luck
+  2982006965, // Wilderflight
+  492673102, // New Pacific Epitaph
+  1904170910, // A Sudden Death
+  2730671571, // Terminus Horizon
+  2760833884, // Cold Comfort
+  // Splicer
+  1119734784, // Chroma Rush
+  1621558458, // Gridskipper
+  304659313, // Ignition Code
+  599895591, // Sojourner's Tale
+  // Garden of Salvation
+  3385326721, // Reckless Oracle
+  4095896073, // Accrued Redemption
+  2408405461, // Sacred Provenance
+  2209003210, // Zealot's Reward
+  4020742303, // Prophet of Doom
+  3454326177, // Omniscient Eye
+  // Vault of Glass
+  2171478765, // Fatebringer
+  3186018373, // Vision of Confluence
+  3197270240, // Found Verdict
+  3653573172, // Praedyth's Revenge
+  4050645223, // Hezen Vengeance
+  // Heresy
+  3229982889, // Adamantite
+  2291392465, // Anamnesis
+  2903168058, // Division
+  3234363830, // Mirror Imago
+  3228630258, // Afterlight
+  3269398063, // Refusal of the Call
+  4028298892, // Psychopomp
+  727781522, // Eyes Unveiled
+  1757177186, // Watchful Eye
+  547165496, // Abyssal Edge
+  211938782, // Whispering Slab
+  1216130969, // Cold Denial
+  607191995, // Hollow Words
+  35794111, // Temptation's Hook
+  // Kepler
+  3804242793, 3804242792, // Phoneutria Fera
+  2888021252, 2888021253, // Trachinus
+  407150810, 407150811, // Ribbontail
+  2765451291, 2765451290, // Synanceia
 ]
 
 export const isOldDuplicate = (hash: number) => {
