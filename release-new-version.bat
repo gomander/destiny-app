@@ -1,6 +1,6 @@
 git push
 git pull
-git checkout master
+git checkout main
 
 cd client
 call pnpm version major
