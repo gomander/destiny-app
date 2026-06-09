@@ -34,7 +34,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS_PROD }}
       - name: Deploy to production environment
-        uses: pnpx firebase-tools deploy --only=hosting --project="$PROJECT_ID"
+        run: pnpx firebase-tools deploy --only=hosting --project="$PROJECT_ID"
   deploy-server:
     runs-on: ubuntu-latest
     timeout-minutes: 5
