@@ -11,16 +11,15 @@ import { onMounted, ref, toRef, watch } from 'vue'
 import { getGroup } from '../utils/firebase'
 import { getPlayerByBungieName } from '../utils/api'
 import TriumphsListTable from './TriumphsListTable.vue'
-import { BungieMember, Triumph } from '../types'
+import type { BungieMember, Triumph } from '../types'
 import { showError } from '../utils/messenger'
 
-interface Props {
+const props = defineProps<{
   title: string
   triumphs: Triumph[]
   groupId?: string
   players?: string[]
-}
-const props = defineProps<Props>()
+}>()
 
 const groupId = toRef(props, 'groupId')
 

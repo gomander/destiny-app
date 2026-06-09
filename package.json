@@ -1,0 +1,20 @@
+{
+  "name": "@darci/monorepo",
+  "version": "46.0.0",
+  "description": "A collection of tools and information for Destiny 2",
+  "author": "Gunnar Omander <gunnar@gomander.dev> (https://gomander.dev)",
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "check-types": "pnpm -r check-types"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@11.5.2+sha512.71c631e382066efc25625d5cf029075de07b61b37f6e27350fbd84b1bda5864c8c1967adc280776b45c30a715c0359a3be08fef42d5bb09e2b99029979692916",
+  "type": "module",
+  "private": true
+}

@@ -1,46 +1,32 @@
 {
-  "name": "darci.gg",
+  "name": "@darci/client",
   "version": "46.0.0",
-  "description": "A collection of tools and information for Destiny 2.",
-  "productName": "DARCI",
-  "author": "Gunnar Omander <gunnar@gomander.dev> (https://gomander.dev)",
-  "private": true,
   "scripts": {
     "dev": "quasar dev",
     "build": "quasar build",
-    "postinstall": "quasar prepare"
+    "postinstall": "quasar prepare",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@quasar/extras": "^1.17.0",
-    "axios": "^1.10.0",
-    "pinia": "^3.0.3",
-    "pinia-plugin-persistedstate": "^4.4.1",
-    "quasar": "^2.18.1",
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "@quasar/extras": "^2.0.0",
+    "axios": "^1.17.0",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "quasar": "^2.19.3",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^2.2.1",
-    "@quasar/cli": "^2.5.0",
-    "@quasar/vite-plugin": "^1.9.0",
-    "@types/node": "^22.16.4",
-    "@vitejs/plugin-vue": "^5.2.4",
-    "autoprefixer": "^10.4.21",
-    "bungie-api-ts": "^5.3.0",
-    "cross-env": "^7.0.3",
-    "dotenv": "^17.2.0",
-    "dotenv-flow": "^4.1.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "@quasar/app-vite": "^2.6.2",
+    "autoprefixer": "^10.5.0",
+    "bungie-api-ts": "^5.10.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vue-tsc": "^3.3.4"
   },
   "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
+    "node": ">=24"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "electron",
-      "esbuild"
-    ]
-  }
+  "type": "module",
+  "private": true
 }

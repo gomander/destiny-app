@@ -114,7 +114,7 @@ import {
 } from '../services/profile-service'
 import type { QTableColumn } from 'quasar'
 import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
-import { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
+import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
 
 interface Props {
   title: string

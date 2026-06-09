@@ -1,4 +1,4 @@
-import {
+import type {
   DestinyClass, DestinyItemSubType, DestinyObjectiveProgress, TierType
 } from 'bungie-api-ts/destiny2'
 

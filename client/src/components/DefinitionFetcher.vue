@@ -15,8 +15,8 @@ import {
 } from 'bungie-api-ts/destiny2'
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
-  BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot, Weapon,
-  RaidTitleTriumphCategories, RaidTriumphCategories
+  BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot,
+  type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories
 } from '../types'
 import { xpRewardTiers } from '../data/xp-modifiers'
 

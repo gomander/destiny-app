@@ -120,7 +120,7 @@ import FindPlayerForm from 'src/components/FindPlayerForm.vue'
 import GroupForm from 'src/components/GroupForm.vue'
 import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
 import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
-import { BungieMember, Group } from '../types'
+import type { BungieMember, Group } from '../types'
 import raids from '../data/raids'
 
 const route = useRoute()

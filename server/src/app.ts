@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import { env } from 'node:process'
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
@@ -11,7 +11,7 @@ app.use(morgan('dev'))
 
 app.use(routes)
 
-const port = process.env.PORT || 9001
+const port = env.PORT || 9001
 app.listen(port, () => {
   console.log(`Express is listening at http://localhost:${port}`)
 })

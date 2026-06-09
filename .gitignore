@@ -1,2 +1,5 @@
-dclim.exe
-.firebase
+.quasar
+node_modules
+
+*.env*
+!.env.template

@@ -75,7 +75,7 @@
 import { computed, ref, watch } from 'vue'
 import { searchPlayersByBungieName, searchUsersByName } from '../utils/api'
 import { showError, showNotification } from '../utils/messenger'
-import { BungieMember } from '../types'
+import type { BungieMember } from '../types'
 
 interface Props {
   modelValue: BungieMember | null
@@ -159,7 +159,10 @@ const getOptions = async (query: string) => {
 }
 
 watch(input, async () => {
-  if (!input.value) return options.value = []
+  if (!input.value) {
+    options.value = []
+    return
+  }
   options.value = (await getOptions(input.value)).slice(0, 10)
   showMenu.value = true
 })

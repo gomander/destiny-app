@@ -49,7 +49,7 @@
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user-store'
 import DefinitionFetcher from 'src/components/DefinitionFetcher.vue'
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
+import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const userStore = useUserStore()
 

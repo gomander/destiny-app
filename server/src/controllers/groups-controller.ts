@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
-import type { CreateGroupData } from '../types.ts'
 import { createGroup, getGroup } from '../services/groups-service.ts'
+import type { CreateGroupData } from '../types.ts'
 
 export const show = async (req: Request, res: Response) => {
   try {
@@ -16,7 +16,7 @@ export const show = async (req: Request, res: Response) => {
       status: 'success',
       data
     })
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).send({
       status: 'error',
       data: { error }
@@ -39,7 +39,7 @@ export const store = async (req: Request, res: Response) => {
       status: 'success',
       data
     })
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).send({
       status: 'error',
       data: { error }
