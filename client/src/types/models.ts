@@ -1,6 +1,4 @@
-import type {
-  DestinyClass, DestinyItemSubType, DestinyObjectiveProgress, TierType
-} from 'bungie-api-ts/destiny2'
+import type { DestinyObjectiveProgress } from 'bungie-api-ts/destiny2'
 
 export enum DamageTypeEnum {
   Kinetic = 'kinetic',
@@ -90,14 +88,6 @@ export interface WeaponStats {
   recoilDirection: number
   magazine: number
   inventorySize: number
-}
-
-export interface Bounty {
-  name: string,
-  icon: string,
-  hash: number,
-  xp: string
-  xpHash: number
 }
 
 export interface WeaponFrame {
@@ -191,26 +181,9 @@ export interface Group {
   players: BungieMember[]
 }
 
-export interface Armor {
-  name: string
-  icon: string
-  hash: number
-  slot: DestinyItemSubType
-  class: DestinyClass
-  rarity: TierType
-  ornaments: number[]
-  seasonIcon: string
-}
-
-export interface Ornament {
-  name: string
-  icon: string
-  hash: number
-}
-
-export interface DarciApiError {
+export interface DarciApiError<T = unknown> {
   status: 'error'
-  data: { error: any }
+  data: { error: T }
 }
 
 export interface DarciApiSuccess<T> {

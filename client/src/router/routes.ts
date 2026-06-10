@@ -31,19 +31,6 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: 'armor',
-        children: [
-          {
-            path: '',
-            component: () => import('pages/ExoticArmorPage.vue')
-          },
-          {
-            path: 'exotic',
-            component: () => import('pages/ExoticArmorPage.vue')
-          }
-        ]
-      },
-      {
         path: 'checklists/raids',
         children: [
           {
@@ -55,14 +42,6 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/RADChecklistPage.vue')
           }
         ]
-      },
-      {
-        path: 'bounty-calculator',
-        component: () => import('pages/BountyCalculatorPage.vue')
-      },
-      {
-        path: 'historical-power',
-        component: () => import('pages/HistoricalPowerPage.vue')
       },
       {
         path: 'auth-return',

@@ -30,6 +30,7 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
       WeaponType.FusionRifle,
       WeaponType.Glaive,
       WeaponType.GrenadeLauncher,
+      WeaponType.HandCannon,
       WeaponType.Shotgun,
       WeaponType.Sidearm,
       WeaponType.SniperRifle,
@@ -56,7 +57,7 @@ export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
  * @returns The first string enum key that has the given value, or null
  */
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
-  const keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
+  const keys = Object.keys(myEnum).filter(x => myEnum[x] === enumValue);
   return keys.length > 0 ? keys[0] : null;
 }
 

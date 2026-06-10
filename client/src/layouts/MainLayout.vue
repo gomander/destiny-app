@@ -6,14 +6,14 @@
           flat
           dense
           round
-          icon="menu"
+          icon="fas fa-bars"
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
 
         <q-toolbar-title>
           <span class="text-weight-bold">DARCI</span>
-          <span class="version">v{{ version }}</span>
+          <span style="opacity: 80%; font-size: 60%; margin-left: 0.5em">v{{ version }}</span>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user-store'
-import DefinitionFetcher from 'src/components/DefinitionFetcher.vue'
+import DefinitionFetcher from 'components/DefinitionFetcher.vue'
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const userStore = useUserStore()
@@ -86,30 +86,6 @@ const essentialLinks: EssentialLinkProps[] = [
     caption: 'Judge base stats',
     icon: 'fas fa-ranking-star',
     link: '/weapons/ranking'
-  },
-  // {
-  //   title: 'Exotic Weapons',
-  //   caption: 'Paywalls and ornaments',
-  //   icon: '',
-  //   link: '/weapons/exotic'
-  // },
-  {
-    title: 'Exotic Armor',
-    caption: 'Paywalls and ornaments',
-    icon: 'fas fa-shield-halved',
-    link: '/armor/exotic'
-  },
-  {
-    title: 'Bounty Calculator',
-    caption: 'Bounties to XP and levels',
-    icon: 'fas fa-calculator',
-    link: '/bounty-calculator'
-  },
-  {
-    title: 'Historical Power',
-    caption: 'Levels by season',
-    icon: 'fas fa-clock-rotate-left',
-    link: '/historical-power'
   }
 ]
 
@@ -119,10 +95,3 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
-
-<style scoped lang="sass">
-.version
-  opacity: 80%
-  font-size: 60%
-  margin-left: 0.5em
-</style>

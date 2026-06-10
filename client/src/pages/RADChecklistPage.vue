@@ -109,63 +109,63 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useGameStore } from '../stores/game-store'
-import { useUserStore } from '../stores/user-store'
-import { createGroup } from '../utils/firebase'
-import AuthenticateButton from 'src/components/AuthenticateButton.vue'
-import CreateGroupForm from 'src/components/CreateGroupForm.vue'
-import FindPlayerForm from 'src/components/FindPlayerForm.vue'
-import GroupForm from 'src/components/GroupForm.vue'
-import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
-import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
-import type { BungieMember, Group } from '../types'
-import raids from '../data/raids'
+  import { computed, ref, watch } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useGameStore } from '../stores/game-store'
+  import { useUserStore } from '../stores/user-store'
+  import { createGroup } from '../utils/firebase'
+  import AuthenticateButton from 'src/components/AuthenticateButton.vue'
+  import CreateGroupForm from 'src/components/CreateGroupForm.vue'
+  import FindPlayerForm from 'src/components/FindPlayerForm.vue'
+  import GroupForm from 'src/components/GroupForm.vue'
+  import TriumphsListGroup from 'src/components/TriumphsListGroup.vue'
+  import TriumphsListSolo from 'src/components/TriumphsListSolo.vue'
+  import type { BungieMember, Group } from '../types'
+  import raids from '../data/raids'
 
-const route = useRoute()
-const router = useRouter()
-const gameStore = useGameStore()
-const userStore = useUserStore()
+  const route = useRoute()
+  const router = useRouter()
+  const gameStore = useGameStore()
+  const userStore = useUserStore()
 
-const groupId = computed(() => route.params.id as string | undefined)
-const raidId = computed(() => route.params.raid as string | undefined)
-const urlPlayers = computed(() => route.params.players as string[] | undefined)
+  const groupId = computed(() => route.params.id as string | undefined)
+  const raidId = computed(() => route.params.raid as string | undefined)
+  const urlPlayers = computed(() => route.params.players as string[] | undefined)
 
-const path = computed(() =>
-  `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`
-)
+  const path = computed(() =>
+    `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`
+  )
 
-const getButtonLink = (raidId: string) => {
-  return `${path.value}/${raidId}${urlPlayers.value ? `/${urlPlayers.value?.map(player => player.replace('#', '%23')).join('/')}` : ''}`
-}
+  const getButtonLink = (raidId: string) => {
+    return `${path.value}/${raidId}${urlPlayers.value ? `/${urlPlayers.value?.map(player => player.replace('#', '%23')).join('/')}` : ''}`
+  }
 
-const currentRaid = computed(() =>
-  raids.find(raid => raid.id === raidId.value) || { name: '', id: '' }
-)
-const currentRaidTriumphs = computed(
-  () => gameStore.raidTriumphs.filter(
-    entry => entry.name.includes(currentRaid.value.name)
-  ).flatMap(entry => entry.triumphs) || []
-)
+  const currentRaid = computed(() =>
+    raids.find(raid => raid.id === raidId.value) || { name: '', id: '' }
+  )
+  const currentRaidTriumphs = computed(
+    () => gameStore.raidTriumphs.filter(
+      entry => entry.name.includes(currentRaid.value.name)
+    ).flatMap(entry => entry.triumphs) || []
+  )
 
-const createNewGroup = async (group: Group) => {
-  const path = await createGroup(group)
-  if (!path) return
-  showCreateGroupForm.value = false
-  goToGroup(path)
-}
+  const createNewGroup = async (group: Group) => {
+    const path = await createGroup(group)
+    if (!path) return
+    showCreateGroupForm.value = false
+    goToGroup(path)
+  }
 
-const goToGroup = (groupId: string) => {
-  router.push(`/checklists/raids/${groupId}/${currentRaid.value.id}`)
-}
+  const goToGroup = (groupId: string) => {
+    router.push(`/checklists/raids/${groupId}/${currentRaid.value.id}`)
+  }
 
-const goToSolo = () => {
-  router.push(`/checklists/raids/${currentRaid.value.id}`)
-}
+  const goToSolo = () => {
+    router.push(`/checklists/raids/${currentRaid.value.id}`)
+  }
 
-const showCreateGroupForm = ref(false)
+  const showCreateGroupForm = ref(false)
 
-const player = ref<BungieMember | null>(userStore.bungieMember)
-watch(player, () => goToSolo())
+  const player = ref<BungieMember | null>(userStore.bungieMember)
+  watch(player, () => goToSolo())
 </script>

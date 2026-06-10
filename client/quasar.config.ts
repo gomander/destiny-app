@@ -5,7 +5,7 @@ const VERSION = version.split('.')[0]
 
 export default defineConfig(() => ({
   boot: [],
-  css: ['app.sass'],
+  css: ['app.css'],
   extras: [
     'fontawesome-v7',
     'roboto-font'
@@ -41,7 +41,17 @@ export default defineConfig(() => ({
   framework: {
     config: {
       dark: 'auto',
-      notify: { position: 'top', progress: true }
+      notify: { position: 'top', progress: true },
+      brand: {
+        primary: '#1383a8',
+        darci: '#1595c0',
+        secondary: '#29afa6',
+        accent: '#6027b0',
+        positive: '#21ba47',
+        negative: '#c11949',
+        info: '#57c6eb',
+        warning: '#f1c64f'
+      }
     },
     iconSet: 'fontawesome-v7',
     lang: 'en-US',

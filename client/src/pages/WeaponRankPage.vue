@@ -331,20 +331,22 @@ const createScore = (stats: WeaponStats, modifier: WeaponStats) => {
 }
 </script>
 
-<style scoped lang="sass">
-.controls-row
-  max-width: 64em
-.q-select, .q-input
-  min-width: 12.5em
-
-.weapon
-  min-width: 15em
-  display: flex
-  align-items: center
-  gap: 1.5em
-
-  & > img
-    width: 2em
-    height: 2em
-    border-radius: 0.5em
+<style scoped>
+  .controls-row {
+    max-width: 64em;
+  }
+  .q-select, .q-input {
+    min-width: 12.5em;
+  }
+  .weapon {
+    min-width: 15em;
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+  }
+  .weapon > img {
+    width: 2em;
+    height: 2em;
+    border-radius: 0.5em;
+  }
 </style>

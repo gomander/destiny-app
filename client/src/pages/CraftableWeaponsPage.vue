@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { useGameStore } from '../stores/game-store'
-import { capitalizeText, getWeaponTypesOfAmmoType } from '../utils/weapon-util'
-import CustomGridDisplay from 'src/components/CustomGridDisplay.vue'
-import { AmmoType } from '../types'
+  import { useGameStore } from '../stores/game-store'
+  import { capitalizeText, getWeaponTypesOfAmmoType } from '../utils/weapon-util'
+  import CustomGridDisplay from 'src/components/CustomGridDisplay.vue'
+  import { AmmoType } from '../types'
 
-const gameStore = useGameStore()
+  const gameStore = useGameStore()
 </script>
