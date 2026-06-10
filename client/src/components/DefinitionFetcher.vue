@@ -10,8 +10,8 @@
   import { showError } from '../utils/messenger'
   import {
     DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
-    DestinyItemSubType, DestinyItemType, DestinyPlugSetDefinition,
-    DestinyPresentationNodeDefinition, DestinyRecordDefinition, TierType
+    DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
+    DestinyRecordDefinition, TierType
   } from 'bungie-api-ts/destiny2'
   import {
     BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
@@ -23,18 +23,13 @@
   const definitionsStore = useDefinitionsStore()
 
   onMounted(async () => {
+    await new Promise(r => setTimeout(r, 300))
     try {
       await getManifest()
-      await Promise.all([
-        getDamageTypeDefinitions(),
-        getPlugSetDefinitions()
-      ])
-      console.log('getting inventory item, record, and presentation node definitions')
-      await Promise.all([
-        getInventoryItemDefinitions(),
-        getRecordDefinitions(),
-        getPresentationNodeDefinitions()
-      ])
+      await getDamageTypeDefinitions()
+      await getInventoryItemDefinitions()
+      await getRecordDefinitions()
+      await getPresentationNodeDefinitions()
       console.log('filling triumph categories')
       fillTriumphCategories()
     } catch (error) {
@@ -118,6 +113,8 @@
   }
 
   async function getInventoryItemDefinitions() {
+    console.log('getting inventory item definitions')
+
     if (!definitionsStore.manifest) return
 
     if (gameStore.manifestVersion === definitionsStore.manifest.version) return
@@ -189,9 +186,12 @@
         hash: damageType.hash
       })
     }
+
+    console.log('got inventory item definitions')
   }
 
   async function getPresentationNodeDefinitions() {
+    console.log('getting presentation node definitions')
     if (!definitionsStore.manifest) return
     try {
       const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
@@ -201,12 +201,15 @@
         const node = nodes[Number(key)]
         definitionsStore.presentationNodeDefinitions.set(key, node)
       }
+      console.log('got presentation node definitions')
     } catch (error) {
+      console.error(error)
       showError(error)
     }
   }
 
   async function getRecordDefinitions() {
+    console.log('getting record definitions')
     if (!definitionsStore.manifest) return
     try {
       const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
@@ -216,7 +219,9 @@
         const record = records[Number(key)]
         definitionsStore.recordDefinitions.set(key, record)
       }
+      console.log('got record definitions')
     } catch (error) {
+      console.error(error)
       showError(error)
     }
   }
@@ -271,24 +276,5 @@
         })
       })
     })
-  }
-
-  async function getPlugSetDefinitions() {
-    console.log('getting plug set definitions')
-    if (!definitionsStore.manifest) return
-    try {
-      const plugSets = await api.getDestinyManifestDefinition<DestinyPlugSetDefinition>(
-        definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyPlugSetDefinition
-      )
-      console.log('plug set definitions fetched, loading into store')
-      for (const key of Object.keys(plugSets)) {
-        const plugSet = plugSets[Number(key)]
-        definitionsStore.plugSetDefinitions.set(key, plugSet)
-      }
-      console.log('got plug set definitions')
-    } catch (error) {
-      console.error(error)
-      showError(error)
-    }
   }
 </script>

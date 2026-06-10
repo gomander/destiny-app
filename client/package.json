@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@quasar/extras": "^2.0.0",
-    "axios": "^1.17.0",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "quasar": "^2.19.3",

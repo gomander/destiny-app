@@ -63,9 +63,10 @@ function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T,
 
 export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType) => {
   const explicitWeaponType = (weaponType === 'grenade launcher' && ammoType)
-    ? ammoType + ' ' + weaponType
+    ? `${ammoType} ${weaponType}`
     : weaponType as unknown as ExplicitWeaponType
-  const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)!
+  const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)
+  if (!w) return ['', capitalizeText(weaponType)]
   return [DestinyIcon[w], capitalizeText(weaponType)]
 }
 

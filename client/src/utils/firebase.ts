@@ -1,14 +1,12 @@
-import axios from 'axios'
 import { showError } from './messenger'
 import type { DarciApiResponse, Group } from '../types'
 
 export const getGroup = async (groupId: string) => {
   try {
-    const res = await axios.get<DarciApiResponse<Group>>(
-      `${process.env.DARCI_API}/groups/${groupId}`
-    )
-    if (res.data.status !== 'success') throw res.data.data.error
-    return res.data.data
+    const res = await fetch(`${process.env.DARCI_API}/groups/${groupId}`)
+    const data = await res.json() as DarciApiResponse<Group>
+    if (data.status !== 'success') throw data.data.error
+    return data.data
   } catch (error) {
     showError(error)
   }
@@ -16,12 +14,13 @@ export const getGroup = async (groupId: string) => {
 
 export const createGroup = async (group: Group) => {
   try {
-    const res = await axios.post<DarciApiResponse<{ path: string }>>(
+    const res = await fetch(
       `${process.env.DARCI_API}/groups`,
-      group
+      { body: JSON.stringify(group) }
     )
-    if (res.data.status !== 'success') throw res.data.data.error
-    return res.data.data.path
+    const data = await res.json() as DarciApiResponse<{ path: string }>
+    if (data.status !== 'success') throw data.data.error
+    return data.data.path
   } catch (error) {
     showError(error)
   }
