@@ -74,6 +74,8 @@ export interface Weapon {
   frameHash: number
   icon: string
   hash: number
+  craftable: boolean
+  tiered: boolean
   stats?: WeaponStats
 }
 

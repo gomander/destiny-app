@@ -21,6 +21,10 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/LegendaryWeaponsPage.vue')
           },
           {
+            path: 'tiered',
+            component: () => import('pages/TieredWeaponsPage.vue')
+          },
+          {
             path: 'craftable',
             component: () => import('pages/CraftableWeaponsPage.vue')
           },

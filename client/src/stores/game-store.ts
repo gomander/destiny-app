@@ -7,7 +7,6 @@ export const useGameStore = defineStore(
     state: () => ({
       manifestVersion: '',
       weapons: [] as Weapon[],
-      craftableWeapons: [] as Weapon[],
       weaponFrames: [] as WeaponFrame[],
       damageTypes: [] as DamageType[],
       raidTriumphs: [] as TriumphCategory[]

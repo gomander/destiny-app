@@ -1,6 +1,6 @@
 <template>
   <q-page class="items-center justify-evenly q-pa-md q-gutter-y-md">
-    <h1>Craftable Weapons</h1>
+    <h1>Tiered Weapons</h1>
 
     <p>
       Smaller displays may have to scroll horizontally and/or close the
@@ -17,7 +17,7 @@
         v-for="weaponType of getWeaponTypesOfAmmoType(ammoType)"
         :weapon-type="weaponType"
         :ammo-type="ammoType"
-        :weapons="gameStore.weapons.filter((weapon) => weapon.craftable)"
+        :weapons="gameStore.weapons.filter((weapon) => weapon.tiered)"
       />
     </section>
   </q-page>

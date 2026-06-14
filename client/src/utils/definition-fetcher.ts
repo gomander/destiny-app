@@ -69,7 +69,9 @@ export async function useDefinitionFetcher() {
       frame: definitionsStore.weaponFrameDefinitions[frameHash].displayProperties.name,
       frameHash,
       icon: 'https://www.bungie.net' + item.displayProperties.icon,
-      hash: item.hash
+      hash: item.hash,
+      craftable: !!item.inventory?.recipeItemHash,
+      tiered: !!item.inventory?.recipeItemHash || item.sockets?.socketEntries[12]?.socketTypeHash === 1236068212
     }
     if (
       [
@@ -133,7 +135,6 @@ export async function useDefinitionFetcher() {
 
     gameStore.manifestVersion = definitionsStore.manifest.version
     gameStore.weapons = []
-    gameStore.craftableWeapons = []
 
     for (const key in definitionsStore.weaponDefinitions) {
       const item = definitionsStore.weaponDefinitions[Number(key)]
@@ -144,12 +145,6 @@ export async function useDefinitionFetcher() {
       ) {
         const weapon = createWeapon(item)
         gameStore.weapons.push(weapon)
-        if (
-          item.inventory?.recipeItemHash &&
-          item.sockets?.socketEntries[12]?.singleInitialItemHash !== 253922071 // empty enhancement socket
-        ) {
-          gameStore.craftableWeapons.push(weapon)
-        }
       }
     }
 

@@ -72,6 +72,12 @@
       link: '/weapons/legendary'
     },
     {
+      title: 'Tiered Weapons',
+      caption: 'By type, frame, and element',
+      icon: 'fas fa-diamond',
+      link: '/weapons/tiered'
+    },
+    {
       title: 'Craftable Weapons',
       caption: 'By type, frame, and element',
       icon: 'fas fa-hammer',
