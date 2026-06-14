@@ -93,7 +93,7 @@ export function swapUniqueFrames(
 
 const oldDupes = [
   // Seventh Seraph
-  1561006927, // Seventh Seraph Carbine
+  1561006927, 4070357005, // Seventh Seraph Carbine
   3037520408, // Seventh Seraph Officer Revolver
   // Opulence
   2429822977, // Austringer
@@ -113,6 +113,7 @@ const oldDupes = [
   2723241847, // Patron of Lost Causes
   3850168899, // Martyr's Retribution
   946443267, // Line in the Sand
+  1251729046, // Steelfeather Repeater
   // Arrivals
   614426548, // Falling Guillotine
   // Guardian Games
@@ -129,6 +130,8 @@ const oldDupes = [
   2261046232, 2603335652, 3103255595, // Jurassic Green
   1280894514, 3871226707, // Mechabre
   413901114, // Acosmic
+  177568179, // Horror Story
+  3574168117, // Hushed Whisper
   // Iron Banner
   2014642399, // The Forward Path
   1942069133, 540880995, // Dark Decider
@@ -185,8 +188,8 @@ const oldDupes = [
   3854037061, // A Swift Verdict
   2094938673, // Adjudicator
   // Vanguard
-  1644162710, // Origin Story
-  3393130645, // Positive Outlook
+  1644162710, 2826850739, // Origin Story
+  3393130645, 491078457, // Positive Outlook
   2171006181, // Service Revolver
   339163900, // Nightshade
   1960218487, 3040742682, // Nameless Midnight
@@ -200,7 +203,7 @@ const oldDupes = [
   // Nightfall
   1457979868, 435216110, // Duty Bound
   4238497225, // D.F.A.
-  2633186522, // Shadow Price
+  2633186522, 2322926844, // Shadow Price
   233423981, 1821529912, // Warden's Law
   1071542914, // Horror's Least
   580961571, // Loaded Question
@@ -216,6 +219,7 @@ const oldDupes = [
   990416096, // Silicon Neuroma
   1929278169, // BrayTech Osprey
   1289000550, // PLUG ONE.1
+  4176873718, // Fair Judgment
   // Last Wish
   601592879, // Age-Old Bond
   2721249463, // Tyranny of Heaven
@@ -229,11 +233,11 @@ const oldDupes = [
   1856262127, 3240434620, // Something New
   2591111628, 233896077, // Compass Rose
   3256453690, // Crowning Duologue
-  591672323, // Fortunate Star
+  591672323, 2326578623, // Fortunate Star
   2965080304, // Yeartide Apex
   3977654524, // Festival Flight
   // Dreaming City
-  640114618, // Tigerspite
+  640114618, 2465372924, // Tigerspite
   334171687, // Waking Vigil
   3242168339, // Vouchsafe
   346136302, // Retold Tale
@@ -274,9 +278,11 @@ const oldDupes = [
   // Black Armory
   3843477312, // Blast Furnace
   603242241, // Hammerhead
+  93253474, 4206550094, // The Ringing Nail
+  1704597062, // The Spiteful Fang
   // Gambit
   4077196130, // Trust
-  324382200, // Breakneck
+  324382200, 2026755633, // Breakneck
   1584643826, // Hush
   2712244741, // Bygones
   1788603939, // Herod-C
@@ -313,6 +319,9 @@ const oldDupes = [
   4105447487, // Elatha FR4
   // The Moon
   2723909519, // Arc Logic
+  // Europa
+  20935540, // Arctic Haze
+  1621657423, // Biting Winds
   // Dead Orbit
   582335600, // Dire Promise
   2625782213, // Contingency Plan
@@ -358,7 +367,7 @@ const oldDupes = [
   1180270694, // Crown-Splitter
   1180270692, // Quickfang
   // Rite of the Nine
-  2129814338, // Prosecutor
+  2129814338, 3483591058, 880829467, // Prosecutor
   1773934241, // Judgment
   3681280908, // Relentless
   14929251, // Long Arm
@@ -371,12 +380,12 @@ const oldDupes = [
   2730671571, // Terminus Horizon
   2760833884, // Cold Comfort
   // Splicer
-  1119734784, // Chroma Rush
+  1119734784, 2598420927, // Chroma Rush
   1621558458, // Gridskipper
   304659313, // Ignition Code
   599895591, // Sojourner's Tale
   // Garden of Salvation
-  3385326721, // Reckless Oracle
+  3385326721, 1992309064, 1802315656, // Reckless Oracle
   4095896073, // Accrued Redemption
   2408405461, // Sacred Provenance
   2209003210, // Zealot's Reward
@@ -408,6 +417,8 @@ const oldDupes = [
   2888021252, 2888021253, // Trachinus
   407150810, 407150811, // Ribbontail
   2765451291, 2765451290, // Synanceia
+  // Warlord's Ruin
+  839344841, // Vengeful Whisper
   // Vesper's Host
   4232480042, // VS Pyroelectric Propellant
   // Sparrow Racing League

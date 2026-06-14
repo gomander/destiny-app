@@ -24,10 +24,9 @@ export async function useDefinitionFetcher() {
     await getDamageTypeDefinitions()
     await Promise.all([
       getInventoryItemDefinitions(),
-      getRecordDefinitions()
+      getRecordDefinitions(),
+      getPresentationNodeDefinitions()
     ])
-    await getPresentationNodeDefinitions()
-    console.log('filling triumph categories')
     fillTriumphCategories()
   } catch (error) {
     showError(error)
@@ -35,9 +34,7 @@ export async function useDefinitionFetcher() {
 
   async function getManifest() {
     try {
-      console.log('getting manifest')
       definitionsStore.manifest = await api.getDestinyManifest()
-      console.log('got manifest')
     } catch (error) {
       console.error(error)
       showError(error)
@@ -45,7 +42,6 @@ export async function useDefinitionFetcher() {
   }
 
   async function getDamageTypeDefinitions() {
-    console.log('getting damage type definitions')
     if (Object.keys(definitionsStore.damageTypeDefinitions).length) return
     if (!definitionsStore.manifest) return
     const damageTypes = await api.getDestinyManifestDefinition<DestinyDamageTypeDefinition>(
@@ -56,7 +52,6 @@ export async function useDefinitionFetcher() {
       if (damageType.displayProperties.name === 'Raid') continue
       definitionsStore.damageTypeDefinitions[key] = damageType
     }
-    console.log('got damage type definitions')
   }
 
   function createWeapon(item: DestinyInventoryItemDefinition): Weapon {
@@ -109,8 +104,6 @@ export async function useDefinitionFetcher() {
   }
 
   async function getInventoryItemDefinitions() {
-    console.log('getting inventory item definitions')
-
     if (!definitionsStore.manifest) return
 
     if (gameStore.manifestVersion === definitionsStore.manifest.version) return
@@ -119,13 +112,8 @@ export async function useDefinitionFetcher() {
       definitionsStore.manifest.jsonWorldComponentContentPaths.en.DestinyInventoryItemDefinition
     )
 
-    console.log('iterating over inventory items')
-
-    // console.log(JSON.stringify(items))
-
     for (const key of Object.keys(items)) {
       const item = items[Number(key)]
-      // console.log(item.displayProperties.name)
       if (
         item.itemType === DestinyItemType.Mod &&
         item.itemCategoryHashes?.includes(2237038328) // intrinsic
@@ -136,13 +124,12 @@ export async function useDefinitionFetcher() {
       if (
         item.itemType === DestinyItemType.Weapon &&
         item.itemCategoryHashes?.includes(1) && // weapon
+        !item.isHolofoil &&
         item.quality?.currentVersion === (item.quality?.versions.length || 0) - 1 // newest version
       ) {
         definitionsStore.weaponDefinitions[key] = item
       }
     }
-
-    console.log('weapons and frames added to definitionsStore')
 
     gameStore.manifestVersion = definitionsStore.manifest.version
     gameStore.weapons = []
@@ -152,7 +139,7 @@ export async function useDefinitionFetcher() {
       const item = definitionsStore.weaponDefinitions[Number(key)]
       if (
         item.inventory?.tierType === TierType.Superior &&
-        !/^.+ \((?!Baroque)\w+\)$/.test(item.displayProperties.name) && // adept
+        !item.isAdept &&
         !isOldDuplicate(item.hash)
       ) {
         const weapon = createWeapon(item)
@@ -166,8 +153,6 @@ export async function useDefinitionFetcher() {
       }
     }
 
-    console.log('manifest version and weapons added to gameStore')
-
     gameStore.weaponFrames = []
 
     for (const key in definitionsStore.weaponFrameDefinitions) {
@@ -180,8 +165,6 @@ export async function useDefinitionFetcher() {
       })
     }
 
-    console.log('weapon frames added to gameStore')
-
     gameStore.damageTypes = []
 
     for (const key in definitionsStore.damageTypeDefinitions) {
@@ -193,12 +176,9 @@ export async function useDefinitionFetcher() {
         hash: damageType.hash
       })
     }
-
-    console.log('got inventory item definitions')
   }
 
   async function getPresentationNodeDefinitions() {
-    console.log('getting presentation node definitions')
     if (!definitionsStore.manifest) return
     try {
       const nodes = await api.getDestinyManifestDefinition<DestinyPresentationNodeDefinition>(
@@ -208,7 +188,6 @@ export async function useDefinitionFetcher() {
         const node = nodes[Number(key)]
         definitionsStore.presentationNodeDefinitions.set(key, node)
       }
-      console.log('got presentation node definitions')
     } catch (error) {
       console.error(error)
       showError(error)
@@ -216,7 +195,6 @@ export async function useDefinitionFetcher() {
   }
 
   async function getRecordDefinitions() {
-    console.log('getting record definitions')
     if (!definitionsStore.manifest) return
     try {
       const records = await api.getDestinyManifestDefinition<DestinyRecordDefinition>(
@@ -226,7 +204,6 @@ export async function useDefinitionFetcher() {
         const record = records[Number(key)]
         definitionsStore.recordDefinitions.set(key, record)
       }
-      console.log('got record definitions')
     } catch (error) {
       console.error(error)
       showError(error)

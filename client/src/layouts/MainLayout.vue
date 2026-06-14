@@ -44,16 +44,18 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useUserStore } from '../stores/user-store'
   import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
   import { useDefinitionFetcher } from 'src/utils/definition-fetcher'
 
   const userStore = useUserStore()
 
-  void useDefinitionFetcher()
-
   const version = process.env.VERSION
+
+  onMounted(() => {
+    void useDefinitionFetcher()
+  })
 
   const essentialLinks: EssentialLinkProps[] = [
     {
