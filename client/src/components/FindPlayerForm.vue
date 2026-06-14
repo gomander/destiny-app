@@ -72,98 +72,97 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { searchPlayersByBungieName, searchUsersByName } from '../utils/api'
-import { showError, showNotification } from '../utils/messenger'
-import type { BungieMember } from '../types'
+  import { computed, ref, watch } from 'vue'
+  import { searchPlayersByBungieName, searchUsersByName } from '../utils/api'
+  import { showError, showNotification } from '../utils/messenger'
+  import type { BungieMember } from '../types'
 
-interface Props {
-  modelValue: BungieMember | null
-  disableOnFind?: boolean
-}
-const props = defineProps<Props>()
-const emit = defineEmits(['update:modelValue'])
+  const props = defineProps<{
+    modelValue: BungieMember | null
+    disableOnFind?: boolean
+  }>()
+  const emit = defineEmits(['update:modelValue'])
 
-const player = computed<BungieMember | null>({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-})
-const playerFound = computed(() => !!player.value)
-const input = ref(
-  playerFound.value
-    ? `${props.modelValue?.name}#${props.modelValue?.code}`
-    : ''
-)
+  const player = computed<BungieMember | null>({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value)
+  })
+  const playerFound = computed(() => !!player.value)
+  const input = ref(
+    playerFound.value
+      ? `${props.modelValue?.name}#${props.modelValue?.code}`
+      : ''
+  )
 
-watch(player, () => {
-  if (!player.value) return
-  input.value = `${player.value.name}#${player.value.code}`
-  showMenu.value = false
-})
+  watch(player, () => {
+    if (!player.value) return
+    input.value = `${player.value.name}#${player.value.code}`
+    showMenu.value = false
+  })
 
-const inputFinalized = computed(() => playerFound.value && props.disableOnFind)
-const disableSearch = computed(() =>
-  input.value.length < 3 ||
-  !/^.+\#\d{1,4}$/.test(input.value) ||
-  inputFinalized.value
-)
+  const inputFinalized = computed(() => playerFound.value && props.disableOnFind)
+  const disableSearch = computed(() =>
+    input.value.length < 3 ||
+    !/^.+\#\d{1,4}$/.test(input.value) ||
+    inputFinalized.value
+  )
 
-const search = async (e: Event) => {
-  e.preventDefault()
-  if (disableSearch.value) return
-  const players = await searchPlayersByBungieName(input.value.trim())
-  if (!players.length) return showNotification('Player not found!')
-  player.value = {
-    id: players[0].membershipId,
-    type: players[0].membershipType,
-    name: players[0].bungieGlobalDisplayName,
-    code: players[0].bungieGlobalDisplayNameCode || 0
-  }
-}
-
-const selectPlayer = (bungieMember: BungieMember) => {
-  player.value = bungieMember
-}
-
-const showMenu = ref(false)
-
-const options = ref<BungieMember[]>([])
-
-const getOptions = async (query: string) => {
-  try {
-    if (query.includes('#')) {
-      const results = await searchPlayersByBungieName(query)
-      return results.map(result => ({
-        id: result.membershipId,
-        type: result.membershipType,
-        name: result.bungieGlobalDisplayName,
-        code: result.bungieGlobalDisplayNameCode || 0
-      }))
+  async function search(e: Event) {
+    e.preventDefault()
+    if (disableSearch.value) return
+    const players = await searchPlayersByBungieName(input.value.trim())
+    if (!players.length) return showNotification('Player not found!')
+    player.value = {
+      id: players[0].membershipId,
+      type: players[0].membershipType,
+      name: players[0].bungieGlobalDisplayName,
+      code: players[0].bungieGlobalDisplayNameCode || 0
     }
-    const results = await searchUsersByName(query)
-    return results.map(result => {
-      const primaryMembership = result.destinyMemberships.find(
-        membership => membership.applicableMembershipTypes.length > 0
-      ) || result.destinyMemberships[0]
-      return {
-        id: primaryMembership?.membershipId || '',
-        type: primaryMembership?.membershipType || 0,
-        name: result.bungieGlobalDisplayName,
-        code: result.bungieGlobalDisplayNameCode || 0
-      }
-    }).filter(player => player.code)
-  } catch (error) {
-    showError(error)
-    return []
   }
-}
 
-watch(input, async () => {
-  if (!input.value) {
-    options.value = []
-    return
+  function selectPlayer(bungieMember: BungieMember) {
+    player.value = bungieMember
   }
-  options.value = (await getOptions(input.value)).slice(0, 10)
-  showMenu.value = true
-})
+
+  const showMenu = ref(false)
+
+  const options = ref<BungieMember[]>([])
+
+  async function getOptions(query: string) {
+    try {
+      if (query.includes('#')) {
+        const results = await searchPlayersByBungieName(query)
+        return results.map(result => ({
+          id: result.membershipId,
+          type: result.membershipType,
+          name: result.bungieGlobalDisplayName,
+          code: result.bungieGlobalDisplayNameCode || 0
+        }))
+      }
+      const results = await searchUsersByName(query)
+      return results.map(result => {
+        const primaryMembership = result.destinyMemberships.find(
+          membership => membership.applicableMembershipTypes.length > 0
+        ) || result.destinyMemberships[0]
+        return {
+          id: primaryMembership?.membershipId || '',
+          type: primaryMembership?.membershipType || 0,
+          name: result.bungieGlobalDisplayName,
+          code: result.bungieGlobalDisplayNameCode || 0
+        }
+      }).filter(player => player.code)
+    } catch (error) {
+      showError(error)
+      return []
+    }
+  }
+
+  watch(input, async () => {
+    if (!input.value) {
+      options.value = []
+      return
+    }
+    options.value = (await getOptions(input.value)).slice(0, 10)
+    showMenu.value = true
+  })
 </script>

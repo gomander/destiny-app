@@ -116,15 +116,14 @@
   import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
   import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
 
-  interface Props {
+  const props = defineProps<{
     title: string
     triumphs: Triumph[]
     players: BungieMember[]
-  }
-  const props = defineProps<Props>()
+  }>()
 
   const columns = ref<QTableColumn[]>([])
-  const resetColumns = () => {
+  function resetColumns() {
     columns.value = [{
       name: 'triumphs',
       label: 'Triumphs',
@@ -150,7 +149,7 @@
     )
   }
 
-  const sortByTriumphCompletion = (triumph: Triumph) => {
+  function sortByTriumphCompletion(triumph: Triumph) {
     columns.value = columns.value.sort((a, b) => {
       if (a.name === 'triumphs' || b.name === 'triumphs') return 0
       const playerAObjectives = players.value.find(
@@ -179,7 +178,7 @@
     populateTableRows()
   })
 
-  const populateTableRows = () => {
+  function populateTableRows() {
     if (!props.triumphs) return
     rows.value = []
     for (const triumph of props.triumphs) {
@@ -248,7 +247,7 @@
     populateTableRows()
   })
 
-  const fetchPlayerData = async () => {
+  async function fetchPlayerData() {
     return (await Promise.all(
       props.players.map(player => getProfileData([100, 900], player.id, player.type))
     )).filter(data => data) as DestinyProfileResponse[]

@@ -11,7 +11,7 @@
           <q-card-section class="flex-col gap">
             <div class="text-h6">Lookup user</div>
             <div class="flex gap">
-              <find-player-form v-model="player"/>
+              <find-player-form v-model="player" />
               <authenticate-button
                 v-if="!userStore.membershipId"
                 tooltip="Authenticate to automatically see your own triumphs"
@@ -48,7 +48,7 @@
               </div>
               <create-group-form
                 v-else
-                v-on:create-group="createNewGroup"
+                @create-group="createNewGroup"
               />
             </div>
           </q-card-section>
@@ -64,8 +64,8 @@
             <div class="text-h6">View an existing group</div>
             <group-form
               :groupId="groupId ?? ''"
-              v-on:go-to-group="goToGroup"
-              v-on:go-to-solo="goToSolo"
+              @go-to-group="goToGroup"
+              @go-to-solo="goToSolo"
             />
           </q-card-section>
         </q-card>
@@ -136,7 +136,7 @@
     `/checklists/raids${groupId.value ? `/${groupId.value}` : ''}`
   )
 
-  const getButtonLink = (raidId: string) => {
+  function getButtonLink(raidId: string) {
     return `${path.value}/${raidId}${urlPlayers.value ? `/${urlPlayers.value?.map(player => player.replace('#', '%23')).join('/')}` : ''}`
   }
 
@@ -149,18 +149,18 @@
     ).flatMap(entry => entry.triumphs) || []
   )
 
-  const createNewGroup = async (group: Group) => {
+  async function createNewGroup(group: Group) {
     const path = await createGroup(group)
     if (!path) return
     showCreateGroupForm.value = false
     goToGroup(path)
   }
 
-  const goToGroup = (groupId: string) => {
+  function goToGroup(groupId: string) {
     router.push(`/checklists/raids/${groupId}/${currentRaid.value.id}`)
   }
 
-  const goToSolo = () => {
+  function goToSolo() {
     router.push(`/checklists/raids/${currentRaid.value.id}`)
   }
 

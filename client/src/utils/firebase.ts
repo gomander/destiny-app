@@ -1,7 +1,7 @@
 import { showError } from './messenger'
 import type { DarciApiResponse, Group } from '../types'
 
-export const getGroup = async (groupId: string) => {
+export async function getGroup(groupId: string) {
   try {
     const res = await fetch(`${process.env.DARCI_API}/groups/${groupId}`)
     const data = await res.json() as DarciApiResponse<Group>
@@ -12,7 +12,7 @@ export const getGroup = async (groupId: string) => {
   }
 }
 
-export const createGroup = async (group: Group) => {
+export async function createGroup(group: Group) {
   try {
     const res = await fetch(
       `${process.env.DARCI_API}/groups`,

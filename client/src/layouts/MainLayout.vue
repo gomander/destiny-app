@@ -40,58 +40,58 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <definition-fetcher />
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useUserStore } from '../stores/user-store'
-import DefinitionFetcher from 'components/DefinitionFetcher.vue'
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
+  import { ref } from 'vue'
+  import { useUserStore } from '../stores/user-store'
+  import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
+  import { useDefinitionFetcher } from 'src/utils/definition-fetcher'
 
-const userStore = useUserStore()
+  const userStore = useUserStore()
 
-const version = process.env.VERSION
+  void useDefinitionFetcher()
 
-const essentialLinks: EssentialLinkProps[] = [
-  {
-    title: 'Home',
-    caption: '',
-    icon: 'fas fa-house',
-    link: '/',
-    exact: true
-  },
-  {
-    title: 'Legendary Weapons',
-    caption: 'By type, frame, and element',
-    icon: 'fas fa-gun',
-    link: '/weapons/legendary'
-  },
-  {
-    title: 'Craftable Weapons',
-    caption: 'By type, frame, and element',
-    icon: 'fas fa-hammer',
-    link: '/weapons/craftable'
-  },
-  {
-    title: 'Raid Checklists',
-    caption: 'Visualize player progress',
-    icon: 'fas fa-table-cells',
-    link: '/checklists/raids'
-  },
-  {
-    title: 'Weapon Ranking',
-    caption: 'Judge base stats',
-    icon: 'fas fa-ranking-star',
-    link: '/weapons/ranking'
+  const version = process.env.VERSION
+
+  const essentialLinks: EssentialLinkProps[] = [
+    {
+      title: 'Home',
+      caption: '',
+      icon: 'fas fa-house',
+      link: '/',
+      exact: true
+    },
+    {
+      title: 'Legendary Weapons',
+      caption: 'By type, frame, and element',
+      icon: 'fas fa-gun',
+      link: '/weapons/legendary'
+    },
+    {
+      title: 'Craftable Weapons',
+      caption: 'By type, frame, and element',
+      icon: 'fas fa-hammer',
+      link: '/weapons/craftable'
+    },
+    {
+      title: 'Raid Checklists',
+      caption: 'Visualize player progress',
+      icon: 'fas fa-table-cells',
+      link: '/checklists/raids'
+    },
+    {
+      title: 'Weapon Ranking',
+      caption: 'Judge base stats',
+      icon: 'fas fa-ranking-star',
+      link: '/weapons/ranking'
+    }
+  ]
+
+  const leftDrawerOpen = ref(false)
+
+  function toggleLeftDrawer() {
+    leftDrawerOpen.value = !leftDrawerOpen.value
   }
-]
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
 </script>

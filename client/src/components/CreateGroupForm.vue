@@ -59,9 +59,9 @@
   import { computed, ref } from 'vue'
   import { useUserStore } from '../stores/user-store'
   import FindPlayerForm from 'src/components/FindPlayerForm.vue'
-  import { BungieMember, Group } from '../types'
+  import type { BungieMember, Group } from '../types'
 
-  const emit = defineEmits(['createGroup'])
+  const emit = defineEmits<{ 'create-group': [Group] }>()
 
   const userStore = useUserStore()
 
@@ -75,13 +75,13 @@
     })
   }
 
-  const allPlayersValid = computed(
-    () => players.value.filter(player => player).length === players.value.length
+  const allPlayersValid = computed(() =>
+    players.value.filter((player) => player).length === players.value.length
   )
   const formInvalid = computed(() => {
     const seen = new Set()
-    const hasDuplicates = players.value.some(
-      player => seen.size === seen.add(player?.id).size
+    const hasDuplicates = players.value.some((player) =>
+      seen.size === seen.add(player?.id).size
     )
     return (
       hasDuplicates ||
@@ -91,20 +91,20 @@
     )
   })
 
-  const addPlayer = () => {
+  function addPlayer() {
     players.value.push(null)
   }
 
-  const removePlayer = (player: BungieMember | null) => {
-    players.value = players.value.filter(p => p !== player)
+  function removePlayer(player: BungieMember | null) {
+    players.value = players.value.filter((p) => p !== player)
   }
 
-  const createGroup = () => {
+  function createGroup() {
     if (!userStore.bungieMember) return
     const group: Group = {
       creator: userStore.bungieMember,
-      players: players.value.filter(player => player) as BungieMember[]
+      players: players.value.filter((player) => player) as BungieMember[]
     }
-    emit('createGroup', group)
+    emit('create-group', group)
   }
 </script>

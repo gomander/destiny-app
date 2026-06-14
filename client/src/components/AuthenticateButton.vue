@@ -15,8 +15,7 @@
   import { useAuthStore } from '../stores/auth-store'
   import { authorizationURL } from '../utils/api'
 
-  interface Props { tooltip?: string }
-  const props = defineProps<Props>()
+  const props = defineProps<{ tooltip?: string }>()
 
   const authStore = useAuthStore()
   authStore.location = location.pathname

@@ -1,6 +1,6 @@
 import { Dialog, Notify } from 'quasar'
 
-export const showError = (message: any) => {
+export function showError(message: any) {
   if (message.toString) message = message.toString()
   if (typeof message !== 'string') message = JSON.stringify(message)
   Dialog.create({
@@ -11,7 +11,7 @@ export const showError = (message: any) => {
   })
 }
 
-export const confirm = async (message: string) => {
+export async function confirm(message: string): Promise<boolean> {
   return new Promise((resolve) => {
     Dialog.create({
       title: 'Confirm',
@@ -23,9 +23,9 @@ export const confirm = async (message: string) => {
   })
 }
 
-export const confirmWithCallback = (
+export function confirmWithCallback(
   message: string, onOkCallback: () => void
-) => {
+) {
   Dialog.create({
     title: 'Confirm',
     message: dialogHtml(message, 'warning'),
@@ -35,7 +35,7 @@ export const confirmWithCallback = (
   }).onOk(onOkCallback)
 }
 
-export const yesNoChoice = async (title: string, message: string) => {
+export async function yesNoChoice(title: string, message: string): Promise<boolean> {
   return new Promise((resolve: (value: boolean) => void) => {
     Dialog.create({
       title: title,
@@ -47,7 +47,7 @@ export const yesNoChoice = async (title: string, message: string) => {
   })
 }
 
-export const showNewVersionPrompt = () => {
+export function showNewVersionPrompt() {
   Dialog.create({
     title: 'New version available',
     message: dialogHtml(
@@ -60,16 +60,16 @@ export const showNewVersionPrompt = () => {
   }).onOk(() => location.reload())
 }
 
-export const showNotification = (message: string) => {
+export function showNotification(message: string) {
   Notify.create({
     message,
     actions: [closeNotifyButton]
   })
 }
 
-export const showNotificationWithUndo = (
+export function showNotificationWithUndo(
   message: string, undoCallback: () => void
-) => {
+) {
   Notify.create({
     message,
     actions: [
@@ -84,7 +84,7 @@ export const showNotificationWithUndo = (
   })
 }
 
-export const textAnswer = async (title: string) => {
+export async function textAnswer(title: string) {
   return new Promise((resolve: (value: string) => void) => {
     Dialog.create({
       title,
@@ -97,7 +97,7 @@ export const textAnswer = async (title: string) => {
   })
 }
 
-const button = (label: string, color = 'primary') => {
+function button(label: string, color = 'primary') {
   return {
     label,
     color,
@@ -111,7 +111,7 @@ const closeNotifyButton = { icon: 'fas fa-times', color: 'white' }
 
 type DialogType = 'error' | 'warning' | 'question' | 'info'
 
-const dialogHtml = (message: string, type: DialogType) => {
+function dialogHtml(message: string, type: DialogType) {
   const { icon, color } = dialogIcon(type)
   return `
     <div class="row no-wrap q-gutter-md items-center">
@@ -126,7 +126,7 @@ const dialogHtml = (message: string, type: DialogType) => {
 }
 
 
-const dialogIcon = (type: DialogType) => {
+function dialogIcon(type: DialogType) {
   switch (type) {
     case 'error':
       return { icon: 'fas fa-exclamation-circle', color: 'negative' }

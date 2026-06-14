@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import type {
   DestinyManifest, DestinyInventoryItemDefinition, DestinyDamageTypeDefinition,
-  DestinyPresentationNodeDefinition, DestinyRecordDefinition,
-  DestinyPlugSetDefinition
+  DestinyPresentationNodeDefinition, DestinyRecordDefinition
 } from 'bungie-api-ts/destiny2'
 
 export const useDefinitionsStore = defineStore(

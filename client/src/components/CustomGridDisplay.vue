@@ -16,7 +16,6 @@
     <div
       class="column-header"
       v-for="column of frames"
-      ref="columnHeaderRefs"
     >
       <div v-if="column">
         <img
@@ -47,7 +46,7 @@
       :style="style"
     >
       <div v-for="weapon of cellWeapons[i]">
-        <a :href="`https://d2foundry.gg/w/${weapon.hash}`" target="_blank">
+        <a :href="`https://light.gg/db/items/${weapon.hash}`" target="_blank">
           <img :src="weapon.icon" :alt="weapon.name" />
         </a>
 
@@ -67,51 +66,44 @@
 
   const gameStore = useGameStore()
 
-  interface Props {
+  const props = defineProps<{
     weaponType: WeaponType
     ammoType?: AmmoType
     weapons: Weapon[]
-  }
-  const props = defineProps<Props>()
+  }>()
 
-  const data = computed(
-    () => props.weapons.filter(
-      (weapon) => weapon.weaponType === props.weaponType &&
-        (!props.ammoType || weapon.ammoType === props.ammoType)
+  const data = computed(() =>
+    props.weapons.filter((weapon) =>
+      weapon.weaponType === props.weaponType &&
+      (!props.ammoType || weapon.ammoType === props.ammoType)
     )
   )
 
-  const frameHashes = computed(
-    () => data.value.map(
-      (weapon) => weapon.frameHash
-    ).filter(
-      (value, index, self) => index === self.findIndex((t) => t === value)
+  const frameHashes = computed(() =>
+    data.value.map((weapon) => weapon.frameHash).filter((value, index, self) =>
+      index === self.findIndex((t) => t === value)
     )
   )
 
-  const frames = computed(
-    () => frameHashes.value.map(
-      (column) => gameStore.weaponFrames.find(frame => frame.hash === column)
-    ).sort(
-      (a, b) => a!.name < b!.name ? -1 : 1
-    )
+  const frames = computed(() =>
+    frameHashes.value.map((column) =>
+      gameStore.weaponFrames.find((frame) => frame.hash === column)
+    ).sort((a, b) => a!.name < b!.name ? -1 : 1)
   )
 
   const damageTypeOrder = props.ammoType === AmmoType.Heavy
     ? ['Kinetic', 'Void', 'Solar', 'Arc', 'Stasis', 'Strand']
     : ['Kinetic', 'Stasis', 'Strand', 'Void', 'Solar', 'Arc']
 
-  const elementHashes = computed(
-    () => data.value.map(
-      (weapon) => weapon.damageTypeHash
-    ).filter(
-      (value, index, self) => index === self.findIndex((t) => t === value)
+  const elementHashes = computed(() =>
+    data.value.map((weapon) => weapon.damageTypeHash).filter((value, index, self) =>
+      index === self.findIndex((t) => t === value)
     )
   )
 
-  const elements = computed(
-    () => elementHashes.value.map(
-      (row) => gameStore.damageTypes.find(damageType => damageType.hash === row)
+  const elements = computed(() =>
+    elementHashes.value.map((row) =>
+      gameStore.damageTypes.find(damageType => damageType.hash === row)
     ).sort((a, b) => {
       const indexA = damageTypeOrder.findIndex((e) => e === a?.name)
       const indexB = damageTypeOrder.findIndex((e) => e === b?.name)
@@ -119,29 +111,26 @@
     })
   )
 
-  const cellStyles = computed(
-    () => elements.value.map(
-      (element) => frames.value.map(
-        (frame) => ({
-          gridColumn: 'c' + frame?.hash,
-          gridRow: 'r' + element?.hash
-        })
-      )
-    ).flat()
+  const cellStyles = computed(() =>
+    elements.value.flatMap((element) =>
+      frames.value.map((frame) => ({
+        gridColumn: 'c' + frame?.hash,
+        gridRow: 'r' + element?.hash
+      }))
+    )
   )
 
-  const cellWeapons = computed(
-    () => elements.value.map(
-      (element) => frames.value.map(
-        (frame) => data.value.filter(
-          (weapon) => weapon.frameHash === frame?.hash &&
-            weapon.damageTypeHash === element?.hash
+  const cellWeapons = computed(() =>
+    elements.value.flatMap((element) =>
+      frames.value.map((frame) =>
+        data.value.filter((weapon) =>
+          weapon.frameHash === frame?.hash && weapon.damageTypeHash === element?.hash
         ).sort((a, b) => a.name < b.name ? -1 : 1)
       )
-    ).flat()
+    )
   )
 
-  const resetGrid = () => {
+  function resetGrid() {
     const cssColumns = '[rows] 80px' + frames.value.map((frame) => `[c${frame?.hash}] 1fr`).join(' ')
     const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element?.hash}] 1fr`).join(' ')
     grid.value!.style.gridTemplateColumns = cssColumns
@@ -167,7 +156,6 @@
 
   const grid = ref<HTMLDivElement | null>(null)
   const rowHeaderRefs = ref<HTMLDivElement[]>([])
-  const columnHeaderRefs = ref<HTMLDivElement[]>([])
 </script>
 
 <style scoped>

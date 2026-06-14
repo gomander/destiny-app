@@ -1,41 +1,37 @@
-<template></template>
+import { useDefinitionsStore } from '../stores/definitions-store'
+import { useGameStore } from '../stores/game-store'
+import * as api from '../utils/api'
+import { isOldDuplicate, swapUniqueFrames } from '../utils/weapon-util'
+import { filteredTriumphs } from '../utils/triumph-util'
+import { showError } from '../utils/messenger'
+import {
+  DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
+  DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
+  DestinyRecordDefinition, TierType
+} from 'bungie-api-ts/destiny2'
+import {
+  BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
+  BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot,
+  type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories
+} from '../types'
 
-<script setup lang="ts">
-  import { onMounted } from 'vue'
-  import { useDefinitionsStore } from '../stores/definitions-store'
-  import { useGameStore } from '../stores/game-store'
-  import * as api from '../utils/api'
-  import { isOldDuplicate, swapUniqueFrames } from '../utils/weapon-util'
-  import { filteredTriumphs } from '../utils/triumph-util'
-  import { showError } from '../utils/messenger'
-  import {
-    DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
-    DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
-    DestinyRecordDefinition, TierType
-  } from 'bungie-api-ts/destiny2'
-  import {
-    BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
-    BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot,
-    type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories
-  } from '../types'
+const gameStore = useGameStore()
+const definitionsStore = useDefinitionsStore()
 
-  const gameStore = useGameStore()
-  const definitionsStore = useDefinitionsStore()
-
-  onMounted(async () => {
-    await new Promise(r => setTimeout(r, 300))
-    try {
-      await getManifest()
-      await getDamageTypeDefinitions()
-      await getInventoryItemDefinitions()
-      await getRecordDefinitions()
-      await getPresentationNodeDefinitions()
-      console.log('filling triumph categories')
-      fillTriumphCategories()
-    } catch (error) {
-      showError(error)
-    }
-  })
+export async function useDefinitionFetcher() {
+  try {
+    await getManifest()
+    await getDamageTypeDefinitions()
+    await Promise.all([
+      getInventoryItemDefinitions(),
+      getRecordDefinitions()
+    ])
+    await getPresentationNodeDefinitions()
+    console.log('filling triumph categories')
+    fillTriumphCategories()
+  } catch (error) {
+    showError(error)
+  }
 
   async function getManifest() {
     try {
@@ -288,4 +284,4 @@
       })
     })
   }
-</script>
+}

@@ -3,7 +3,7 @@ import {
   AmmoType, DestinyIcon, ExplicitWeaponType, WeaponType
 } from '../types'
 
-export const capitalizeText = (s: string) => {
+export function capitalizeText(s: string) {
   return s.toLowerCase()
     .split('-')
     .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
@@ -13,7 +13,7 @@ export const capitalizeText = (s: string) => {
     .join(' ')
 }
 
-export const getWeaponTypesOfAmmoType = (ammoType: AmmoType) => {
+export function getWeaponTypesOfAmmoType(ammoType: AmmoType) {
   if (ammoType === AmmoType.Primary) {
     return [
       WeaponType.AutoRifle,
@@ -61,7 +61,7 @@ function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T,
   return keys.length > 0 ? keys[0] : null;
 }
 
-export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType) => {
+export function getWeaponIconAndName(weaponType: WeaponType, ammoType?: AmmoType) {
   const explicitWeaponType = (weaponType === 'grenade launcher' && ammoType)
     ? `${ammoType} ${weaponType}`
     : weaponType as unknown as ExplicitWeaponType
@@ -70,9 +70,9 @@ export const getWeaponIconAndName = (weaponType: WeaponType, ammoType?: AmmoType
   return [DestinyIcon[w], capitalizeText(weaponType)]
 }
 
-export const swapUniqueFrames = (
+export function swapUniqueFrames(
   frameHash: number, subType: DestinyItemSubType
-) => {
+) {
   switch (frameHash) {
     case 1282254042: return 1294026524 // Together Forever -> Adaptive (Drang)
     case 2213377102: return 1458010786 // MIDA Synergy -> Lightweight (Mini-Tool)
@@ -108,6 +108,7 @@ const oldDupes = [
   1167153950, // Adhortative
   2314999489, // Imperative
   2663204025, // Subjunctive
+  1952163498, // Pluperfect
   // Dawn
   2723241847, // Patron of Lost Causes
   3850168899, // Martyr's Retribution
@@ -148,7 +149,7 @@ const oldDupes = [
   308332265, 4009352833, // Roar of the Bear
   108221785, 1764868900, // Riiswalker
   4265183314, 3717177717, // Multimach CCX
-  2189073092, // Lethal Abundance
+  2189073092, 3428407746, // Lethal Abundance
   3434944005, 888872889, // Point of the Stag
   1870979911, // Orewing's Maul
   3434507093, // Occluded Finality
@@ -170,7 +171,7 @@ const oldDupes = [
   3624844116, 906840740, // Unwavering Duty
   2351180975, // Igneous Hammer
   3164743584, 1401300690, // Eye of Sol
-  1907698332, // The Summoner
+  1907698332, 1820994983, // The Summoner
   3682803680, // Shayura's Wrath
   4248997900, // Incisor
   2638190703, // Aisha's Embrace
@@ -197,7 +198,7 @@ const oldDupes = [
   3551104348, // Double-Edged Answer
   4146702548, // Outrageous Fortune
   // Nightfall
-  1457979868, // Duty Bound
+  1457979868, 435216110, // Duty Bound
   4238497225, // D.F.A.
   2633186522, // Shadow Price
   233423981, 1821529912, // Warden's Law
@@ -253,6 +254,8 @@ const oldDupes = [
   4174481098, // Steel Sybil Z-14
   3354242550, // The Recluse
   2050789284, // Stars in Shadow
+  2496875173, // Sorrow's Verse
+  3754408118, // The Riposte
   // Into the Light
   2499720827, // Midnight Coup
   3757612024, // Luna's Howl
@@ -276,6 +279,7 @@ const oldDupes = [
   324382200, // Breakneck
   1584643826, // Hush
   2712244741, // Bygones
+  1788603939, // Herod-C
   // Reckoning
   3116356268, // Spare Rations
   2744715540, // Bug-Out Bag
@@ -283,8 +287,9 @@ const oldDupes = [
   755130877, // Last Man Standing
   1115104187, // Sole Survivor
   715338174, // Just in Case
+  821154603, // Gnawing Hunger
   // EDZ
-  3762467078, // Scathelocke
+  3762467078, 602618796, // Scathelocke
   2502422772, // Cartesian Coordinate
   731147177, // Hawthorne's Field-Forged Shotgun
   // Titan
@@ -306,6 +311,8 @@ const oldDupes = [
   161537637, // Infinite Paths 8
   2248667690, 3393519051, // Perfect Paradox
   4105447487, // Elatha FR4
+  // The Moon
+  2723909519, // Arc Logic
   // Dead Orbit
   582335600, // Dire Promise
   2625782213, // Contingency Plan
@@ -401,8 +408,12 @@ const oldDupes = [
   2888021252, 2888021253, // Trachinus
   407150810, 407150811, // Ribbontail
   2765451291, 2765451290, // Synanceia
+  // Vesper's Host
+  4232480042, // VS Pyroelectric Propellant
+  // Sparrow Racing League
+  2587567543, // Snipehunt Mk. 47
 ]
 
-export const isOldDuplicate = (hash: number) => {
+export function isOldDuplicate(hash: number) {
   return oldDupes.includes(hash)
 }
