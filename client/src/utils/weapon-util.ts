@@ -81,7 +81,9 @@ export function swapUniqueFrames(
     case 31057037: return 3449390870 // Adaptive -> Adaptive (sidearms)
     case 3364911712: return 3920852688 // Rapid-Fire -> Rapid-Fire (scout rifles)
     case 895140517: return 1636108362 // Precision -> Precision (shotguns)
+    case 1888623310: return 1636108362 // MIDA Synergy -> Precision (MIDA Macro-Tool)
     case 2189829540: return 1294026524 // Adaptive -> Adaptive (Rose)
+    case 1615948893: return 2928496916 // Together Forever -> Micro-Missle (Unfall)
     case 3468089894: // Aggressive -> Aggressive
       switch (subType) {
         case DestinyItemSubType.Shotgun: return 3983457027
