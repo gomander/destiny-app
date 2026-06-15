@@ -74,7 +74,7 @@
             <td>{{ i + 1 }}.</td>
             <td class="weapon">
               <img
-                :src="entry.weapon.icon"
+                :src="`https://www.bungie.net${entry.weapon.icon}`"
                 :alt="entry.weapon.name"
                 :title="entry.weapon.name"
               />

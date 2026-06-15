@@ -47,7 +47,7 @@
     >
       <div v-for="weapon of cellWeapons[i]">
         <a :href="`https://light.gg/db/items/${weapon.hash}`" target="_blank">
-          <img :src="weapon.icon" :alt="weapon.name" />
+          <img :src="`https://www.bungie.net${weapon.icon}`" :alt="weapon.name" />
         </a>
 
         <q-tooltip class="text-body2">

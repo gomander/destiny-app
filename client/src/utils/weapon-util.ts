@@ -123,7 +123,7 @@ const oldDupes = [
   3854359821, // The Number
   3762467076, // Uriel's Gift
   1119734784, 2598420927, // Chroma Rush
-  2598420927, // Steelfeather Repeater
+  1251729046, // Steelfeather Repeater
   3385326721, 1992309064, // Reckless Oracle
   20935540, // Arctic Haze
   3762467079, // Valakadyn
@@ -483,9 +483,57 @@ const oldDupes = [
   66875353, 495940989, 4220529694, // Avalanche
   3624844116, 906840740, // Unwavering Duty
   3325778512, // A Fine Memorial
-  3105930175
+  3105930175, // Chain of Command
+  2187717691, // Circular Logic
+  1757177186, 768610585, // Watchful Eye
+  1496419775, // Bane of Sorrow
+  1642384931, // Fixed Odds
+  2582755344, // Seventh Seraph SAW
+  47772649, // THE SWARM
+  487205709, 3984556130, // Terminus Horizon
+  2896109856, // Archon's Thunder
+  4176551594, // Qua Vinctus IV
+  1766088024, // Thermal Erosion
+  1600633250, // 21% Delirium
   // Rocket launchers
+  2186258845, // Bellowing Giant
+  2545083870, // Apex Predator
+  417474224, // Hoosegow
+  432716552, // Shining Sphere
+  4255171531, 3960301269, // The Hothead
+  694275488, 2511482352, // Cynosure
+  991314988, // Bad Omens
+  4050645223, // Hezen Vengeance
+  3067821200, // Heretic
+  417474225, // Mos Epoch III
+  839786290, 291447487, // Cold Comfort
+  1929278169, // BrayTech Osprey
+  958384347, 3009199534, // Tomorrow's Answer
+  308332265, 4009352833, 2231910050, // Roar of the Bear
+  3740842661, 2140635451, // Sleepless
+  725408022, // Ascendancy
+  1289324202, // Pyroclastic Flow
+  42351395, // Subzero Salvo
+  1411084669, // Zenobia-D
+  3256453690, 4106757302, // Crowning Duologue
   // Swords
+  3551104348, // Double-Edged Answer
+  4174481098, // Steel Sybil Z-14
+  1644160541, 250721843, // Abide the Return
+  715338174, // Just in Case
+  287042892, // Negative Space
+  2276266837, // Honor's Edge
+  3400256755, 396910433, 1911078836, 601948197, // Zephyr
+  1180270694, // Crown-Splitter
+  3438139008, // Chivalric Fire
+  1313528549, // Sola's Scar
+  35794111, 1587953057, // Temptation's Hook
+  3668817296, // Dragoncult Sickle
+  1180270692, // Quickfang
+  614426548, 1815105249, // Falling Guillotine
+  2889501828, 189854537, // The Slammer
+  1479562935, // Aurora Dawn
+  547165496, 4221591387, // Abyssal Edge
   // Bows
   649691506, // A Good Shout
 ]

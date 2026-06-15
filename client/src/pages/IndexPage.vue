@@ -23,8 +23,26 @@
     <p class="intro-text">
       Check out the available tools from the left-hand menu!
     </p>
+
+    <p>
+      If something isn't working properly, try this button:
+    </p>
+
+    <q-btn
+      color="primary"
+      no-caps
+      label="Reset page"
+      @click="reset"
+    />
   </q-page>
 </template>
+
+<script setup lang="ts">
+  function reset() {
+    localStorage.clear()
+    location.reload()
+  }
+</script>
 
 <style scoped>
   p {

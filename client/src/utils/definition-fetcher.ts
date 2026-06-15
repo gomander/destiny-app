@@ -68,7 +68,7 @@ export async function useDefinitionFetcher() {
       slot: BungieWeaponSlot[item.equippingBlock?.equipmentSlotTypeHash || 0] as WeaponSlot,
       frame: definitionsStore.weaponFrameDefinitions[frameHash].displayProperties.name,
       frameHash,
-      icon: 'https://www.bungie.net' + item.displayProperties.icon,
+      icon: item.displayProperties.icon,
       hash: item.hash,
       craftable: !!item.inventory?.recipeItemHash,
       tiered: !!item.inventory?.recipeItemHash || item.sockets?.socketEntries[12]?.socketTypeHash === 1236068212
