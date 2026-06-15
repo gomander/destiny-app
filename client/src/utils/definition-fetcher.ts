@@ -1,7 +1,7 @@
 import { useDefinitionsStore } from '../stores/definitions-store'
 import { useGameStore } from '../stores/game-store'
 import * as api from '../utils/api'
-import { isOldDuplicate, swapUniqueFrames } from '../utils/weapon-util'
+import { swapUniqueFrames } from '../utils/weapon-util'
 import { filteredTriumphs } from '../utils/triumph-util'
 import { showError } from '../utils/messenger'
 import {
@@ -71,7 +71,8 @@ export async function useDefinitionFetcher() {
       icon: item.displayProperties.icon,
       hash: item.hash,
       craftable: !!item.inventory?.recipeItemHash,
-      tiered: !!item.inventory?.recipeItemHash || item.sockets?.socketEntries[12]?.socketTypeHash === 1236068212
+      tiered: !!item.inventory?.recipeItemHash || item.sockets?.socketEntries[12]?.socketTypeHash === 1236068212,
+      released: Number(item.traitIds.find((trait) => trait.startsWith('releases'))?.match(/\d+/)?.[0])
     }
     if (
       [
@@ -140,8 +141,7 @@ export async function useDefinitionFetcher() {
       const item = definitionsStore.weaponDefinitions[Number(key)]
       if (
         item.inventory?.tierType === TierType.Superior &&
-        !item.isAdept &&
-        !isOldDuplicate(item.hash)
+        !item.isAdept
       ) {
         const weapon = createWeapon(item)
         gameStore.weapons.push(weapon)

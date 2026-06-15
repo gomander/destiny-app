@@ -76,6 +76,7 @@ export interface Weapon {
   hash: number
   craftable: boolean
   tiered: boolean
+  released: number
   stats?: WeaponStats
 }
 

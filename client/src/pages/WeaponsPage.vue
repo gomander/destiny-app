@@ -25,7 +25,7 @@
         v-for="weaponType of getWeaponTypesOfAmmoType(ammoType)"
         :weapon-type="weaponType"
         :ammo-type="ammoType"
-        :weapons="weaponsList"
+        :weapons="finalWeaponsList"
       />
     </section>
   </q-page>
@@ -48,13 +48,23 @@
 
   const selection = ref('tiered');
 
-  const weaponsList = computed(() => {
+  const dedupedWeapons = computed(() => {
+    const map = new Map()
+    for (const weapon of gameStore.weapons) {
+      const existing = map.get(weapon.name)
+      if (!existing || weapon.released > existing.released) {
+        map.set(weapon.name, weapon)
+      }
+    }
+    return Array.from(map.values())
+  })
+  const finalWeaponsList = computed(() => {
     if (selection.value === 'craftable') {
-      return gameStore.weapons.filter((weapon) => weapon.craftable)
+      return dedupedWeapons.value.filter((weapon) => weapon.craftable)
     }
     if (selection.value === 'tiered') {
-      return gameStore.weapons.filter((weapon) => weapon.tiered)
+      return dedupedWeapons.value.filter((weapon) => weapon.tiered)
     }
-    return gameStore.weapons
+    return dedupedWeapons.value
   })
 </script>
