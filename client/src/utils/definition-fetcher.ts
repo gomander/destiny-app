@@ -121,7 +121,18 @@ export async function useDefinitionFetcher() {
         item.itemType === DestinyItemType.Mod &&
         item.itemCategoryHashes?.includes(2237038328) // intrinsic
       ) {
+        if (item.hash === 2622129339) {
+          definitionsStore.weaponFrameDefinitions[key] = {
+            ...item,
+            displayProperties: {
+              ...item.displayProperties,
+              description: 'Capable of healing allies and hurting foes. Harming targets builds a restorative charge. Hip firing at allies while this weapon is charged heals them. Rapid healing increases weapon damage and grants elemental buffs.'
+            }
+          }
+          continue
+        }
         definitionsStore.weaponFrameDefinitions[key] = item
+        continue
       }
 
       if (

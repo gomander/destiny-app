@@ -44,6 +44,7 @@ export function getWeaponTypesOfAmmoType(ammoType: AmmoType) {
       WeaponType.LinearFusionRifle,
       WeaponType.MachineGun,
       WeaponType.RocketLauncher,
+      WeaponType.SniperRifle,
       WeaponType.Sword,
       WeaponType.Bow
     ]
@@ -84,6 +85,10 @@ export function swapUniqueFrames(
     case 1888623310: return 1636108362 // MIDA Synergy -> Precision (MIDA Macro-Tool)
     case 2189829540: return 1294026524 // Adaptive -> Adaptive (Rose)
     case 1615948893: return 2928496916 // Together Forever -> Micro-Missle (Unfall)
+    case 2078075300: return 2622129339 // Support -> Support (Chrysura Melo)
+    case 2235383762: return 2622129339 // Support -> Support (Cusp Sempiternal)
+    case 2799967529: return 2622129339 // Support -> Support (DECATUR 02)
+    case 3488129416: return 2622129339 // Support -> Support (Adamantite)
     case 3468089894: // Aggressive -> Aggressive
       switch (subType) {
         case DestinyItemSubType.Shotgun: return 3983457027
