@@ -7,16 +7,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import TriumphsListTable from 'src/components/TriumphsListTable.vue'
-import { BungieMember, Triumph } from '../types'
+  import { computed } from 'vue'
+  import TriumphsListTable from 'src/components/TriumphsListTable.vue'
+  import type { BungieMember, Triumph } from '../types'
 
-interface Props {
-  title: string
-  triumphs: Triumph[]
-  player: BungieMember | null
-}
-const props = defineProps<Props>()
+  const props = defineProps<{
+    title: string
+    triumphs: Triumph[]
+    player: BungieMember | null
+  }>()
 
-const players = computed(() => props.player ? [props.player] : [])
+  const players = computed(() => props.player ? [props.player] : [])
 </script>

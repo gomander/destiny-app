@@ -1,7 +1,5 @@
-FROM node:22-slim
+FROM node:lts-slim
 WORKDIR /app
 COPY . .
-RUN npm i -g pnpm
-RUN pnpm install --frozen-lockfile --prod
 USER node
-CMD ["pnpm", "start"]
+CMD ["node", "--env-file=.env", "."]

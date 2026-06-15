@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { BungieMembershipType } from 'bungie-api-ts/app'
-import { GroupUserInfoCard } from 'bungie-api-ts/groupv2'
-import { GeneralUser } from 'bungie-api-ts/user'
-import { BungieMember, TriumphPlayer } from '../types'
+import type { BungieMembershipType } from 'bungie-api-ts/app'
+import type { GroupUserInfoCard } from 'bungie-api-ts/groupv2'
+import type { GeneralUser } from 'bungie-api-ts/user'
+import type { BungieMember, TriumphPlayer } from '../types'
 
 export const useUserStore = defineStore(
   'user',

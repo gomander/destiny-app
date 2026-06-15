@@ -1,15 +1,13 @@
-import axios, { AxiosError } from 'axios'
-import {
+import type {
   DestinyManifest, DestinyProfileResponse, ServerResponse
 } from 'bungie-api-ts/destiny2'
-import {
+import type {
   GetGroupsForMemberResponse, GroupMember, GroupMembership, SearchResultOfGroupMember
 } from 'bungie-api-ts/groupv2'
-import {
-  UserInfoCard, UserMembershipData, UserSearchResponse,
-  UserSearchResponseDetail
+import type {
+  UserInfoCard, UserMembershipData, UserSearchResponse, UserSearchResponseDetail
 } from 'bungie-api-ts/user'
-import { BungieTokens } from '../types'
+import type { BungieTokens } from '../types'
 
 export function authorizationURL(state: string): string {
   const queryParams = new URLSearchParams({
@@ -27,17 +25,20 @@ export async function getAccessTokenFromCode(code: string): Promise<BungieTokens
     client_id: BUNGIE_OAUTH_CLIENT_ID
   })
   try {
-    const res = await axios.post<BungieTokens>(
+    const res = await fetch(
       `${BUNGIE_API}/app/oauth/token/`,
-      body,
       {
+        method: 'POST',
         headers: {
           'X-API-KEY': BUNGIE_API_KEY,
           'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        },
+        body
       }
     )
-    return res.data
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as BungieTokens
+    return data
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
@@ -45,7 +46,7 @@ export async function getAccessTokenFromCode(code: string): Promise<BungieTokens
 
 export async function getMembershipData(accessToken: string): Promise<UserMembershipData> {
   try {
-    const res = await axios.get<ServerResponse<UserMembershipData>>(
+    const res = await fetch(
       `${BUNGIE_API}/User/GetMembershipsForCurrentUser/`,
       {
         headers: {
@@ -54,8 +55,10 @@ export async function getMembershipData(accessToken: string): Promise<UserMember
         }
       }
     )
-    return res.data.Response
-  } catch (error) {
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<UserMembershipData>
+    return data.Response
+  } catch {
     throw new Error('Bungie API request failed')
   }
 }
@@ -72,13 +75,13 @@ export async function getDestinyProfileData(
   const headers: HeadersInit = { 'X-API-KEY': BUNGIE_API_KEY }
   if (accessToken) headers.Authorization = `Bearer ${accessToken}`
   try {
-    const res = await axios.get<ServerResponse<DestinyProfileResponse>>(
-      `${BUNGIE_API}/Destiny2/${membershipType}/Profile/${
-        destinyMembershipId
-      }?components=${components.join(',')}`,
+    const res = await fetch(
+      `${BUNGIE_API}/Destiny2/${membershipType}/Profile/${destinyMembershipId}?components=${components.join(',')}`,
       { headers }
     )
-    return res.data.Response
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<DestinyProfileResponse>
+    return data.Response
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
@@ -86,20 +89,25 @@ export async function getDestinyProfileData(
 
 export async function getDestinyManifest(): Promise<DestinyManifest> {
   try {
-    const res = await axios.get<ServerResponse<DestinyManifest>>(
+    const res = await fetch(
       `${BUNGIE_API}/Destiny2/Manifest/`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
-    return res.data.Response
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<DestinyManifest>
+    return data.Response
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
 }
 
-export async function getDestinyManifestDefinition<T>(path: string): Promise<{ [key: number]: T }> {
+export async function getDestinyManifestDefinition<T>(path: string): Promise<{ [k: number]: T }> {
   try {
-    const res = await axios.get<{ [key_1: number]: T} >(`${BUNGIE}${path}`)
-    return res.data
+    const res = await fetch(`${BUNGIE}${path}`)
+    if (!res.ok) throw new Error(res.statusText)
+    console.log('got res for ' + path)
+    const data = await res.json() as { [k: number]: T }
+    return data
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
@@ -114,12 +122,19 @@ export async function searchPlayersByBungieName(query: string): Promise<UserInfo
     throw new Error('Invalid Bungie name')
   }
   try {
-    const res = await axios.post<ServerResponse<UserInfoCard[]>>(
+    const res = await fetch(
       `${BUNGIE_API}/Destiny2/SearchDestinyPlayerByBungieName/-1`,
-      { displayName, displayNameCode: Number(displayNameCode) },
-      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+      {
+        headers: {
+          'X-API-KEY': BUNGIE_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ displayName, displayNameCode: Number(displayNameCode) })
+      }
     )
-    return res.data.Response
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<UserInfoCard[]>
+    return data.Response
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
@@ -128,12 +143,17 @@ export async function searchPlayersByBungieName(query: string): Promise<UserInfo
 export async function searchUsersByName(query: string): Promise<UserSearchResponseDetail[]> {
   query = query.trim().replace('#', '%23')
   try {
-    const res = await axios.post<ServerResponse<UserSearchResponse>>(
+    const res = await fetch(
       `${BUNGIE_API}/User/Search/GlobalName/0`,
-      { displayNamePrefix: query },
-      { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
+      {
+        method: 'POST',
+        headers: { 'X-API-KEY': BUNGIE_API_KEY },
+        body: JSON.stringify({ displayNamePrefix: query })
+      }
     )
-    return res.data.Response.searchResults
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<UserSearchResponse>
+    return data.Response.searchResults
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
@@ -142,12 +162,14 @@ export async function searchUsersByName(query: string): Promise<UserSearchRespon
 export async function getClanMembers(clanId: string, page = 1): Promise<GroupMember[]> {
   const members: GroupMember[] = []
   try {
-    const res = await axios.get<ServerResponse<SearchResultOfGroupMember>>(
+    const res = await fetch(
       `${BUNGIE_API}/GroupV2/${clanId}/Members/${page}`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
-    members.push(...res.data.Response.results)
-    if (res.data.Response.hasMore) {
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<SearchResultOfGroupMember>
+    members.push(...data.Response.results)
+    if (data.Response.hasMore) {
       members.push(...await getClanMembers(clanId, page + 1))
     }
   } catch (error) {
@@ -165,19 +187,21 @@ export async function getPlayerGroups(
   membershipId: string, membershipType: number
 ): Promise<GroupMembership[]> {
   try {
-    const res = await axios.get<ServerResponse<GetGroupsForMemberResponse>>(
+    const res = await fetch(
       `${BUNGIE_API}/GroupV2/User/${membershipType}/${membershipId}`,
       { headers: { 'X-API-KEY': BUNGIE_API_KEY } }
     )
-    return res.data.Response.results
+    if (!res.ok) throw new Error(res.statusText)
+    const data = await res.json() as ServerResponse<GetGroupsForMemberResponse>
+    return data.Response.results
   } catch (error) {
     throw new Error(getApiErrorText(error))
   }
 }
 
 function getApiErrorText(error: unknown): string {
-  if (error instanceof AxiosError) {
-    return `Bungie API request failed with status ${error.response?.status || error.status}`
+  if (error instanceof Error) {
+    return `Bungie API request failed with status ${error.message}`
   }
   return 'Bungie API request failed'
 }

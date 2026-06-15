@@ -36,22 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+  import { ref, watch } from 'vue'
 
-interface Props { groupId: string }
-const props = defineProps<Props>()
+  const props = defineProps<{ groupId: string }>()
 
-const emit = defineEmits(['goToGroup', 'goToSolo'])
+  const emit = defineEmits(['goToGroup', 'goToSolo'])
 
-const groupInput = ref(props.groupId)
-watch(props, () => groupInput.value = props.groupId)
+  const groupInput = ref(props.groupId)
+  watch(props, () => groupInput.value = props.groupId)
 
-const goToGroup = (e: Event) => {
-  e.preventDefault()
-  emit('goToGroup', groupInput.value)
-}
+  function goToGroup(e: Event) {
+    e.preventDefault()
+    emit('goToGroup', groupInput.value)
+  }
 
-const goToSolo = () => {
-  emit('goToSolo')
-}
+  function goToSolo() {
+    emit('goToSolo')
+  }
 </script>

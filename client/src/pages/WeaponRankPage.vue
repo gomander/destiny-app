@@ -74,7 +74,7 @@
             <td>{{ i + 1 }}.</td>
             <td class="weapon">
               <img
-                :src="entry.weapon.icon"
+                :src="`https://www.bungie.net${entry.weapon.icon}`"
                 :alt="entry.weapon.name"
                 :title="entry.weapon.name"
               />
@@ -191,160 +191,162 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useGameStore } from '../stores/game-store'
-import {
-  DamageTypeEnum, GameMode, WeaponSlot, WeaponStats, WeaponType
-} from '../types'
+  import { computed, ref, watch } from 'vue'
+  import { useGameStore } from '../stores/game-store'
+  import {
+    DamageTypeEnum, type GameMode, WeaponSlot, type WeaponStats, WeaponType
+  } from '../types'
 
-const gameStore = useGameStore()
+  const gameStore = useGameStore()
 
-const PVE_STAT_MODIFIERS: WeaponStats = {
-  range: 3,
-  stability: 1,
-  handling: 1,
-  reloadSpeed: 3,
-  zoom: 0,
-  aimAssistance: 1,
-  airborneEffectiveness: 1,
-  recoilDirection: 2,
-  magazine: 4,
-  inventorySize: 5
-}
-
-const PVP_STAT_MODIFIERS: WeaponStats = {
-  range: 6,
-  stability: 3,
-  handling: 2,
-  reloadSpeed: 1,
-  zoom: 1,
-  aimAssistance: 4,
-  airborneEffectiveness: 2,
-  recoilDirection: 1,
-  magazine: 1,
-  inventorySize: 0
-}
-
-const gameMode = ref<GameMode>('pvp')
-const weaponType = ref<WeaponType>(WeaponType.AutoRifle)
-const damageType = ref<DamageTypeEnum | null>(null)
-const slot = ref<WeaponSlot | null>(null)
-const frame = ref<{ name: string, hash: number } | null>(null)
-const weightMode = ref<'default' | 'manual'>('default')
-const weights = ref<WeaponStats>({ ...PVP_STAT_MODIFIERS })
-
-watch(weaponType, () => frame.value = null)
-
-watch(gameMode, () => {
-  if (weightMode.value === 'default') {
-    weights.value = gameMode.value === 'pve'
-      ? { ...PVE_STAT_MODIFIERS }
-      : { ...PVP_STAT_MODIFIERS }
+  const PVE_STAT_MODIFIERS: WeaponStats = {
+    range: 3,
+    stability: 1,
+    handling: 1,
+    reloadSpeed: 3,
+    zoom: 0,
+    aimAssistance: 1,
+    airborneEffectiveness: 1,
+    recoilDirection: 2,
+    magazine: 4,
+    inventorySize: 5
   }
-})
 
-const gameModes = [
-  { label: 'PvE', value: 'pve' },
-  { label: 'PvP', value: 'pvp' }
-]
+  const PVP_STAT_MODIFIERS: WeaponStats = {
+    range: 6,
+    stability: 3,
+    handling: 2,
+    reloadSpeed: 1,
+    zoom: 1,
+    aimAssistance: 4,
+    airborneEffectiveness: 2,
+    recoilDirection: 1,
+    magazine: 1,
+    inventorySize: 0
+  }
 
-const weightModes = [
-  { label: 'Default', value: 'default' },
-  { label: 'Manual', value: 'manual'}
-]
+  const gameMode = ref<GameMode>('pvp')
+  const weaponType = ref<WeaponType>(WeaponType.AutoRifle)
+  const damageType = ref<DamageTypeEnum | null>(null)
+  const slot = ref<WeaponSlot | null>(null)
+  const frame = ref<{ name: string, hash: number } | null>(null)
+  const weightMode = ref<'default' | 'manual'>('default')
+  const weights = ref<WeaponStats>({ ...PVP_STAT_MODIFIERS })
 
-const weaponTypes = [
-  { label: 'Auto Rifle', value: WeaponType.AutoRifle },
-  { label: 'Hand Cannon', value: WeaponType.HandCannon },
-  { label: 'Pulse Rifle', value: WeaponType.PulseRifle },
-  { label: 'Scout Rifle', value: WeaponType.ScoutRifle },
-  { label: 'Sidearm', value: WeaponType.Sidearm },
-  { label: 'Submachine Gun', value: WeaponType.SubmachineGun },
-  { label: 'Fusion Rifle', value: WeaponType.FusionRifle },
-  { label: 'Shotgun', value: WeaponType.Shotgun },
-  { label: 'Sniper Rifle', value: WeaponType.SniperRifle },
-  { label: 'Trace Rifle', value: WeaponType.TraceRifle },
-  { label: 'Linear Fusion Rifle', value: WeaponType.LinearFusionRifle },
-  { label: 'Machine Gun', value: WeaponType.MachineGun }
-]
+  watch(weaponType, () => frame.value = null)
 
-const weaponSlots = [
-  { label: 'All', value: null },
-  { label: 'Kinetic', value: WeaponSlot.Kinetic },
-  { label: 'Energy', value: WeaponSlot.Energy },
-  { label: 'Power', value: WeaponSlot.Power }
-]
+  watch(gameMode, () => {
+    if (weightMode.value === 'default') {
+      weights.value = gameMode.value === 'pve'
+        ? { ...PVE_STAT_MODIFIERS }
+        : { ...PVP_STAT_MODIFIERS }
+    }
+  })
 
-const damageTypes = [
-  { label: 'All', value: null },
-  { label: 'Kinetic', value: DamageTypeEnum.Kinetic },
-  { label: 'Stasis', value: DamageTypeEnum.Stasis },
-  { label: 'Strand', value: DamageTypeEnum.Strand },
-  { label: 'Void', value: DamageTypeEnum.Void },
-  { label: 'Solar', value: DamageTypeEnum.Solar },
-  { label: 'Arc', value: DamageTypeEnum.Arc }
-]
+  const gameModes = [
+    { label: 'PvE', value: 'pve' },
+    { label: 'PvP', value: 'pvp' }
+  ]
 
-const frames = computed(() => {
-  const frames = weapons.value.map(
-    weapon => ({ name: weapon.frame, hash: weapon.frameHash })
+  const weightModes = [
+    { label: 'Default', value: 'default' },
+    { label: 'Manual', value: 'manual'}
+  ]
+
+  const weaponTypes = [
+    { label: 'Auto Rifle', value: WeaponType.AutoRifle },
+    { label: 'Hand Cannon', value: WeaponType.HandCannon },
+    { label: 'Pulse Rifle', value: WeaponType.PulseRifle },
+    { label: 'Scout Rifle', value: WeaponType.ScoutRifle },
+    { label: 'Sidearm', value: WeaponType.Sidearm },
+    { label: 'Submachine Gun', value: WeaponType.SubmachineGun },
+    { label: 'Fusion Rifle', value: WeaponType.FusionRifle },
+    { label: 'Shotgun', value: WeaponType.Shotgun },
+    { label: 'Sniper Rifle', value: WeaponType.SniperRifle },
+    { label: 'Trace Rifle', value: WeaponType.TraceRifle },
+    { label: 'Linear Fusion Rifle', value: WeaponType.LinearFusionRifle },
+    { label: 'Machine Gun', value: WeaponType.MachineGun }
+  ]
+
+  const weaponSlots = [
+    { label: 'All', value: null },
+    { label: 'Kinetic', value: WeaponSlot.Kinetic },
+    { label: 'Energy', value: WeaponSlot.Energy },
+    { label: 'Power', value: WeaponSlot.Power }
+  ]
+
+  const damageTypes = [
+    { label: 'All', value: null },
+    { label: 'Kinetic', value: DamageTypeEnum.Kinetic },
+    { label: 'Stasis', value: DamageTypeEnum.Stasis },
+    { label: 'Strand', value: DamageTypeEnum.Strand },
+    { label: 'Void', value: DamageTypeEnum.Void },
+    { label: 'Solar', value: DamageTypeEnum.Solar },
+    { label: 'Arc', value: DamageTypeEnum.Arc }
+  ]
+
+  const frames = computed(() => {
+    const frames = weapons.value.map(
+      weapon => ({ name: weapon.frame, hash: weapon.frameHash })
+    )
+    return Array.from(new Set(frames.map(frame => frame.hash))).map(
+      hash => frames.find(frame => hash === frame.hash)
+    )
+  })
+
+  const weapons = computed(() => gameStore.weapons.filter(weapon =>
+    weapon.weaponType === weaponType.value &&
+    (!damageType.value || weapon.damageType === damageType.value) &&
+    (!slot.value || weapon.slot === slot.value)
+  ))
+
+  const weaponsToDisplay = computed(() => weapons.value.filter(
+    weapon => !frame.value || weapon.frameHash === frame.value.hash)
   )
-  return Array.from(new Set(frames.map(frame => frame.hash))).map(
-    hash => frames.find(frame => hash === frame.hash)
-  )
-})
 
-const weapons = computed(() => gameStore.weapons.filter(weapon =>
-  weapon.weaponType === weaponType.value &&
-  (!damageType.value || weapon.damageType === damageType.value) &&
-  (!slot.value || weapon.slot === slot.value)
-))
+  const weaponsWithScores = computed(() => weaponsToDisplay.value.map(weapon => (
+    { weapon, score: createScore(weapon.stats!, weights.value) }
+  )).sort((a, b) => b.score - a.score))
 
-const weaponsToDisplay = computed(() => weapons.value.filter(
-  weapon => !frame.value || weapon.frameHash === frame.value.hash)
-)
+  function judgeRecoilDirection(recoilDirection: number) {
+    const deviation = Math.abs(
+      Math.cos(recoilDirection * Math.PI / 10) * (100 - recoilDirection)
+    )
+    return Math.round(50 - (deviation - recoilDirection) / 2)
+  }
 
-const weaponsWithScores = computed(() => weaponsToDisplay.value.map(weapon => (
-  { weapon, score: createScore(weapon.stats!, weights.value) }
-)).sort((a, b) => b.score - a.score))
-
-const judgeRecoilDirection = (recoilDirection: number) => {
-  const deviation = Math.abs(
-    Math.cos(recoilDirection * Math.PI / 10) * (100 - recoilDirection)
-  )
-  return Math.round(50 - (deviation - recoilDirection) / 2)
-}
-
-const createScore = (stats: WeaponStats, modifier: WeaponStats) => {
-  return Math.round(
-    stats.range * modifier.range +
-    stats.stability * modifier.stability  +
-    stats.handling * modifier.handling +
-    stats.reloadSpeed * modifier.reloadSpeed +
-    stats.zoom * modifier.zoom +
-    stats.aimAssistance * modifier.aimAssistance +
-    stats.airborneEffectiveness * modifier.airborneEffectiveness +
-    judgeRecoilDirection(stats.recoilDirection) * modifier.recoilDirection +
-    stats.magazine * modifier.magazine +
-    stats.inventorySize * modifier.inventorySize * Number(gameMode.value === 'pve')
-  )
-}
+  function createScore(stats: WeaponStats, modifier: WeaponStats) {
+    return Math.round(
+      stats.range * modifier.range +
+      stats.stability * modifier.stability  +
+      stats.handling * modifier.handling +
+      stats.reloadSpeed * modifier.reloadSpeed +
+      stats.zoom * modifier.zoom +
+      stats.aimAssistance * modifier.aimAssistance +
+      stats.airborneEffectiveness * modifier.airborneEffectiveness +
+      judgeRecoilDirection(stats.recoilDirection) * modifier.recoilDirection +
+      stats.magazine * modifier.magazine +
+      stats.inventorySize * modifier.inventorySize * Number(gameMode.value === 'pve')
+    )
+  }
 </script>
 
-<style scoped lang="sass">
-.controls-row
-  max-width: 64em
-.q-select, .q-input
-  min-width: 12.5em
-
-.weapon
-  min-width: 15em
-  display: flex
-  align-items: center
-  gap: 1.5em
-
-  & > img
-    width: 2em
-    height: 2em
-    border-radius: 0.5em
+<style scoped>
+  .controls-row {
+    max-width: 64em;
+  }
+  .q-select, .q-input {
+    min-width: 12.5em;
+  }
+  .weapon {
+    min-width: 15em;
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+  }
+  .weapon > img {
+    width: 2em;
+    height: 2em;
+    border-radius: 0.5em;
+  }
 </style>

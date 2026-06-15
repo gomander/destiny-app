@@ -1,21 +1,19 @@
-import FirestoreDatabase from '../firestore-database.ts'
+import db from '../firestore-database.ts'
 import type { CreateGroupData } from '../types.ts'
 
 export const getGroup = async (path: string) => {
-  const db = FirestoreDatabase()
   const snapshot = await db.doc(`groups/${path}`).get()
   return snapshot.data()
 }
 
 export const createGroup = async (group: CreateGroupData) => {
-  const db = FirestoreDatabase()
   const path = await createUniquePath()
   await db.collection('groups').doc(path).set(group)
   return { path }
 }
 
 const createUniquePath = async () => {
-  let newPath
+  let newPath: string
   while (true) {
     newPath = getRandomPath()
     if (await pathIsAvailable(newPath)) break
@@ -28,7 +26,6 @@ const getRandomPath = () => {
 }
 
 const pathIsAvailable = async (path: string) => {
-  const db = FirestoreDatabase()
   const doc = await db.doc(`groups/${path}`).get()
   return !doc.exists
 }

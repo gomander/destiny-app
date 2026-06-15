@@ -12,13 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '../stores/auth-store'
-import { authorizationURL } from '../utils/api'
+  import { useAuthStore } from '../stores/auth-store'
+  import { authorizationURL } from '../utils/api'
 
-interface Props { tooltip?: string }
-const props = defineProps<Props>()
+  const props = defineProps<{ tooltip?: string }>()
 
-const authStore = useAuthStore()
-authStore.location = location.pathname
-authStore.code = crypto.randomUUID().split('-')[0]
+  const authStore = useAuthStore()
+  authStore.location = location.pathname
+  authStore.code = crypto.randomUUID().split('-')[0]
 </script>

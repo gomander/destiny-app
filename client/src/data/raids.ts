@@ -7,7 +7,8 @@ const raids = [
   { name: 'King\'s Fall', id: 'kings-fall' },
   { name: 'Root of Nightmares', id: 'root-of-nightmares' },
   { name: 'Crota\'s End', id: 'crotas-end' },
-  { name: 'Salvation\'s Edge', id: 'salvations-edge' }
+  { name: 'Salvation\'s Edge', id: 'salvations-edge' },
+  // { name: 'Desert Perpetual', id: 'desert-perpetual' }
 ]
 
 export default raids

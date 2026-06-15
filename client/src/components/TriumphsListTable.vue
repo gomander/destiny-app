@@ -44,7 +44,7 @@
           <div
             v-for="objective in value.objectives || [{ complete: value.complete }]"
             class="col full-height objective"
-            :class="objective.complete ? 'complete' : 'incomplete'"
+            :class="objective.complete ? 'bg-positive' : 'bg-negative'"
           >
             <div class="absolute-full"></div>
           </div>
@@ -108,194 +108,188 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, toRef, watch } from 'vue'
-import {
-  getProfileData, mapProfileRecordsToTriumphs
-} from '../services/profile-service'
-import type { QTableColumn } from 'quasar'
-import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
-import { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
+  import { onMounted, ref, toRef, watch } from 'vue'
+  import {
+    getProfileData, mapProfileRecordsToTriumphs
+  } from '../services/profile-service'
+  import type { QTableColumn } from 'quasar'
+  import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
+  import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
 
-interface Props {
-  title: string
-  triumphs: Triumph[]
-  players: BungieMember[]
-}
-const props = defineProps<Props>()
+  const props = defineProps<{
+    title: string
+    triumphs: Triumph[]
+    players: BungieMember[]
+  }>()
 
-const columns = ref<QTableColumn[]>([])
-const resetColumns = () => {
-  columns.value = [{
-    name: 'triumphs',
-    label: 'Triumphs',
-    field: 'triumph',
-    align: 'left',
-    sortable: true,
-    sort: (a: Triumph, b: Triumph) => a.description > b.description ? 1 : -1
-  }]
-}
-resetColumns()
-interface Row {
-  triumph: Triumph
-  [k: string]: Triumph | TriumphPlayer | false
-}
-const rows = ref<Row[]>([])
-const loading = ref(true)
-const filter = ref(null)
-const filterMethod = (rows: readonly Row[], query: string) => {
-  const lowerQuery = query.toLowerCase()
-  return rows.filter((row: Row) =>
-    row.triumph.name.toLowerCase().includes(lowerQuery) ||
-    row.triumph.description.toLowerCase().includes(lowerQuery)
-  )
-}
-
-const sortByTriumphCompletion = (triumph: Triumph) => {
-  columns.value = columns.value.sort((a, b) => {
-    if (a.name === 'triumphs' || b.name === 'triumphs') return 0
-    const playerAObjectives = players.value.find(
-      player => player.id === a.name
-    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
-      obj => obj.complete
-    ).length
-    if (playerAObjectives === undefined) return 0
-    const playerBObjectives = players.value.find(
-      player => player.id === b.name
-    )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
-      obj => obj.complete
-    ).length
-    if (playerBObjectives === undefined) return 0
-    return playerAObjectives - playerBObjectives
-  })
-}
-
-const includeOptional = ref(true)
-watch(includeOptional, () => {
-  populateTableRows()
-})
-
-const hideCompleted = ref(false)
-watch(hideCompleted, () => {
-  populateTableRows()
-})
-
-const populateTableRows = () => {
-  if (!props.triumphs) return
-  rows.value = []
-  for (const triumph of props.triumphs) {
-    if (!includeOptional.value && !triumph.required) continue
-    const row: Row = { triumph }
-    for (const player of players.value) {
-      row[player.id] = player.triumphs.find(
-        t => t.hash === triumph.hash
-      ) || false
-    }
-    if (hideCompleted.value) {
-      const completedStatuses = Object.values(row).map(triumph =>
-        typeof triumph === 'object' && 'complete' in triumph
-          ? triumph.complete
-          : triumph
-      )
-      if (
-        !completedStatuses.includes(false) &&
-        !completedStatuses.includes(undefined)
-      ) continue
-    }
-    rows.value.push(row)
-  }
-}
-
-watch(props, () => {
-  populateTableRows()
-})
-
-const playersProp = toRef(props, 'players')
-watch(playersProp, async () => {
-  loading.value = true
-  resetColumns()
-  playerData.value = await fetchPlayerData()
-  loading.value = false
-})
-
-const playerData = ref<DestinyProfileResponse[]>([])
-const players = ref<PlayerTriumphs[]>([])
-watch(playerData, () => {
-  players.value = playerData.value.map(player => {
-    if (!player.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
-    if (!player.profileRecords.data) return
-    const userInfo = player.profile.data.userInfo
-    const newPlayer = {
-      name: userInfo.bungieGlobalDisplayName,
-      discriminator: String(userInfo.bungieGlobalDisplayNameCode),
-      id: userInfo.membershipId,
-      triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
-    }
-    columns.value.push({
-      name: newPlayer.id,
-      label: newPlayer.name,
-      field: newPlayer.id,
-      align: 'center',
+  const columns = ref<QTableColumn[]>([])
+  function resetColumns() {
+    columns.value = [{
+      name: 'triumphs',
+      label: 'Triumphs',
+      field: 'triumph',
+      align: 'left',
       sortable: true,
-      sort: (a: TriumphPlayer, b: TriumphPlayer) => {
-        return (
-          a.objectives.filter(obj => obj.complete).length / a.objectives.length -
-          b.objectives.filter(obj => obj.complete).length / b.objectives.length
-        )
-      }
+      sort: (a: Triumph, b: Triumph) => a.description > b.description ? 1 : -1
+    }]
+  }
+  resetColumns()
+  interface Row {
+    triumph: Triumph
+    [k: string]: Triumph | TriumphPlayer | false
+  }
+  const rows = ref<Row[]>([])
+  const loading = ref(true)
+  const filter = ref(null)
+  const filterMethod = (rows: readonly Row[], query: string) => {
+    const lowerQuery = query.toLowerCase()
+    return rows.filter((row: Row) =>
+      row.triumph.name.toLowerCase().includes(lowerQuery) ||
+      row.triumph.description.toLowerCase().includes(lowerQuery)
+    )
+  }
+
+  function sortByTriumphCompletion(triumph: Triumph) {
+    columns.value = columns.value.sort((a, b) => {
+      if (a.name === 'triumphs' || b.name === 'triumphs') return 0
+      const playerAObjectives = players.value.find(
+        player => player.id === a.name
+      )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
+        obj => obj.complete
+      ).length
+      if (playerAObjectives === undefined) return 0
+      const playerBObjectives = players.value.find(
+        player => player.id === b.name
+      )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
+        obj => obj.complete
+      ).length
+      if (playerBObjectives === undefined) return 0
+      return playerAObjectives - playerBObjectives
     })
-    return newPlayer
-  }).filter(player => player) as PlayerTriumphs[]
-  populateTableRows()
-})
+  }
 
-const fetchPlayerData = async () => {
-  return (await Promise.all(
-    props.players.map(player => getProfileData([100, 900], player.id, player.type))
-  )).filter(data => data) as DestinyProfileResponse[]
-}
+  const includeOptional = ref(true)
+  watch(includeOptional, () => {
+    populateTableRows()
+  })
 
-onMounted(async () => {
-  loading.value = true
-  playerData.value = await fetchPlayerData()
-  loading.value = false
-})
+  const hideCompleted = ref(false)
+  watch(hideCompleted, () => {
+    populateTableRows()
+  })
+
+  function populateTableRows() {
+    if (!props.triumphs) return
+    rows.value = []
+    for (const triumph of props.triumphs) {
+      if (!includeOptional.value && !triumph.required) continue
+      const row: Row = { triumph }
+      for (const player of players.value) {
+        row[player.id] = player.triumphs.find(
+          t => t.hash === triumph.hash
+        ) || false
+      }
+      if (hideCompleted.value) {
+        const completedStatuses = Object.values(row).map(triumph =>
+          typeof triumph === 'object' && 'complete' in triumph
+            ? triumph.complete
+            : triumph
+        )
+        if (
+          !completedStatuses.includes(false) &&
+          !completedStatuses.includes(undefined)
+        ) continue
+      }
+      rows.value.push(row)
+    }
+  }
+
+  watch(props, () => {
+    populateTableRows()
+  })
+
+  const playersProp = toRef(props, 'players')
+  watch(playersProp, async () => {
+    loading.value = true
+    resetColumns()
+    playerData.value = await fetchPlayerData()
+    loading.value = false
+  })
+
+  const playerData = ref<DestinyProfileResponse[]>([])
+  const players = ref<PlayerTriumphs[]>([])
+  watch(playerData, () => {
+    players.value = playerData.value.map(player => {
+      if (!player.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
+      if (!player.profileRecords.data) return
+      const userInfo = player.profile.data.userInfo
+      const newPlayer = {
+        name: userInfo.bungieGlobalDisplayName,
+        discriminator: String(userInfo.bungieGlobalDisplayNameCode),
+        id: userInfo.membershipId,
+        triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
+      }
+      columns.value.push({
+        name: newPlayer.id,
+        label: newPlayer.name,
+        field: newPlayer.id,
+        align: 'center',
+        sortable: true,
+        sort: (a: TriumphPlayer, b: TriumphPlayer) => {
+          return (
+            a.objectives.filter(obj => obj.complete).length / a.objectives.length -
+            b.objectives.filter(obj => obj.complete).length / b.objectives.length
+          )
+        }
+      })
+      return newPlayer
+    }).filter(player => player) as PlayerTriumphs[]
+    populateTableRows()
+  })
+
+  async function fetchPlayerData() {
+    return (await Promise.all(
+      props.players.map(player => getProfileData([100, 900], player.id, player.type))
+    )).filter(data => data) as DestinyProfileResponse[]
+  }
+
+  onMounted(async () => {
+    loading.value = true
+    playerData.value = await fetchPlayerData()
+    loading.value = false
+  })
 </script>
 
-<style scoped lang="sass">
-.complete
-  background-color: $positive
-
-.incomplete
-  background-color: $negative
-
-.completion-icon
-  font-size: 1.5em
-  color: #FFF8
-
-.objective
-  border: 0.1em solid #FFF1
-
-.col-header
-  font-size: 150%
-
-.triumph
-  max-width: 30em
-  cursor: pointer
-
-  &-data
-    display: flex
-    align-items: center
-    gap: 1em
-
-  &-name
-    font-size: 100%
-    line-height: 150%
-    font-weight: bold
-
-  &-description
-    white-space: normal
-
-.required-text
-  font-weight: 300
-  opacity: 50%
+<style scoped>
+  .completion-icon {
+    font-size: 1.5em;
+    color: #FFF8;
+  }
+  .objective {
+    border: 0.1em solid #FFF1;
+  }
+  .col-header {
+    font-size: 150%;
+  }
+  .triumph {
+    max-width: 30em;
+    cursor: pointer;
+  }
+  .triumph-data {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  .triumph-name {
+    font-size: 100%;
+    line-height: 150%;
+    font-weight: bold;
+  }
+  .triumph-description {
+    white-space: normal;
+  }
+  .required-text {
+    font-weight: 300;
+    opacity: 50%;
+  }
 </style>

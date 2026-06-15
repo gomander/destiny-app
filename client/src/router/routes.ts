@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import raids from '../data/raids'
 
 const raidsSelector = raids.map(raid => raid.id).join('|')
@@ -14,32 +14,11 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/LegendaryWeaponsPage.vue')
-          },
-          {
-            path: 'legendary',
-            component: () => import('pages/LegendaryWeaponsPage.vue')
-          },
-          {
-            path: 'craftable',
-            component: () => import('pages/CraftableWeaponsPage.vue')
+            component: () => import('pages/WeaponsPage.vue')
           },
           {
             path: 'ranking',
             component: () => import('pages/WeaponRankPage.vue')
-          }
-        ]
-      },
-      {
-        path: 'armor',
-        children: [
-          {
-            path: '',
-            component: () => import('pages/ExoticArmorPage.vue')
-          },
-          {
-            path: 'exotic',
-            component: () => import('pages/ExoticArmorPage.vue')
           }
         ]
       },
@@ -55,14 +34,6 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/RADChecklistPage.vue')
           }
         ]
-      },
-      {
-        path: 'bounty-calculator',
-        component: () => import('pages/BountyCalculatorPage.vue')
-      },
-      {
-        path: 'historical-power',
-        component: () => import('pages/HistoricalPowerPage.vue')
       },
       {
         path: 'auth-return',
