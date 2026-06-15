@@ -454,8 +454,36 @@ const oldDupes = [
   135971347, // Psi Aeterna IV
   // Heavy weapons
   // Grenade launchers
+  218335759, 568611923, // Edge Transit
+  3329842376, // Memory Interdict
+  616582330, // Cry Mutiny
+  736901634, // Doomsday
+  1443049976, // Interference VI
+  578459533, 3183283212, 1854753404, // Wendigo GL3
+  2738601016, // Cataphract GL3
+  657927352, 2666273249, // Hullabaloo
+  413901114, 425681240, // Acosmic
+  1983332562, // Berenger's Memory
+  1972985595, // Swarm of the Raven
+  2066434718, // Canis Major
+  4146702548, // Outrageous Fortune
+  1762785662, // VS Chill Inhibitor
   // Linear fusion rifles
+  3483485727, // Mistral Lift
+  3652506829, // Stormchaser
+  2591257541, // Scintillation
+  3005879473, // Crooked Fang-4fr
+  727781522, 615373993, // Eyes Unveiled
+  946443267, // Line in the Sand
+  2502422775, // Tarantula
+  1399243961, // Reed's Regret
+  3221722018, // Laser Painter
   // Machine guns
+  603242241, 1896309757, // Hammerhead
+  66875353, 495940989, 4220529694, // Avalanche
+  3624844116, 906840740, // Unwavering Duty
+  3325778512, // A Fine Memorial
+  3105930175
   // Rocket launchers
   // Swords
   // Bows
