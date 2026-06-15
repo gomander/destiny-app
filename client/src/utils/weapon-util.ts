@@ -215,7 +215,7 @@ const oldDupes = [
   2050789284, // Stars in Shadow
   3218364298, // Redrix's Estoc
   1178397319, 2099894368, // Battle Scar
-  568515759, // Chattering Bone
+  568515759, 501329015, // Chattering Bone
   339163900, 1974641289, 1559068369, // Nightshade
   2812100428, 1891321753, 1123433952, // Stay Frosty
   2342054803, // Ogma PR6
@@ -229,21 +229,226 @@ const oldDupes = [
   299665907, // Outlast
   1071542914, 216983039, 1018012078, // Horror's Least
   // Scout rifles
+  542573208, // Last Rite
+  8293111, 4249949938, // Long Arm
+  4193877020, // Does Not Compute
+  2314999489, // Imperative
+  3890960908, 1161561386, // The Guiding Sight
+  3799980700, // Transfiguration
+  3504336176, // Night Watch
+  2723241847, 2249996761, // Patron of Lost Causes
+  3423493037, // Red Tape
+  1389546626, 3007479950, 2595813005, // Taraxippos
+  3242168339, 355922321, // Vouchsafe
+  1342668638, // Pleiades Corrector
+  1927800278, // Eternal Blazon
+  4281371574, 772231794, 3832743906, 1453235079, // Hung Jury SR4
+  1960218487, 3040742682, 996109059, 3470514298, // Nameless Midnight
+  3612142623, // Live Fire
+  222606050, // Glissando-47
+  3907337522, 444627789, // Oxygen SR3
+  3186018373, // Vision of Confluence
+  1531295694, // Adverse Possession IX
+  1931556011, // No Feelings
+  3535742959, 3292795429, 3975115486, // Randy's Throwing Knife
+  2638190703, // Aisha's Embrace
+  925326394, // Black Scorpion-4sr
+  2625782213, // Contingency Plan
+  2226158470, // Unworthy
   // Sidearms
+  829330711, 3437370193, // Peacebond
+  3618823368, // Evening SI4
+  1911843791, // Last Hope
+  2009277538, // The Last Dance
+  293505772, // The Vision
+  2091737595, // Traveler's Judgment 5
+  982229638, 1532276803, 3166250992, // Allied Demand
+  805677041, 213264394, // Buzzard
+  48361212, // Controlling Vision
+  2362471600, // Drang
+  79075821, // Drang (Baroque)
+  409551876, 2839128618, // The Keening
+  2659286158, // Compact Defender
+  3138208275, 2575844666, // Liminal Vigil
+  2121785039, // Brass Attacks
+  2992463569, // Division
+  2345794502, // Forgiveness
+  819358961, 2588048270, // Spoiler Alert
+  3937866388, // Seventh Seraph SI-2
+  3998080529, // Heliocentric QSC
+  1051949956, // Anonymous Autumn
+  2581162758, // Enigma's Draw
+  2199171672, // Lonesome
+  3854037061, // A Swift Verdict
+  414045521, // Insurmountable
+  378498222, 1409524486, // Punching Out
+  3424403076, // The Fool's Remedy
   // Submachine guns
+  3877448149, // Mirror Imago
+  2909905776, 1865351684, 2488587246, 1028124540, // The Hero's Burden
+  2744715540, // Bug-Out Bag
+  3926811686, // Parabellum
+  149110926, // Whatchamacallit
+  1506719573, 2814093983, // Cold Front
+  4039572196, // The Immortal
+  294129361, 3559361670, 655712834, 55393445, // The Title
+  3000847393, // Unforgiven
+  3262192268, 4228149269, // No Survivors
+  2770035786, // M-17 "Fast Talker"
+  1459443448, // Escape Velocity
+  4265183314, 3717177717, 3211624072, // Multimach CCX
+  1200414607, // The Showrunner
+  2349907931, 1066772626, // Prolonged Engagement
+  3354242550, 1050806815, // The Recluse
+  174192097, // CALUS Mini-Tool
+  2517599010, 2742490609, // Death Adder
+  3089417788, // MIDA Mini-Tool
+  2988121501, 3021407779, // Out of Bounds
+  1339362514, // Stochastic Variable
+  2663204025, // Subjunctive
+  2094938673, 1013434963, // Adjudicator
+  566976653, // Antiope-D
+  2510526114, 673621062, // Unending Tempest
+  811403305, // Synchronic Roulette
+  4277547616, // Every Waking Moment
+  3682803680, 2022294213, // Shayura's Wrath
+  3276304504, // Perfect Pitch
+  766323545, // Seventh Seraph VY-7
   // Special weapons
   // Fusion rifles
+  933455006, // Burden of Guilt
+  1084190509, // Pressurized Precision
+  1834313033, // Afterlight
+  93061497, // VS Gravitic Arrest
+  2931957300, // Dream Breaker
+  1006783454, // Timelines' Vertex
+  4094657108, // Techeun Force
+  74733286, // Nox Sidereal IV
+  1824586582, // Resounding
+  3512349612, // Coriolis Force
+  963710795, // Aurvandil FR6
+  2767393525, // Nox Perennial V
+  2398848320, // Erentil FR4
+  1030895163, 3573686365, 2728851518, // Glacioclasm
+  4105447487, // Elatha FR4
+  580961571, 3125454907, // Loaded Question
+  2961807684, 930590127, 1999697514, 2290416, // The Wizened Rebuke
+  4124357815, // The Epicurean
+  607191995, // Hollow Words
+  3445437901, 253196586, 2901221332, // Main Ingredient
+  1289000550, 3293524502, // PLUG ONE.1
+  2715240478, 1323862250, // Riptide
+  1644680957, 3613444087, // Null Composure
+  2209003210, // Zealot's Reward
+  2502422772, 2481881293, // Cartesian Coordinate
   // Glaives
+  3269398063, 2671849376, // Refusal of the Call
+  3001205424, // Ecliptic Distaff
+  2298039571, // Rake Angle
+  2680976411, 1845372864, // Albedo Wing
+  1757202961, 2934305134, // Greasy Luck
+  267672635, // Backfang
   // Grenade launchers
+  3718184802, // Ouster Engine
+  1762785663, // VS Velocity Baton
+  4028298892, 3840794631, // Psychopomp
+  2599338624, // Liturgy
+  2306182339, 1206729100, // Wilderflight
+  1332123064, // Wild Style
+  304659313, // Ignition Code
+  3745974521, 40394833, // Militia's Birthright
+  2026087437, // Lingering Dread
+  1870979911, // Orewing's Maul
+  3252697558, 1946491241, // Truthteller
+  4255586669, // Empty Vessel
+  2060863616, 2461640837, // Salvager's Salvo
+  3993415705, 568611922, // The Mountaintop
+  1125217994, 2059741649, // New Pacific Epitaph
+  1218113510, // Tusk of the Boar
+  3850168899, // Martyr's Retribution
+  613334176, 568611921, // Forebearance
+  1151688091, // Undercurrent
   // Hand cannons
   2462965802, // Uncivil Discourse
   // Shotguns
+  1697682876, 2653171213, // Astral Horizon
+  2919334548, // Imperial Decree
+  4097972038, 1976481399, // A Sudden Death
+  838556752, // Python
+  1179141605, // Felwinter's Lie
+  755130877, 4287947559, // Last Man Standing
+  4117693024, 1094005544, 1586231351, // Mindbender's Ambition
+  3582424018, // Deadpan Delivery
+  3197270240, // Found Verdict
+  3649985571, // Arcane Embrace
+  731147177, // Hawthorne's Field-Forged Shotgun
+  3216652511, // Reckless Endangerment
+  108221785, 1764868900, 557165046, // Riiswalker
+  1325579289, 1402766122, 1612781792, // Retrofuturist
+  1821724780, // Seventh Seraph CQC-12
+  499245245, // Ded Gramarye IV
+  2891672170, // Xenoclast IV
+  2782847179, // Blasphemer
+  2821430069, // Fortissimo-11
+  4037745684, // Bonechiller
+  3360937899, // Unvoiced
+  599895591, // Sojourner's Tale
+  515224227, // First In, Last Out
+  731147178, // Good Bone Structure
+  94729174, 2326716489, 487361141, // Gunnora's Axe
+  2185327324, 2653171212, 51129316, // The Inquisitor
+  2035738085, // Deadlock
+  3184681056, // Fractethyst
+  346136302, 871900124, // Retold Tale
+  2591111628, 233896077, 4169225313, // Compass Rose
+  2563012876, // Matador 64
+  4020742303, // Prophet of Doom
+  2248667690, 3393519051, 1298672084, // Perfect Paradox
+  1664372054, // Threat Level
+  2573900604, // Basso Ostinato
+  3929685100, // The Deicide
+  3190698551, // Wishbringer
   // Sidearms
   480368036, // Tinasha's Mastery
   3922217119, 837298567, // Lotus-Eater
   3381450498, // Indebted Kindness
   // Sniper rifles
+  3164743584, 1401300690, 627188188, // Eye of Sol
+  3312073053, // Shepherd's Watch
+  1645386487, // Tranquility
+  4164201232, // 1000 Yard Stare
+  3666954563, // Elegy-49
+  4190932264, // Beloved
+  4272442416, // The Domino
+  2065081837, 2450917538, 42874240, // Uzume RR4
+  4184808992, 891765152, // Adored
+  2073794990, // Mercurial Overreach
+  1115104187, 1150492185, // Sole Survivor
+  3169616514, 1403800851, // Bite of the Fox
+  990416096, // Silicon Neuroma
+  690412397, // Something Something
+  2990047042, 3612338554, // Succession
+  3473290087, 232119851, // Frozen Orbit
+  4166221755, // Trophy Hunter
+  1893967086, // Keen Thistle
+  1106635211, // Last Foray
+  1280894514, 3871226707, 2477980485, // Mechabre
+  3434507093, 852551895, // Occluded Finality
+  1449922174, // Tatara Gaze
+  3215649176, // The Helmsman
+  3380742308, // Alone as a god
+  3653573172, // Praedyth's Revenge
+  686951703, // The Supremacy
+  2806569825, // Naeem's Lance
+  2290863050, 4083045006, // Persuader
+  2738174948, // Distant Tumulus
+  3454326177, // Omniscient Eye
+  3297863558, 1874424704, // Twilight Oath
+  2164448701, // Apostate
   // Trace rifles
+  4248997900, // Incisor
+  1303313141, // Unsworn
+  2029899814, // Keraunios
   // Pulse rifles
   42435996, 1715391576, // Mint Retrograde
   135971347, // Psi Aeterna IV
@@ -255,187 +460,6 @@ const oldDupes = [
   // Swords
   // Bows
   649691506, // A Good Shout
-  // 79075821, // Drang (Baroque)
-  // 174192097, // CALUS Mini-Tool
-  // 4124357815, // The Epicurean
-  // 2919334548, // Imperial Decree
-  // 4190932264, // Beloved
-  // 1642384931, // Fixed Odds
-  // 2314999489, // Imperative
-  // 2663204025, // Subjunctive
-  // 2723241847, // Patron of Lost Causes
-  // 3850168899, // Martyr's Retribution
-  // 946443267, // Line in the Sand
-  // 614426548, // Falling Guillotine
-  // 294129361, 3559361670, 655712834, // The Title
-  // 1389546626, 3007479950, // Taraxippos
-  // 657927352, // Hullabaloo
-  // 1096206669, // IKELOS_SG_v1.0.2
-  // 1200824700, // IKELOS_HC_v1.0.2
-  // 1253087083, // IKELOS_SR_v1.0.2
-  // 2222560548, // IKELOS_SMG_v1.0.2
-  // 1280894514, 3871226707, // Mechabre
-  // 413901114, // Acosmic
-  // 4425887, // The Time-Worn Spire
-  // 3890960908, 1161561386, // The Guiding Sight
-  // 3424403076, // The Fool's Remedy
-  // 982229638, 1532276803, // Allied Demand
-  // 2909905776, 1865351684, 2488587246, // The Hero's Burden
-  // 2961807684, 930590127, 1999697514, // The Wizened Rebuke
-  // 94729174, 2326716489, 487361141, // Gunnora's Axe
-  // 3169616514, // Bite of the Fox
-  // 1972985595, // Swarm of the Raven
-  // 308332265, 4009352833, // Roar of the Bear
-  // 108221785, 1764868900, // Riiswalker
-  // 4265183314, 3717177717, // Multimach CCX
-  // 1870979911, // Orewing's Maul
-  // 3434507093, // Occluded Finality
-  // 432716552, // Shining Sphere
-  // 829330711, // Peacebond
-  // 1506719573, 2814093983, // Cold Front
-  // 1030895163, 3573686365, 2728851518, // Glacioclasm
-  // 66875353, 495940989, 4220529694, // Avalanche
-  // 3400256755, 396910433, 1911078836, // Zephyr
-  // 2680976411, // Albedo Wing
-  // 1697682876, // Astral Horizon
-  // 2185327324, 2653171212, // The Inquisitor
-  // 3624844116, 906840740, // Unwavering Duty
-  // 3164743584, 1401300690, // Eye of Sol
-  // 3682803680, // Shayura's Wrath
-  // 4248997900, // Incisor
-  // 2638190703, // Aisha's Embrace
-  // 2345794502, // Forgiveness
-  // 958384347, // Tomorrow's Answer
-  // 325519402, // Darkest Before
-  // 3854037061, // A Swift Verdict
-  // 2094938673, // Adjudicator
-  // 1960218487, 3040742682, // Nameless Midnight
-  // 1927800278, // Eternal Blazon
-  // 819358961, // Spoiler Alert
-  // 3445437901, // Main Ingredient
-  // 3582424018, // Deadpan Delivery
-  // 2290863050, 4083045006, // Persuader
-  // 3551104348, // Double-Edged Answer
-  // 4146702548, // Outrageous Fortune
-  // 580961571, // Loaded Question
-  // 805677041, // Buzzard
-  // 4281371574, 772231794, 3832743906, // Hung Jury SR4
-  // 3745974521, 40394833, // The Militia's Birthright
-  // 4117693024, 1094005544, // Mindbender's Ambition
-  // 578459533, 3183283212, // Wendigo GL3
-  // 47772649, // THE SWARM
-  // 2065081837, 2450917538, // Uzume RR4
-  // 1151688091, // Undercurrent
-  // 990416096, // Silicon Neuroma
-  // 1929278169, // BrayTech Osprey
-  // 1289000550, // PLUG ONE.1
-  // 3799980700, // Transfiguration
-  // 4094657108, // Techeun Force
-  // 686951703, // The Supremacy
-  // 2545083870, // Apex Predator
-  // 2591111628, 233896077, // Compass Rose
-  // 3256453690, // Crowning Duologue
-  // 2965080304, // Yeartide Apex
-  // 3977654524, // Festival Flight
-  // 3242168339, // Vouchsafe
-  // 346136302, // Retold Tale
-  // 3297863558, // Twilight Oath
-  // 3740842661, // Sleepless
-  // 1644160541, // Abide the Return
-  // 1325579289, 1402766122, // Retrofuturist
-  // 1674742470, // Autumn Wind
-  // 4193877020, // Does Not Compute
-  // 3535742959, // Randy's Throwing Knife
-  // 3993415705, // The Mountaintop
-  // 3190698551, // Wishbringer
-  // 4174481098, // Steel Sybil Z-14
-  // 3354242550, // The Recluse
-  // 205225492, // Hung Jury SR4
-  // 3098328572, // The Recluse
-  // 4043921923, // The Mountaintop
-  // 2480074702, // Forbearance
-  // 570866107, // Succession
-  // 2228325504, // Edge Transit
-  // 211732170, // Hammerhead
-  // 243425374, // Falling Guillotine
-  // 603242241, // Hammerhead
-  // 2744715540, // Bug-Out Bag
-  // 755130877, // Last Man Standing
-  // 1115104187, // Sole Survivor
-  // 715338174, // Just in Case
-  // 2502422772, // Cartesian Coordinate
-  // 731147177, // Hawthorne's Field-Forged Shotgun
-  // 417474224, // Hoosegow
-  // 287042892, // Negative Space
-  // 1911843791, // Last Hope
-  // 3312073053, // Sheperd's Watch
-  // 417474225, // Mos Epoch III
-  // 1983332562, // Berenger's Memory
-  // 2502422775, // Tarantula
-  // 2091737595, // Traveler's Judgment 5
-  // 2248667690, 3393519051, // Perfect Paradox
-  // 4105447487, // Elatha FR4
-  // 2625782213, // Contingency Plan
-  // 48361212, // Controlling Vision
-  // 1459443448, // Escape Velocity
-  // 3252697558, 1946491241, // Truthteller
-  // 2738174948, // Distant Tumulus
-  // 1342668638, // Pleiades Corrector
-  // 2581162758, // Enigma's Draw
-  // 293505772, // The Vision
-  // 1339362514, // Stochastic Variable
-  // 1006783454, // Timelines' Vertex
-  // 3929685100, // The Deicide
-  // 4272442416, // The Domino
-  // 3329842376, // Memory Interdict
-  // 1531295694, // Adverse Possession IX
-  // 1443049976, // Interference VI
-  // 2276266837, // Honor's Edge
-  // 925326394, // Black Scorpion-4sr
-  // 1200414607, // The Showrunner
-  // 566976653, // Antiope-D
-  // 2517599010, // Death Adder
-  // 2398848320, // Erentil FR4
-  // 515224227, // First In, Last Out
-  // 731147178, // Good Bone Structure
-  // 3666954563, // Elegy-49
-  // 218335759, // Edge Transit
-  // 3005879473, // Crooked Fang-4fr
-  // 1411084669, // Zenobia-D
-  // 1180270694, // Crown-Splitter
-  // 1180270692, // Quickfang
-  // 14929251, // Long Arm
-  // 1460079227, // Liminal Vigil
-  // 4193602194, // No Survivors
-  // 1685406703, // Greasy Luck
-  // 2982006965, // Wilderflight
-  // 492673102, // New Pacific Epitaph
-  // 1904170910, // A Sudden Death
-  // 2730671571, // Terminus Horizon
-  // 2760833884, // Cold Comfort
-  // 304659313, // Ignition Code
-  // 599895591, // Sojourner's Tale
-  // 2209003210, // Zealot's Reward
-  // 4020742303, // Prophet of Doom
-  // 3454326177, // Omniscient Eye
-  // 3186018373, // Vision of Confluence
-  // 3197270240, // Found Verdict
-  // 3653573172, // Praedyth's Revenge
-  // 4050645223, // Hezen Vengeance
-  // 2903168058, // Division
-  // 3234363830, // Mirror Imago
-  // 3228630258, // Afterlight
-  // 3269398063, // Refusal of the Call
-  // 4028298892, // Psychopomp
-  // 727781522, // Eyes Unveiled
-  // 1757177186, // Watchful Eye
-  // 547165496, // Abyssal Edge
-  // 607191995, // Hollow Words
-  // 35794111, // Temptation's Hook
-  // 3804242793, 3804242792, // Phoneutria Fera
-  // 2888021252, 2888021253, // Trachinus
-  // 407150810, 407150811, // Ribbontail
-  // 2765451291, 2765451290, // Synanceia
 ]
 
 export function isOldDuplicate(hash: number) {
