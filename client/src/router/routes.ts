@@ -14,19 +14,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/LegendaryWeaponsPage.vue')
-          },
-          {
-            path: 'legendary',
-            component: () => import('pages/LegendaryWeaponsPage.vue')
-          },
-          {
-            path: 'tiered',
-            component: () => import('pages/TieredWeaponsPage.vue')
-          },
-          {
-            path: 'craftable',
-            component: () => import('pages/CraftableWeaponsPage.vue')
+            component: () => import('pages/WeaponsPage.vue')
           },
           {
             path: 'ranking',
