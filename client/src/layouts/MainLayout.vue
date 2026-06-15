@@ -3,6 +3,7 @@
     <q-header unelevated>
       <q-toolbar>
         <q-btn
+          v-if="useMobileLayout"
           flat
           dense
           round
@@ -15,12 +16,41 @@
           <span class="text-weight-bold">DARCI</span>
           <span style="opacity: 80%; font-size: 60%; margin-left: 0.5em">v{{ version }}</span>
         </q-toolbar-title>
+
+        <div v-if="!useMobileLayout">
+          <q-btn
+            label="Home"
+            icon="fas fa-house"
+            unelevated
+            to="/"
+          />
+
+          <q-btn
+            label="Weapons"
+            icon="fas fa-gun"
+            unelevated
+            to="/weapons"
+          />
+
+          <q-btn
+            label="Raid checklists"
+            icon="fas fa-table-cells"
+            unelevated
+            to="/checklists/raids"
+          />
+
+          <q-btn
+            label="Weapon ranking"
+            icon="fas fa-ranking-star"
+            unelevated
+            to="/weapons/ranking"
+          />
+        </div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
       bordered
       :width="275"
     >
@@ -44,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { useUserStore } from '../stores/user-store'
   import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
   import { useDefinitionFetcher } from 'src/utils/definition-fetcher'
@@ -52,6 +82,8 @@
   const userStore = useUserStore()
 
   const version = process.env.VERSION
+
+  const useMobileLayout = computed(() => window.innerWidth <= 900)
 
   onMounted(() => {
     void useDefinitionFetcher()
@@ -66,22 +98,11 @@
       exact: true
     },
     {
-      title: 'Legendary Weapons',
+      title: 'Weapons',
       caption: 'By type, frame, and element',
       icon: 'fas fa-gun',
-      link: '/weapons/legendary'
-    },
-    {
-      title: 'Tiered Weapons',
-      caption: 'By type, frame, and element',
-      icon: 'fas fa-diamond',
-      link: '/weapons/tiered'
-    },
-    {
-      title: 'Craftable Weapons',
-      caption: 'By type, frame, and element',
-      icon: 'fas fa-hammer',
-      link: '/weapons/craftable'
+      link: '/weapons',
+      exact: true
     },
     {
       title: 'Raid Checklists',
