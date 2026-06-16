@@ -8,8 +8,12 @@
       ref="label"
     >
       <div>
+        <img
+          :src="`/icons/weapons/${weaponType}.png`"
+          :alt="weaponName"
+          :title="weaponName"
+        >
         <h3>{{ weaponName }}</h3>
-        <i>{{ weaponIcon }}</i>
       </div>
     </div>
 
@@ -22,7 +26,7 @@
           :src="'https://www.bungie.net' + column.icon"
           :alt="column.name"
           :title="column.name + '\n\n' + column.description"
-        />
+        >
       </div>
     </div>
 
@@ -36,7 +40,7 @@
           :src="'https://www.bungie.net' + row?.icon"
           :alt="row?.name || ''"
           :title="row?.name || ''"
-        />
+        >
       </div>
     </div>
 
@@ -47,7 +51,8 @@
     >
       <div v-for="weapon of cellWeapons[i]">
         <a :href="`https://light.gg/db/items/${weapon.hash}`" target="_blank">
-          <img :src="`https://www.bungie.net${weapon.icon}`" :alt="weapon.name" />
+          <img :src="`https://www.bungie.net${weapon.icon}`" :alt="weapon.name">
+          <span>{{ weapon.name }}</span>
         </a>
 
         <q-tooltip class="text-body2">
@@ -165,6 +170,7 @@
     border-radius: 0.25em;
     width: fit-content;
     text-align: center;
+    background-color: #333;
   }
   .grid > div {
     border: 0.1em solid black;
@@ -181,25 +187,28 @@
     align-items: center;
     height: 64px;
   }
-  .grid > div > div > a {
+  .grid-data a {
+    position: relative;
     height: 64px;
   }
-  .grid-data {
-    background-color: #424242;
-  }
   .grid-data img {
-    border: 0.1em solid #9e9e9e;
+    border: 0.1em solid #ddd;
   }
   .grid-label, .column-header, .row-header {
     color: white;
     background-color: #212121;
   }
+  .grid-label > div {
+    position: relative;
+  }
+  .grid-label h3, .grid-data a > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    color: transparent;
+  }
   img {
     height: 100%;
-    border-radius: 0.5em;
-  }
-  i {
-    font-size: 125%;
-    font-style: normal;
   }
 </style>
