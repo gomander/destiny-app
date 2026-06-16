@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue'
-  import { useUserStore } from '../stores/user-store'
+  import { useUserStore } from 'stores'
   import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue'
   import { useDefinitionFetcher } from 'src/utils/definition-fetcher'
 

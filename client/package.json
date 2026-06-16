@@ -8,11 +8,10 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@quasar/extras": "^2.0.0",
+    "@quasar/extras": "^2.0.1",
     "pinia": "^3.0.4",
-    "pinia-plugin-persistedstate": "^4.7.1",
-    "quasar": "^2.19.3",
-    "vue": "^3.5.35",
+    "quasar": "^2.20.0",
+    "vue": "^3.5.38",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
@@ -21,7 +20,7 @@
     "bungie-api-ts": "^5.10.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
-    "vue-tsc": "^3.3.4"
+    "vue-tsc": "^3.3.5"
   },
   "engines": {
     "node": ">=24"

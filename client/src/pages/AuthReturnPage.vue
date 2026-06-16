@@ -7,10 +7,9 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { useAuthStore } from '../stores/auth-store'
-  import { useUserStore } from '../stores/user-store'
-  import * as api from '../utils/api'
-  import { showError } from '../utils/messenger'
+  import { useAuthStore, useUserStore } from 'stores'
+  import * as api from 'src/utils/api'
+  import { showError } from 'src/utils/messenger'
 
   const authStore = useAuthStore()
   const userStore = useUserStore()
@@ -18,10 +17,14 @@
   const router = useRouter()
 
   onMounted(async () => {
-    if (route.query.state !== authStore.code) return
-
+    if (route.query.state !== authStore.code) {
+      throw new Error('Query state did not match authorization code')
+    }
     try {
-      const tokens = await api.getAccessTokenFromCode(route.query.code as string)
+      if (!route.query.code?.length) {
+        throw new Error('Query code missing')
+      }
+      const tokens = await api.getAccessTokenFromCode(route.query.code.toString())
       if (!tokens) return
       userStore.accessToken = tokens.access_token
       userStore.membershipId = tokens.membership_id
@@ -41,8 +44,11 @@
         name: userStore.name,
         code: userStore.nameCode
       }
+      userStore.persist()
       router.push({ path: authStore.location })
     } catch (error) {
+      authStore.reset()
+      router.push('/')
       showError(error)
     }
   })

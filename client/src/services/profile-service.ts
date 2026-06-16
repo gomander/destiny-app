@@ -1,20 +1,18 @@
-import { useDefinitionsStore } from '../stores/definitions-store'
-import { useGameStore } from '../stores/game-store'
-import { useUserStore } from '../stores/user-store'
-import * as api from '../utils/api'
+import { useDefinitionsStore, useGameStore, useUserStore } from 'stores'
+import * as api from 'src/utils/api'
 import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
-import { TriumphPlayer } from '../types'
+import { TriumphPlayer } from 'src/types'
 
 const definitionsStore = useDefinitionsStore()
 const gameStore = useGameStore()
 const userStore = useUserStore()
 
-export const getAuthenticatedProfileData = async (
+export async function getAuthenticatedProfileData(
   components = [100, 200, 201, 900],
   membershipId?: string,
   membershipType?: number,
   accessToken?: string
-) => {
+) {
   membershipId = membershipId || userStore.primaryMembershipId
   membershipType = membershipType || userStore.destinyMemberships.find(
     m => m.membershipId === userStore.primaryMembershipId
@@ -26,18 +24,18 @@ export const getAuthenticatedProfileData = async (
   )
 }
 
-export const getProfileData = async (
+export async function getProfileData(
   components = [100, 200, 201, 900],
   membershipId: string,
   membershipType: number,
   accessToken?: string
-) => {
+) {
   return await api.getDestinyProfileData(
     components, membershipId, membershipType, accessToken
   )
 }
 
-export const getProfileRecords = async () => {
+export async function getProfileRecords() {
   if (!userStore.membershipId) return
   const profile = await getAuthenticatedProfileData([900])
 
@@ -47,9 +45,7 @@ export const getProfileRecords = async () => {
   userStore.records = mapProfileRecordsToTriumphs(records)
 }
 
-export const mapProfileRecordsToTriumphs = (
-  profileRecords: DestinyProfileRecordsComponent
-) => {
+export function mapProfileRecordsToTriumphs(profileRecords: DestinyProfileRecordsComponent) {
   const records = profileRecords.records
   const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphs).flat()
 

@@ -1,5 +1,5 @@
-import { showError } from './messenger'
-import type { DarciApiResponse, Group } from '../types'
+import { showError } from 'src/utils/messenger'
+import type { DarciApiResponse, Group } from 'src/types'
 
 export async function getGroup(groupId: string) {
   try {

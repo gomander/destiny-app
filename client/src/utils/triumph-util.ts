@@ -6,4 +6,6 @@ export const filteredTriumphs = [
   3025362184, // Horticulturist
   1417273794, // Superior Swordplay
   3975049489, // Paragon
+  2037346146, // Stop the Clock
+  2758399574 // Stop the Clock II
 ]

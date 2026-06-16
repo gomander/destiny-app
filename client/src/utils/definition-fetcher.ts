@@ -1,9 +1,8 @@
-import { useDefinitionsStore } from '../stores/definitions-store'
-import { useGameStore } from '../stores/game-store'
-import * as api from '../utils/api'
-import { swapUniqueFrames } from '../utils/weapon-util'
-import { filteredTriumphs } from '../utils/triumph-util'
-import { showError } from '../utils/messenger'
+import { useDefinitionsStore, useGameStore } from 'stores'
+import * as api from 'src/utils/api'
+import { swapUniqueFrames } from 'src/utils/weapon-util'
+import { filteredTriumphs } from 'src/utils/triumph-util'
+import { showError } from 'src/utils/messenger'
 import {
   DestinyDamageTypeDefinition, DestinyInventoryItemDefinition,
   DestinyItemSubType, DestinyItemType, DestinyPresentationNodeDefinition,
@@ -13,7 +12,7 @@ import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
   BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot,
   type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories
-} from '../types'
+} from 'src/types'
 
 const gameStore = useGameStore()
 const definitionsStore = useDefinitionsStore()

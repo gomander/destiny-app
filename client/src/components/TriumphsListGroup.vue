@@ -8,11 +8,11 @@
 
 <script setup lang="ts">
   import { onMounted, ref, toRef, watch } from 'vue'
-  import { getGroup } from '../utils/firebase'
-  import { getPlayerByBungieName } from '../utils/api'
-  import TriumphsListTable from './TriumphsListTable.vue'
-  import type { BungieMember, Triumph } from '../types'
-  import { showError } from '../utils/messenger'
+  import { getGroup } from 'src/utils/firebase'
+  import { getPlayerByBungieName } from 'src/utils/api'
+  import { showError } from 'src/utils/messenger'
+  import TriumphsListTable from 'src/components/TriumphsListTable.vue'
+  import type { BungieMember, Triumph } from 'src/types'
 
   const props = defineProps<{
     title: string

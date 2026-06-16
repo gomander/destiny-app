@@ -73,9 +73,9 @@
 
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue'
-  import { searchPlayersByBungieName, searchUsersByName } from '../utils/api'
-  import { showError, showNotification } from '../utils/messenger'
-  import type { BungieMember } from '../types'
+  import { searchPlayersByBungieName, searchUsersByName } from 'src/utils/api'
+  import { showError, showNotification } from 'src/utils/messenger'
+  import type { BungieMember } from 'src/types'
 
   const props = defineProps<{
     modelValue: BungieMember | null

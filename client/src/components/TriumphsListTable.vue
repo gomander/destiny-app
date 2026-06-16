@@ -111,10 +111,10 @@
   import { onMounted, ref, toRef, watch } from 'vue'
   import {
     getProfileData, mapProfileRecordsToTriumphs
-  } from '../services/profile-service'
+  } from 'src/services/profile-service'
   import type { QTableColumn } from 'quasar'
   import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
-  import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from '../types'
+  import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from 'src/types'
 
   const props = defineProps<{
     title: string

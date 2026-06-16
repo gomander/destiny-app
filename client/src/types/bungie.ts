@@ -86,7 +86,7 @@ export enum RaidTriumphCategories {
   RootOfNightmares = 4114450368,
   CrotasEnd = 2782956855,
   SalvationsEdge = 2657827258,
-  // DesertPerpetual = ...
+  DesertPerpetual = 3954661385
 }
 
 export enum RaidTitleTriumphCategories {
@@ -99,5 +99,5 @@ export enum RaidTitleTriumphCategories {
   RootOfNightmares = 1976056830,
   CrotasEnd = 238107129,
   SalvationsEdge = 334829503,
-  // DesertPerpetual = ...,
+  DesertPerpetual = 3954661385
 }

@@ -57,9 +57,9 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue'
-  import { useUserStore } from '../stores/user-store'
+  import { useUserStore } from 'stores'
   import FindPlayerForm from 'src/components/FindPlayerForm.vue'
-  import type { BungieMember, Group } from '../types'
+  import type { BungieMember, Group } from 'src/types'
 
   const emit = defineEmits<{ 'create-group': [Group] }>()
 

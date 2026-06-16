@@ -7,7 +7,7 @@ import type {
 import type {
   UserInfoCard, UserMembershipData, UserSearchResponse, UserSearchResponseDetail
 } from 'bungie-api-ts/user'
-import type { BungieTokens } from '../types'
+import type { BungieTokens } from 'src/types'
 
 export function authorizationURL(state: string): string {
   const queryParams = new URLSearchParams({
@@ -105,7 +105,6 @@ export async function getDestinyManifestDefinition<T>(path: string): Promise<{ [
   try {
     const res = await fetch(`${BUNGIE}${path}`)
     if (!res.ok) throw new Error(res.statusText)
-    console.log('got res for ' + path)
     const data = await res.json() as { [k: number]: T }
     return data
   } catch (error) {

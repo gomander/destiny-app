@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue'
-  import { capitalizeText, getWeaponTypesOfAmmoType } from '../utils/weapon-util'
-  import { useGameStore } from '../stores/game-store'
-  import CustomGridDisplay from '../components/CustomGridDisplay.vue'
-  import { AmmoType } from '../types'
+  import { useGameStore } from 'stores'
+  import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
+  import CustomGridDisplay from 'src/components/CustomGridDisplay.vue'
+  import { AmmoType } from 'src/types'
 
   const gameStore = useGameStore()
 

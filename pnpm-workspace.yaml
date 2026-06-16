@@ -6,3 +6,4 @@ allowBuilds:
   '@parcel/watcher': false
   esbuild: false
   protobufjs: false
+  vue-demi: set this to true or false
