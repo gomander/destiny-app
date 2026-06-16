@@ -1,7 +1,5 @@
 import { DestinyItemSubType } from 'bungie-api-ts/destiny2'
-import {
-  AmmoType, DestinyIcon, ExplicitWeaponType, WeaponType
-} from 'src/types'
+import { AmmoType, WeaponType } from 'src/types'
 
 export function capitalizeText(s: string) {
   return s.toLowerCase()
@@ -49,26 +47,6 @@ export function getWeaponTypesOfAmmoType(ammoType: AmmoType) {
       WeaponType.Sword
     ]
   }
-}
-/**
- * Generic reverse-mapping function for string enums
- *
- * @param myEnum The enum to reverse-map
- * @param enumValue The value to look for
- * @returns The first string enum key that has the given value, or null
- */
-function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
-  const keys = Object.keys(myEnum).filter(x => myEnum[x] === enumValue);
-  return keys.length > 0 ? keys[0] : null;
-}
-
-export function getWeaponIconAndName(weaponType: WeaponType, ammoType?: AmmoType) {
-  const explicitWeaponType = (weaponType === 'grenade launcher' && ammoType)
-    ? `${ammoType} ${weaponType}`
-    : weaponType as unknown as ExplicitWeaponType
-  const w = getEnumKeyByEnumValue(ExplicitWeaponType, explicitWeaponType)
-  if (!w) return ['', capitalizeText(weaponType)]
-  return [DestinyIcon[w], capitalizeText(weaponType)]
 }
 
 export function swapUniqueFrames(

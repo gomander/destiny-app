@@ -10,10 +10,9 @@
       <div>
         <img
           :src="`/icons/weapons/${weaponType}.png`"
-          :alt="weaponName"
-          :title="weaponName"
+          alt=""
         >
-        <h3>{{ weaponName }}</h3>
+        <h3>{{ weaponType }}s</h3>
       </div>
     </div>
 
@@ -25,8 +24,12 @@
         <img
           :src="'https://www.bungie.net' + column.icon"
           :alt="column.name"
-          :title="column.name + '\n\n' + column.description"
         >
+
+        <q-tooltip class="text-body2 text-center" maxWidth="30em">
+          <p>{{ column.name }}</p>
+          <p>{{ column.description }}</p>
+        </q-tooltip>
       </div>
     </div>
 
@@ -39,8 +42,11 @@
         <img
           :src="'https://www.bungie.net' + row?.icon"
           :alt="row?.name || ''"
-          :title="row?.name || ''"
         >
+
+        <q-tooltip class="text-body2">
+          {{ row?.name || '' }}
+        </q-tooltip>
       </div>
     </div>
 
@@ -66,7 +72,6 @@
 <script setup lang="ts">
   import { ref, computed, watch, onMounted } from 'vue'
   import { useGameStore } from 'stores'
-  import { getWeaponIconAndName } from 'src/utils/weapon-util'
   import { AmmoType, type Weapon, WeaponType } from 'src/types'
 
   const gameStore = useGameStore()
@@ -157,8 +162,6 @@
     resetGrid()
   })
 
-  const [weaponIcon, weaponName] = getWeaponIconAndName(props.weaponType, props.ammoType)
-
   const grid = ref<HTMLDivElement | null>(null)
   const rowHeaderRefs = ref<HTMLDivElement[]>([])
 </script>
@@ -192,7 +195,7 @@
     height: 64px;
   }
   .grid-data img {
-    border: 0.1em solid #ddd;
+    border: 0.1em solid #aaa;
   }
   .grid-label, .column-header, .row-header {
     color: white;
@@ -207,8 +210,12 @@
     top: 50%;
     translate: -50% -50%;
     color: transparent;
+    pointer-events: none;
   }
   img {
     height: 100%;
+  }
+  p:last-child {
+    margin-bottom: 0;
   }
 </style>
