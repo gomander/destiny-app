@@ -46,6 +46,7 @@
       }
       userStore.persist()
       router.push({ path: authStore.location })
+      authStore.reset()
     } catch (error) {
       authStore.reset()
       router.push('/')

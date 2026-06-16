@@ -1,7 +1,7 @@
 <template>
   <q-btn
     label="Authenticate with Bungie"
-    :href="authorizationURL(authStore.code)"
+    @click="authorize"
     no-caps
     color="primary"
   >
@@ -19,5 +19,8 @@
 
   const authStore = useAuthStore()
 
-  authStore.prepareAuth(location.pathname)
+  function authorize() {
+    authStore.prepareAuth(location.pathname)
+    location.href = authorizationURL(authStore.code)
+  }
 </script>

@@ -16,38 +16,24 @@ export const useAuthStore = defineStore(storeName, {
   actions: {
     prepareAuth(location: string) {
       this.location = location
-      this.code = getCode()
-      this.persist()
-    },
-    persist() {
+      this.code = crypto.randomUUID().split('-')[0]
       localStorage.setItem(storeName, JSON.stringify(this.$state))
     },
     reset() {
-      this.location = '/'
-      this.code = getCode()
+      this.location = ''
+      this.code = ''
       localStorage.removeItem(storeName)
     }
   }
 })
 
 function getInitialValues(): AuthData {
-  const data = JSON.parse(localStorage.getItem(storeName) || '{}')
-  if (
-    !data ||
-    typeof data !== 'object' ||
-    !('location' in data) ||
-    typeof data.location !== 'string' ||
-    !('code' in data) ||
-    typeof data.code !== 'string'
-  ) {
+  const data = localStorage.getItem(storeName)
+  if (!data) {
     return {
       location: '/',
-      code: getCode()
+      code: 'invalid'
     }
   }
-  return data
-}
-
-function getCode() {
-  return crypto.randomUUID().split('-')[0]
+  return JSON.parse(data)
 }
