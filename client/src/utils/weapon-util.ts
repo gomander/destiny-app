@@ -6,10 +6,10 @@ import {
 export function capitalizeText(s: string) {
   return s.toLowerCase()
     .split('-')
-    .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join('-')
     .split(' ')
-    .map((s: string) => s.charAt(0).toUpperCase() + s.substring(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ')
 }
 
@@ -31,22 +31,22 @@ export function getWeaponTypesOfAmmoType(ammoType: AmmoType) {
       WeaponType.Glaive,
       WeaponType.GrenadeLauncher,
       WeaponType.HandCannon,
+      WeaponType.PulseRifle,
       WeaponType.Shotgun,
       WeaponType.Sidearm,
       WeaponType.SniperRifle,
-      WeaponType.TraceRifle,
-      WeaponType.PulseRifle
+      WeaponType.TraceRifle
     ]
   }
   if (ammoType === AmmoType.Heavy) {
     return [
+      WeaponType.Bow,
       WeaponType.GrenadeLauncher,
       WeaponType.LinearFusionRifle,
       WeaponType.MachineGun,
       WeaponType.RocketLauncher,
       WeaponType.SniperRifle,
-      WeaponType.Sword,
-      WeaponType.Bow
+      WeaponType.Sword
     ]
   }
 }

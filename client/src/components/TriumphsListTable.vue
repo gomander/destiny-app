@@ -75,7 +75,7 @@
         placeholder="Search"
       >
         <template v-slot:append>
-          <q-icon name="search"/>
+          <q-icon name="fas fa-search"/>
         </template>
       </q-input>
     </template>
