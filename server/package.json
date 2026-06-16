@@ -1,6 +1,6 @@
 {
   "name": "@darci/server",
-  "version": "46.0.0",
+  "version": "47.0.0",
   "main": "src/app.ts",
   "scripts": {
     "dev": "node --watch --env-file=.env .",
