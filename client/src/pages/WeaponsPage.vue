@@ -34,7 +34,7 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue'
   import { useGameStore } from 'stores'
-  import { capitalizeText, getWeaponTypesOfAmmoType } from 'src/utils/weapon-util'
+  import { capitalizeText, getWeaponTypesOfAmmoType, dedupeWeapons } from 'src/utils/weapon-util'
   import CustomGridDisplay from 'src/components/CustomGridDisplay.vue'
   import { AmmoType } from 'src/types'
 
@@ -48,16 +48,7 @@
 
   const selection = ref('tiered');
 
-  const dedupedWeapons = computed(() => {
-    const map = new Map()
-    for (const weapon of gameStore.weapons) {
-      const existing = map.get(weapon.name)
-      if (!existing || weapon.released > existing.released) {
-        map.set(weapon.name, weapon)
-      }
-    }
-    return Array.from(map.values())
-  })
+  const dedupedWeapons = computed(() => dedupeWeapons(gameStore.weapons))
   const finalWeaponsList = computed(() => {
     if (selection.value === 'craftable') {
       return dedupedWeapons.value.filter((weapon) => weapon.craftable)

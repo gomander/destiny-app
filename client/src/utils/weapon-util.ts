@@ -1,5 +1,5 @@
 import { DestinyItemSubType } from 'bungie-api-ts/destiny2'
-import { AmmoType, WeaponType } from 'src/types'
+import { AmmoType, WeaponType, type Weapon } from 'src/types'
 
 export function capitalizeText(s: string) {
   return s.toLowerCase()
@@ -74,4 +74,15 @@ export function swapUniqueFrames(
       }
     default: return frameHash
   }
+}
+
+export function dedupeWeapons(weapons: Weapon[]) {
+  const map = new Map()
+  for (const weapon of weapons) {
+    const existing = map.get(weapon.name)
+    if (!existing || weapon.released > existing.released) {
+      map.set(weapon.name, weapon)
+    }
+  }
+  return Array.from(map.values())
 }

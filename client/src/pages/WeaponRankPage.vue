@@ -193,6 +193,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue'
   import { useGameStore } from 'stores'
+  import { dedupeWeapons } from 'src/utils/weapon-util'
   import {
     DamageTypeEnum, type GameMode, WeaponSlot, type WeaponStats, WeaponType
   } from 'src/types'
@@ -294,7 +295,8 @@
     )
   })
 
-  const weapons = computed(() => gameStore.weapons.filter(weapon =>
+  const dedupedWeapons = computed(() => dedupeWeapons(gameStore.weapons))
+  const weapons = computed(() => dedupedWeapons.value.filter(weapon =>
     weapon.weaponType === weaponType.value &&
     (!damageType.value || weapon.damageType === damageType.value) &&
     (!slot.value || weapon.slot === slot.value)
