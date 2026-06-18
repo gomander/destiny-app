@@ -1,6 +1,6 @@
 {
   "name": "@gomander/darci",
-  "version": "49.0.0",
+  "version": "50.0.0",
   "description": "A collection of tools and information for Destiny 2",
   "author": "Gunnar Omander <gunnar@gomander.dev> (https://gomander.dev)",
   "scripts": {
@@ -17,8 +17,8 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.3",
     "@quasar/app-vite": "^2.6.2",
+    "@types/node": "^25.9.3",
     "autoprefixer": "^10.5.0",
     "bungie-api-ts": "^5.10.0",
     "typescript": "^6.0.3",
