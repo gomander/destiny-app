@@ -8,7 +8,7 @@ env:
   PROJECT_ID: darci-gg
 
 jobs:
-  deploy-client:
+  deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -25,49 +25,13 @@ jobs:
         run: pnpm i
       - name: Create .env file
         run: |
-          echo '${{ secrets.ENV_FILE_PROD }}' > client/.env
-          echo "COMMIT_HASH=${GITHUB_SHA:0:4}" >> client/.env
-      - name: Build client
-        run: pnpm --prefix=client build
+          echo '${{ secrets.ENV_FILE_PROD }}' > .env
+          echo "COMMIT_HASH=${GITHUB_SHA:0:4}" >> .env
+      - name: Build
+        run: pnpm build
       - name: Prepare authorization with Google Cloud
         uses: google-github-actions/auth@v3
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS_PROD }}
       - name: Deploy to production environment
         run: pnpx firebase-tools deploy --only=hosting --project="$PROJECT_ID"
-  deploy-server:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v6
-      - name: Install PNPM
-        uses: pnpm/action-setup@v6
-      - name: Install Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-      - name: Create env file
-        run: |
-          echo '${{ secrets.ENV_FILE_PROD }}' > server/.env
-          echo "COMMIT_HASH=${GITHUB_SHA:0:4}" >> server/.env
-      - name: Prepare authorization with Google Cloud
-        uses: google-github-actions/auth@v3
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS_PROD }}
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v3
-      - name: Generate deployable bundle
-        run: pnpm --filter=server -P --node-linker=hoisted deploy dist
-      - name: Deploy to production environment
-        run: |
-          gcloud run deploy api \
-            --source=dist \
-            --platform=managed \
-            --region=us-central1 \
-            --allow-unauthenticated \
-            --min-instances=0 \
-            --max-instances=1 \
-            --project="$PROJECT_ID" \
-            --set-env-vars="NODE_ENV=production"
