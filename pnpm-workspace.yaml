@@ -1,11 +1,3 @@
-packages:
-  - client
-  - server
-
-injectWorkspacePackages: true
-
 allowBuilds:
   '@parcel/watcher': false
   esbuild: false
-  protobufjs: false
-  vue-demi: false

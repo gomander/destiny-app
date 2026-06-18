@@ -5,8 +5,7 @@
     autocapitalize="off"
     autocomplete="off"
     spellcheck="false"
-    @submit="search"
-    @reset=""
+    @submit="(e) => e.preventDefault()"
   >
     <q-input
       v-model="input"
@@ -16,15 +15,12 @@
       maxlength="30"
       debounce="500"
       dense filled
-      :readonly="inputFinalized"
-      class="find-player-input"
     >
-      <q-tooltip>
+      <q-tooltip class="text-body2">
         Must be an exact match on the name or the name#code, case insensitive
       </q-tooltip>
 
       <q-menu
-        v-if="!inputFinalized"
         v-model="showMenu"
         fit auto-close no-focus
       >
@@ -45,27 +41,28 @@
     </q-input>
 
     <q-btn
-      v-if="!inputFinalized"
-      type="submit"
+      type="button"
       color="primary"
       no-caps unelevated
-      icon="fas fa-search"
+      icon="fas fa-arrow-right"
+      @click="lookupPlayer"
       :disable="disableSearch"
     >
-      <q-tooltip>
-        Search
+      <q-tooltip class="text-body2">
+        Go to player
       </q-tooltip>
     </q-btn>
 
     <q-btn
-      v-if="inputFinalized"
-      color="positive"
+      type="button"
+      color="primary"
       no-caps unelevated
-      icon="fas fa-check"
-      disable
+      icon="fas fa-plus"
+      @click="addPlayer"
+      :disable="disableSearch"
     >
-      <q-tooltip>
-        Player has been added!
+      <q-tooltip class="text-body2">
+        Add player to group view
       </q-tooltip>
     </q-btn>
   </q-form>
@@ -74,65 +71,59 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue'
   import { searchPlayersByBungieName, searchUsersByName } from 'src/utils/api'
-  import { showError, showNotification } from 'src/utils/messenger'
+  import { showError } from 'src/utils/messenger'
   import type { BungieMember } from 'src/types'
 
-  const props = defineProps<{
-    modelValue: BungieMember | null
-    disableOnFind?: boolean
+  const emit = defineEmits<{
+    'add-player': [BungieMember]
+    'lookup-player': [BungieMember]
   }>()
-  const emit = defineEmits(['update:modelValue'])
 
-  const player = computed<BungieMember | null>({
-    get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value)
-  })
-  const playerFound = computed(() => !!player.value)
-  const input = ref(
-    playerFound.value
-      ? `${props.modelValue?.name}#${props.modelValue?.code}`
-      : ''
-  )
+  const input = ref('')
+  const selectedPlayer = ref<BungieMember | null>(null)
+  const showMenu = ref(false)
+  const options = ref<BungieMember[]>([])
 
-  watch(player, () => {
-    if (!player.value) return
-    input.value = `${player.value.name}#${player.value.code}`
-    showMenu.value = false
-  })
-
-  const inputFinalized = computed(() => playerFound.value && props.disableOnFind)
   const disableSearch = computed(() =>
     input.value.length < 3 ||
-    !/^.+\#\d{1,4}$/.test(input.value) ||
-    inputFinalized.value
+    !/^.+\#\d{1,4}$/.test(input.value)
   )
 
-  async function search(e: Event) {
-    e.preventDefault()
-    if (disableSearch.value) return
-    const players = await searchPlayersByBungieName(input.value.trim())
-    if (!players.length) return showNotification('Player not found!')
-    player.value = {
-      id: players[0].membershipId,
-      type: players[0].membershipType,
-      name: players[0].bungieGlobalDisplayName,
-      code: players[0].bungieGlobalDisplayNameCode || 0
+  watch(input, async () => {
+    let value = input.value.trim()
+    if (!value) {
+      options.value = []
+      return
+    }
+    if (value.endsWith('#')) value = value.replace('#', '')
+    options.value = (await getOptions(value)).slice(0, 10)
+    showMenu.value = true
+  })
+
+  function selectPlayer(bungieMember: BungieMember) {
+    input.value = `${bungieMember.name}#${bungieMember.code}`
+    selectedPlayer.value = bungieMember
+  }
+
+  function addPlayer() {
+    if (selectedPlayer.value) {
+      emit('add-player', selectedPlayer.value)
     }
   }
 
-  function selectPlayer(bungieMember: BungieMember) {
-    player.value = bungieMember
+  function lookupPlayer() {
+    if (selectedPlayer.value) {
+      emit('lookup-player', selectedPlayer.value)
+    } else {
+
+    }
   }
-
-  const showMenu = ref(false)
-
-  const options = ref<BungieMember[]>([])
 
   async function getOptions(query: string) {
     try {
       if (query.includes('#')) {
         const results = await searchPlayersByBungieName(query)
-        return results.map(result => ({
+        return results.map((result) => ({
           id: result.membershipId,
           type: result.membershipType,
           name: result.bungieGlobalDisplayName,
@@ -140,9 +131,9 @@
         }))
       }
       const results = await searchUsersByName(query)
-      return results.map(result => {
-        const primaryMembership = result.destinyMemberships.find(
-          membership => membership.applicableMembershipTypes.length > 0
+      return results.map((result) => {
+        const primaryMembership = result.destinyMemberships.find((membership) =>
+          membership.applicableMembershipTypes.length > 0
         ) || result.destinyMemberships[0]
         return {
           id: primaryMembership?.membershipId || '',
@@ -150,19 +141,10 @@
           name: result.bungieGlobalDisplayName,
           code: result.bungieGlobalDisplayNameCode || 0
         }
-      }).filter(player => player.code)
+      }).filter((player) => player.code)
     } catch (error) {
       showError(error)
       return []
     }
   }
-
-  watch(input, async () => {
-    if (!input.value) {
-      options.value = []
-      return
-    }
-    options.value = (await getOptions(input.value)).slice(0, 10)
-    showMenu.value = true
-  })
 </script>

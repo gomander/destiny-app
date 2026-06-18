@@ -1,10 +1,10 @@
 {
+  "extends": "./.quasar/tsconfig.json",
   "compilerOptions": {
-    "module": "nodenext",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "erasableSyntaxOnly": true,
-    "skipLibCheck": true,
-    "types": ["node"]
+    "isolatedModules": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": false
   }
 }

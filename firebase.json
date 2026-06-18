@@ -1,40 +1,14 @@
 {
   "hosting": {
     "site": "darci-gg",
-    "public": "client/dist/spa",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "dist/spa",
     "rewrites": [
-      {
-        "source": "/api",
-        "run": {
-          "serviceId": "api",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/api/**",
-        "run": {
-          "serviceId": "api",
-          "region": "us-central1"
-        }
-      },
       {
         "source": "**",
         "destination": "/index.html"
       }
     ],
     "headers": [
-      {
-        "source": "/api/**",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "no-store"
-        }]
-      },
       {
         "source": "*.html",
         "headers": [ {
@@ -43,21 +17,21 @@
         } ]
       },
       {
-        "source": "**/*.@(js|css)",
+        "source": "**/*.@(js|css|ico)",
         "headers": [ {
           "key": "Cache-Control",
           "value": "max-age=5184000"
         } ]
       },
       {
-        "source": "**/*.@(png|svg)",
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)",
         "headers": [ {
           "key": "Cache-Control",
           "value": "max-age=7776000"
         } ]
       },
       {
-        "source": "**/*.@(woff|woff2|mp3)",
+        "source": "**/*.@(ttf|woff|woff2|mp3)",
         "headers": [ {
           "key": "Cache-Control",
           "value": "max-age=15552000"

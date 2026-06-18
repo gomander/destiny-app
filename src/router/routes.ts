@@ -23,17 +23,8 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: 'checklists/raids',
-        children: [
-          {
-            path: `:id(\\w\\w\\w-\\w\\w\\w)?/:raid(${raidsSelector})?`,
-            component: () => import('pages/RADChecklistPage.vue')
-          },
-          {
-            path: `:raid(${raidsSelector})?/:players+`,
-            component: () => import('pages/RADChecklistPage.vue')
-          }
-        ]
+        path: `checklists/raids/:raid(${raidsSelector})?`,
+        component: () => import('pages/RADChecklistPage.vue')
       },
       {
         path: 'auth-return',

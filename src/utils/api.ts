@@ -124,6 +124,7 @@ export async function searchPlayersByBungieName(query: string): Promise<UserInfo
     const res = await fetch(
       `${BUNGIE_API}/Destiny2/SearchDestinyPlayerByBungieName/-1`,
       {
+        method: 'POST',
         headers: {
           'X-API-KEY': BUNGIE_API_KEY,
           'Content-Type': 'application/json'

@@ -2,7 +2,7 @@ git push
 git pull
 git checkout main
 
-pnpm version -r major
+pnpm version major
 version=$(node -e "console.log(require('./package.json').version.split('.')[0])")
 
 git commit -a -m "Set v$version"
