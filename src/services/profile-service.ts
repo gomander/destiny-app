@@ -1,6 +1,6 @@
 import { useDefinitionsStore, useGameStore, useUserStore } from 'stores'
 import * as api from 'src/utils/api'
-import { DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
+import { DestinyCharacterRecordsComponent, DestinyProfileRecordsComponent } from 'bungie-api-ts/destiny2'
 import { TriumphPlayer } from 'src/types'
 
 const definitionsStore = useDefinitionsStore()
@@ -37,23 +37,28 @@ export async function getProfileData(
 
 export async function getProfileRecords() {
   if (!userStore.membershipId) return
-  const profile = await getAuthenticatedProfileData([900])
+  const response = await getAuthenticatedProfileData([900])
+  if (!response || !response.profile.data) return
+  const profileRecords = response.profileRecords.data
+  const characterRecords = response.characterRecords?.data?.[response.profile.data.characterIds[0]]
+  if (!profileRecords || !characterRecords) return
 
-  const records = profile?.profileRecords.data
-  if (!records) return
-
-  userStore.records = mapProfileRecordsToTriumphs(records)
+  userStore.records = [
+    ...mapRecordsToTriumphs(profileRecords),
+    ...mapRecordsToTriumphs(characterRecords)
+  ]
 }
 
-export function mapProfileRecordsToTriumphs(profileRecords: DestinyProfileRecordsComponent) {
-  const records = profileRecords.records
-  const triumphList = gameStore.raidTriumphs.map(entry => entry.triumphs).flat()
-
+export function mapRecordsToTriumphs(
+  data: DestinyProfileRecordsComponent | DestinyCharacterRecordsComponent
+) {
+  const { records } = data
+  const triumphList = gameStore.raidTriumphs.flatMap((entry) => entry.triumphs)
   const triumphs: TriumphPlayer[] = []
   for (const key of Object.keys(records)) {
     const record = records[Number(key)]
-
-    const triumph = triumphList.find(triumph => triumph.hash === Number(key))
+    if (!record.objectives && !record.intervalObjectives) continue
+    const triumph = triumphList.find((triumph) => triumph.hash === Number(key))
     if (triumph) {
       const definition = definitionsStore.recordDefinitions.get(key)
       if (!definition) continue
@@ -75,6 +80,5 @@ export function mapProfileRecordsToTriumphs(profileRecords: DestinyProfileRecord
       })
     }
   }
-
   return triumphs
 }

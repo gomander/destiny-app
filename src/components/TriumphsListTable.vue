@@ -55,11 +55,11 @@
               class="fa-solid fa-check"
             ></i>
             <i
-              v-else-if="!value.objectives?.find(obj => obj.complete)"
+              v-else-if="!value.objectives?.find((obj) => obj.complete)"
               class="fa-solid fa-xmark"
             ></i>
             <span v-else>
-              {{ value.objectives.filter(obj => obj.complete).length }} /
+              {{ value.objectives.filter((obj) => obj.complete).length }} /
               {{ value.objectives.length }}
             </span>
           </div>
@@ -75,7 +75,7 @@
         placeholder="Search"
       >
         <template v-slot:append>
-          <q-icon name="fas fa-search"/>
+          <q-icon name="fas fa-search" />
         </template>
       </q-input>
     </template>
@@ -109,11 +109,9 @@
 
 <script setup lang="ts">
   import { onMounted, ref, toRef, watch } from 'vue'
-  import {
-    getProfileData, mapProfileRecordsToTriumphs
-  } from 'src/services/profile-service'
   import type { QTableColumn } from 'quasar'
   import type { DestinyProfileResponse } from 'bungie-api-ts/destiny2'
+  import { getProfileData, mapRecordsToTriumphs } from 'src/services/profile-service'
   import type { BungieMember, PlayerTriumphs, Triumph, TriumphPlayer } from 'src/types'
 
   const props = defineProps<{
@@ -134,6 +132,7 @@
     }]
   }
   resetColumns()
+
   interface Row {
     triumph: Triumph
     [k: string]: Triumph | TriumphPlayer | false
@@ -141,7 +140,8 @@
   const rows = ref<Row[]>([])
   const loading = ref(true)
   const filter = ref(null)
-  const filterMethod = (rows: readonly Row[], query: string) => {
+
+  function filterMethod(rows: readonly Row[], query: string) {
     const lowerQuery = query.toLowerCase()
     return rows.filter((row: Row) =>
       row.triumph.name.toLowerCase().includes(lowerQuery) ||
@@ -152,17 +152,21 @@
   function sortByTriumphCompletion(triumph: Triumph) {
     columns.value = columns.value.sort((a, b) => {
       if (a.name === 'triumphs' || b.name === 'triumphs') return 0
-      const playerAObjectives = players.value.find(
-        player => player.id === a.name
-      )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
-        obj => obj.complete
-      ).length
+      const playerAObjectives = players.value
+        .find((player) => player.id === a.name)
+        ?.triumphs
+        .find((t) => t.hash === triumph.hash)
+        ?.objectives
+        .filter((obj) => obj.complete)
+        .length
       if (playerAObjectives === undefined) return 0
-      const playerBObjectives = players.value.find(
-        player => player.id === b.name
-      )?.triumphs.find(t => t.hash === triumph.hash)?.objectives.filter(
-        obj => obj.complete
-      ).length
+      const playerBObjectives = players.value
+        .find((player) => player.id === b.name)
+        ?.triumphs
+        .find((t) => t.hash === triumph.hash)
+        ?.objectives
+        .filter((obj) => obj.complete)
+        .length
       if (playerBObjectives === undefined) return 0
       return playerAObjectives - playerBObjectives
     })
@@ -185,12 +189,10 @@
       if (!includeOptional.value && !triumph.required) continue
       const row: Row = { triumph }
       for (const player of players.value) {
-        row[player.id] = player.triumphs.find(
-          t => t.hash === triumph.hash
-        ) || false
+        row[player.id] = player.triumphs.find((t) => t.hash === triumph.hash) || false
       }
       if (hideCompleted.value) {
-        const completedStatuses = Object.values(row).map(triumph =>
+        const completedStatuses = Object.values(row).map((triumph) =>
           typeof triumph === 'object' && 'complete' in triumph
             ? triumph.complete
             : triumph
@@ -219,15 +221,20 @@
   const playerData = ref<DestinyProfileResponse[]>([])
   const players = ref<PlayerTriumphs[]>([])
   watch(playerData, () => {
-    players.value = playerData.value.map(player => {
+    players.value = playerData.value.map((player) => {
       if (!player.profile.data?.userInfo.bungieGlobalDisplayNameCode) return
-      if (!player.profileRecords.data) return
+      if (!player.profileRecords.data || !player.characterRecords.data) return
       const userInfo = player.profile.data.userInfo
       const newPlayer = {
         name: userInfo.bungieGlobalDisplayName,
         discriminator: String(userInfo.bungieGlobalDisplayNameCode),
         id: userInfo.membershipId,
-        triumphs: mapProfileRecordsToTriumphs(player.profileRecords.data)
+        triumphs: [
+          ...mapRecordsToTriumphs(player.profileRecords.data),
+          ...mapRecordsToTriumphs(
+            player.characterRecords.data[player.profile.data.characterIds[0]]
+          )
+        ]
       }
       columns.value.push({
         name: newPlayer.id,
@@ -243,14 +250,14 @@
         }
       })
       return newPlayer
-    }).filter(player => player) as PlayerTriumphs[]
+    }).filter((player) => !!player)
     populateTableRows()
   })
 
   async function fetchPlayerData() {
     return (await Promise.all(
-      props.players.map(player => getProfileData([100, 900], player.id, player.type))
-    )).filter(data => data) as DestinyProfileResponse[]
+      props.players.map((player) => getProfileData([100, 900], player.id, player.type))
+    )).filter((data) => data)
   }
 
   onMounted(async () => {

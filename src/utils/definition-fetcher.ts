@@ -129,9 +129,9 @@ export async function useDefinitionFetcher() {
               description: 'Capable of healing allies and hurting foes. Harming targets builds a restorative charge. Hip firing at allies while this weapon is charged heals them. Rapid healing increases weapon damage and grants elemental buffs.'
             }
           }
-          continue
+        } else {
+          definitionsStore.weaponFrameDefinitions[key] = item
         }
-        definitionsStore.weaponFrameDefinitions[key] = item
         continue
       }
 
@@ -241,40 +241,40 @@ export async function useDefinitionFetcher() {
         gameStore.raidTriumphs.push({
           name: node.displayProperties.name,
           hash: node.hash,
-          triumphHashes: node.children.records.map(
-            record => record.recordHash
-          ).filter(record => !filteredTriumphs.includes(record)),
+          triumphHashes: node.children.records
+            .map((record) => record.recordHash)
+            .filter((record) => !filteredTriumphs.includes(record)),
           triumphs: []
         })
       }
     })
     definitionsStore.presentationNodeDefinitions.forEach((node, hash) => {
       if (raidTriumphCategories.includes(Number(hash))) {
-        const titleCategory = gameStore.raidTriumphs.find(
-          category => category.name === node.displayProperties.name
+        const titleCategory = gameStore.raidTriumphs.find((category) =>
+          category.name === node.displayProperties.name
         )
         if (!titleCategory) return
         titleCategory.triumphHashes = [...new Set([
           titleCategory.triumphHashes,
-          node.children.records.map(
-            records => records.recordHash
-          ).filter(record => !filteredTriumphs.includes(record))
+          node.children.records
+            .map((records) => records.recordHash)
+            .filter((record) => !filteredTriumphs.includes(record))
         ].flat())]
       }
     })
-    gameStore.raidTriumphs.forEach(triumphCategory => {
-      triumphCategory.triumphHashes.forEach(hash => {
+    gameStore.raidTriumphs.forEach((triumphCategory) => {
+      triumphCategory.triumphHashes.forEach((hash) => {
         const record = definitionsStore.recordDefinitions.get(String(hash))
         if (!record) return
         const required = !!definitionsStore.presentationNodeDefinitions.get(
           String(triumphCategory.hash)
-        )?.children.records.find(r => r.recordHash === record.hash)
+        )?.children.records.find((r) => r.recordHash === record.hash)
         triumphCategory.triumphs.push({
           name: record.displayProperties.name,
           description: record.displayProperties.description,
           icon: record.displayProperties.icon,
           hash: record.hash,
-          required: required
+          required
         })
       })
     })
