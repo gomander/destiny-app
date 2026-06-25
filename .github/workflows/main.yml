@@ -4,7 +4,7 @@ on:
       - v*
 
 env:
-  NODE_VERSION: lts/*
+  NODE_VERSION: 24.16.0
   PROJECT_ID: darci-gg
 
 jobs:
