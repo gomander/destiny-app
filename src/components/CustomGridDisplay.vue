@@ -20,17 +20,42 @@
       class="column-header"
       v-for="column of frames"
     >
-      <div v-if="column">
-        <img
-          :src="'https://www.bungie.net' + column.icon"
-          :alt="column.name"
-        >
+      <img
+        :src="'https://www.bungie.net' + column.icon"
+        :alt="column.name"
+        width="64"
+        height="64"
+      >
+      <img
+        v-if="column.championType === 'barrier'"
+        src="https://www.bungie.net/common/destiny2_content/icons/fcbf6c81f645985e21a2cc7a904c5a20.png"
+        alt="Barrier"
+        width="32"
+        height="32"
+        class="champion-icon"
+      >
+      <img
+        v-if="column.championType === 'overload'"
+        src="https://www.bungie.net/common/destiny2_content/icons/3c360aff0b37034db4e81e1b8dd06b47.png"
+        alt="Overload"
+        width="32"
+        height="32"
+        class="champion-icon"
+      >
+      <img
+        v-if="column.championType === 'unstoppable'"
+        src="https://www.bungie.net/common/destiny2_content/icons/2d2dbf4f3c040c20a85d00fe7c37bef7.png"
+        alt="Unstoppable"
+        width="32"
+        height="32"
+        class="champion-icon"
+      >
 
-        <q-tooltip class="text-body2 text-center" maxWidth="30em">
-          <p>{{ column.name }}</p>
-          <p>{{ column.description }}</p>
-        </q-tooltip>
-      </div>
+      <q-tooltip class="text-body2 text-center" maxWidth="30em">
+        <p>{{ column.name }}</p>
+        <p>{{ column.description }}</p>
+        <p>These weapons can stun {{ column.championType }} champions.</p>
+      </q-tooltip>
     </div>
 
     <div
@@ -40,12 +65,14 @@
     >
       <div>
         <img
-          :src="'https://www.bungie.net' + row?.icon"
-          :alt="row?.name || ''"
+          :src="'https://www.bungie.net' + row.icon"
+          :alt="row.name || ''"
+          width="64"
+          height="64"
         >
 
         <q-tooltip class="text-body2">
-          {{ row?.name || '' }}
+          {{ row.name || '' }}
         </q-tooltip>
       </div>
     </div>
@@ -56,8 +83,16 @@
       :style="style"
     >
       <div v-for="weapon of cellWeapons[i]">
-        <a :href="`https://light.gg/db/items/${weapon.hash}`" target="_blank">
-          <img :src="`https://www.bungie.net${weapon.icon}`" :alt="weapon.name">
+        <a
+          :href="`https://light.gg/db/items/${weapon.hash}`"
+          target="_blank"
+        >
+          <img
+            :src="`https://www.bungie.net${weapon.icon}`"
+            :alt="weapon.name"
+            width="64"
+            height="64"
+          >
           <span>{{ weapon.name }}</span>
         </a>
 
@@ -96,9 +131,10 @@
   )
 
   const frames = computed(() =>
-    frameHashes.value.map((column) =>
-      gameStore.weaponFrames.find((frame) => frame.hash === column)
-    ).sort((a, b) => a!.name < b!.name ? -1 : 1)
+    frameHashes.value
+      .map((column) => gameStore.weaponFrames.find((frame) => frame.hash === column))
+      .filter((column) => !!column)
+      .sort((a, b) => a!.name < b!.name ? -1 : 1)
   )
 
   const damageTypeOrder = props.ammoType === AmmoType.Heavy
@@ -112,13 +148,14 @@
   )
 
   const elements = computed(() =>
-    elementHashes.value.map((row) =>
-      gameStore.damageTypes.find(damageType => damageType.hash === row)
-    ).sort((a, b) => {
-      const indexA = damageTypeOrder.findIndex((e) => e === a?.name)
-      const indexB = damageTypeOrder.findIndex((e) => e === b?.name)
-      return indexA < indexB ? -1 : 1
-    })
+    elementHashes.value
+      .map((row) => gameStore.damageTypes.find(damageType => damageType.hash === row))
+      .filter((row) => !!row)
+      .sort((a, b) => {
+        const indexA = damageTypeOrder.findIndex((e) => e === a?.name)
+        const indexB = damageTypeOrder.findIndex((e) => e === b?.name)
+        return indexA < indexB ? -1 : 1
+      })
   )
 
   const cellStyles = computed(() =>
@@ -212,7 +249,11 @@
     color: transparent;
     pointer-events: none;
   }
-  img {
+  div.column-header {
+    flex-direction: row;
+    align-items: center;
+  }
+  img:not(.champion-icon) {
     height: 100%;
   }
   p:last-child {

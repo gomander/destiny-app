@@ -166,7 +166,14 @@ export async function useDefinitionFetcher() {
         name: item.displayProperties.name,
         icon: item.displayProperties.icon,
         description: item.displayProperties.description,
-        hash: item.hash
+        hash: item.hash,
+        championType: item.perks.find((perk) => perk.perkHash === 2917776374)
+          ? 'unstoppable'
+          : item.perks.find((perk) => perk.perkHash === 472686235)
+            ? 'overload'
+            : item.perks.find((perk) => perk.perkHash === 3469621377)
+              ? 'barrier'
+              : 'unknown'
       })
     }
 

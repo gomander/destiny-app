@@ -97,7 +97,8 @@ export interface WeaponFrame {
   name: string,
   icon: string,
   description: string,
-  hash: number
+  hash: number,
+  championType: 'barrier' | 'overload' | 'unstoppable' | 'unknown'
 }
 
 export interface DamageType {
