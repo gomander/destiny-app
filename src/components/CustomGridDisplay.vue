@@ -105,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch, onMounted } from 'vue'
+  import { computed, watch, onMounted, useTemplateRef } from 'vue'
   import { useGameStore } from 'stores'
   import { AmmoType, type Weapon, WeaponType } from 'src/types'
 
@@ -142,9 +142,9 @@
     : ['Kinetic', 'Stasis', 'Strand', 'Void', 'Solar', 'Arc']
 
   const elementHashes = computed(() =>
-    data.value.map((weapon) => weapon.damageTypeHash).filter((value, index, self) =>
-      index === self.findIndex((t) => t === value)
-    )
+    data.value
+      .map((weapon) => weapon.damageTypeHash)
+      .filter((value, index, self) => index === self.findIndex((t) => t === value))
   )
 
   const elements = computed(() =>
@@ -182,7 +182,7 @@
     const cssRows = '[columns] 1fr' + elements.value.map((element) => `[r${element?.hash}] 1fr`).join(' ')
     grid.value!.style.gridTemplateColumns = cssColumns
     grid.value!.style.gridTemplateRows = cssRows
-    rowHeaderRefs.value.forEach((div) => {
+    rowHeaderRefs.value?.forEach((div) => {
       div.style.gridColumn = 'rows'
     })
   }
@@ -199,8 +199,8 @@
     resetGrid()
   })
 
-  const grid = ref<HTMLDivElement | null>(null)
-  const rowHeaderRefs = ref<HTMLDivElement[]>([])
+  const grid = useTemplateRef('grid')
+  const rowHeaderRefs = useTemplateRef('rowHeaderRefs')
 </script>
 
 <style scoped>
@@ -208,7 +208,7 @@
     display: grid;
     border: 0.1em solid black;
     border-radius: 0.25em;
-    width: fit-content;
+    width: min-content;
     text-align: center;
     background-color: #333;
   }

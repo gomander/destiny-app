@@ -11,7 +11,8 @@ import {
 import {
   BungieDamageType, BungieItemSubType, BungieAmmoType, BungieWeaponSlot,
   BungieWeaponStat, DamageTypeEnum, WeaponType, AmmoType, WeaponSlot,
-  type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories
+  type Weapon, RaidTitleTriumphCategories, RaidTriumphCategories,
+  type WeaponFrame, type DamageType
 } from 'src/types'
 
 const gameStore = useGameStore()
@@ -145,7 +146,7 @@ export async function useDefinitionFetcher() {
     }
 
     gameStore.manifestVersion = definitionsStore.manifest.version
-    gameStore.weapons = []
+    const weapons: Weapon[] = []
 
     for (const key in definitionsStore.weaponDefinitions) {
       const item = definitionsStore.weaponDefinitions[Number(key)]
@@ -153,16 +154,17 @@ export async function useDefinitionFetcher() {
         item.inventory?.tierType === TierType.Superior &&
         !item.isAdept
       ) {
-        const weapon = createWeapon(item)
-        gameStore.weapons.push(weapon)
+        weapons.push(createWeapon(item))
       }
     }
 
-    gameStore.weaponFrames = []
+    gameStore.weapons = weapons
+
+    const weaponFrames: WeaponFrame[] = []
 
     for (const key in definitionsStore.weaponFrameDefinitions) {
       const item = definitionsStore.weaponFrameDefinitions[Number(key)]
-      gameStore.weaponFrames.push({
+      weaponFrames.push({
         name: item.displayProperties.name,
         icon: item.displayProperties.icon,
         description: item.displayProperties.description,
@@ -177,17 +179,21 @@ export async function useDefinitionFetcher() {
       })
     }
 
-    gameStore.damageTypes = []
+    gameStore.weaponFrames = weaponFrames
+
+    const damageTypes: DamageType[] = []
 
     for (const key in definitionsStore.damageTypeDefinitions) {
       const damageType = definitionsStore.damageTypeDefinitions[Number(key)]
-      gameStore.damageTypes.push({
+      damageTypes.push({
         name: damageType.displayProperties.name,
         icon: damageType.displayProperties.icon,
         description: damageType.displayProperties.description,
         hash: damageType.hash
       })
     }
+
+    gameStore.damageTypes = damageTypes
   }
 
   async function getPresentationNodeDefinitions() {
