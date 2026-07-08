@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md flex-col gap">
-    <h1>Raid Triumph Checklist</h1>
+    <h1>RAD Triumph Checklist</h1>
 
     <div class="row q-col-gutter-md items-stretch">
       <div class="col-grow col-lg-4">
@@ -32,8 +32,18 @@
           :label="raid.name"
           no-caps unelevated
           color="primary"
-          :to="{ params: { raid: raid.id }, query: route.query }"
+          :to="{ params: { activity: raid.id }, query: route.query }"
           :disable="route.path.includes(raid.id)"
+        />
+      </q-card-section>
+      <q-card-section class="flex gap-sm">
+        <q-btn
+          v-for="dungeon of dungeons"
+          :label="dungeon.name"
+          no-caps unelevated
+          color="primary"
+          :to="{ params: { activity: dungeon.id }, query: route.query }"
+          :disable="route.path.includes(dungeon.id)"
         />
       </q-card-section>
     </q-card>
@@ -56,7 +66,7 @@
   import FindPlayerForm from 'src/components/FindPlayerForm.vue'
   import TriumphsListTable from 'src/components/TriumphsListTable.vue'
   import type { BungieMember } from 'src/types'
-  import raids from 'src/data/raids'
+  import { raids, dungeons } from 'src/data/raids'
 
   const route = useRoute()
   const router = useRouter()
@@ -65,11 +75,13 @@
 
   const players = ref<BungieMember[]>([])
 
-  const raidId = computed(() => route.params.raid?.toString())
+  const raidId = computed(() => route.params.activity?.toString())
   const urlPlayers = computed(() => route.query.players?.toString().split(','))
 
   const currentRaid = computed(() =>
-    raids.find((raid) => raid.id === raidId.value) || { name: '', id: '' }
+    raids.find((raid) => raid.id === raidId.value) ||
+    dungeons.find((dungeon) => dungeon.id === raidId.value) ||
+    { name: '', id: '' }
   )
   const currentRaidTriumphs = computed(() =>
     gameStore.raidTriumphs.filter((entry) =>
@@ -115,9 +127,13 @@
   function addPlayer(player: BungieMember) {
     router.push({
       query: {
-        players: route.query.players
-          ? `${route.query.players},${player.name}#${player.code}`
-          : `${player.name}#${player.code}`
+        players: (
+          route.query.players
+            ? `${route.query.players},`
+            : userStore.membershipId
+              ? `${userStore.name}#${userStore.nameCode},`
+              : ''
+        ) + `${player.name}#${player.code}`
       }
     })
   }

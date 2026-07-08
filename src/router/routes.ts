@@ -1,7 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
-import raids from 'src/data/raids'
+import { raids, dungeons } from 'src/data/raids'
 
-const raidsSelector = raids.map(raid => raid.id).join('|')
+const raidsSelector = raids.map((raid) => raid.id).join('|')
+const dungeonsSelector = dungeons.map((dungeon) => dungeon.id).join('|')
 
 const routes: RouteRecordRaw[] = [
   {
@@ -23,7 +24,7 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: `checklists/raids/:raid(${raidsSelector})?`,
+        path: `checklists/:activity(${raidsSelector}|${dungeonsSelector})?`,
         component: () => import('pages/RADChecklistPage.vue')
       },
       {

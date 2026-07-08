@@ -33,10 +33,10 @@
           />
 
           <q-btn
-            label="Raid checklists"
+            label="RAD checklists"
             icon="fas fa-table-cells"
             unelevated
-            to="/checklists/raids"
+            to="/checklists"
           />
 
           <q-btn

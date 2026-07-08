@@ -86,7 +86,14 @@ export enum RaidTriumphCategories {
   RootOfNightmares = 4114450368,
   CrotasEnd = 2782956855,
   SalvationsEdge = 2657827258,
-  DesertPerpetual = 3954661385
+  DesertPerpetual = 3954661385,
+  Duality = 4032492628,
+  SpireOfTheWatcher = 3846053700,
+  GhostsOfTheDeep = 2279316529,
+  WarlordsRuin = 3022435577,
+  VespersHost = 3254829425,
+  SunderedDoctrine = 2009673092,
+  Equilibrium = 3851744670
 }
 
 export enum RaidTitleTriumphCategories {
@@ -99,5 +106,12 @@ export enum RaidTitleTriumphCategories {
   RootOfNightmares = 1976056830,
   CrotasEnd = 238107129,
   SalvationsEdge = 334829503,
-  DesertPerpetual = 3954661385
+  DesertPerpetual = 3954661385,
+  Duality = 854126634,
+  SpireOfTheWatcher = 4183969062,
+  GhostsOfTheDeep = 1705744655,
+  WarlordsRuin = 1021469803,
+  VespersHost = 2723381343,
+  SunderedDoctrine = 2105055614,
+  Equilibrium = 1504131436
 }

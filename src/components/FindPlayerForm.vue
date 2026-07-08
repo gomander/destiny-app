@@ -16,10 +16,6 @@
       debounce="500"
       dense filled
     >
-      <q-tooltip class="text-body2">
-        Must be an exact match on the name or the name#code, case insensitive
-      </q-tooltip>
-
       <q-menu
         v-model="showMenu"
         fit auto-close no-focus
@@ -108,14 +104,14 @@
   function addPlayer() {
     if (selectedPlayer.value) {
       emit('add-player', selectedPlayer.value)
+      input.value = ''
     }
   }
 
   function lookupPlayer() {
     if (selectedPlayer.value) {
       emit('lookup-player', selectedPlayer.value)
-    } else {
-
+      input.value = ''
     }
   }
 
