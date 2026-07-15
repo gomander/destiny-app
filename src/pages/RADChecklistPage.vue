@@ -89,10 +89,10 @@
     ).flatMap((entry) => entry.triumphs) || []
   )
 
-  watch(urlPlayers, async () => {
-    if (urlPlayers.value) {
-      await updatePlayers(urlPlayers.value)
-    } else if (userStore.bungieMember) {
+  watch(urlPlayers, async (newValue, oldValue) => {
+    if (newValue && newValue.join() !== oldValue?.join()) {
+      await updatePlayers(newValue)
+    } else if (!newValue && userStore.bungieMember) {
       players.value = [userStore.bungieMember]
     }
   }, { immediate: true })
