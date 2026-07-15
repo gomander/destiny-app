@@ -76,10 +76,38 @@ export function swapUniqueFrames(
 export function dedupeWeapons(weapons: Weapon[]) {
   const map = new Map()
   for (const weapon of weapons) {
+    weapon.name = addSourceToNameIfDuplicate(weapon.hash, weapon.name)
     const existing = map.get(weapon.name)
     if (!existing || weapon.released > existing.released) {
       map.set(weapon.name, weapon)
     }
   }
   return Array.from(map.values())
+}
+
+function addSourceToNameIfDuplicate(weaponHash: number, weaponName: string) {
+  switch (weaponHash) {
+    case 4158265643:
+      return 'Reckless Oracle (Pantheon)'
+    case 1992309064:
+      return 'Reckless Oracle (Garden of Salvation)'
+    case 3647341740:
+      return 'Zaouli\'s Bane (Pantheon)'
+    case 431721920:
+      return 'Zaouli\'s Bane (King\'s Fall)'
+    case 830651379:
+      return 'Chattering Bone (Pantheon)'
+    case 501329015:
+      return 'Chattering Bone (Last Wish)'
+    case 3736001860:
+      return 'Forbearance (Onslaught)'
+    case 613334176:
+      return 'Forbearance (Vow of the Disciple)'
+    case 2731922624:
+      return 'Succession (Onslaught)'
+    case 2990047042:
+      return 'Succession (Deep Stone Crypt)'
+    default:
+      return weaponName
+  }
 }
