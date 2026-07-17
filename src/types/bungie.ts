@@ -73,7 +73,7 @@ export enum BungieWeaponStat {
   'airborneEffectiveness' = 2714457168,
   'recoilDirection' = 2715839340,
   'magazine' = 3871231066,
-  'inventorySize' = 1931675084
+  'ammoGeneration' = 1931675084
 }
 
 export enum RaidTriumphCategories {

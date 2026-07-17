@@ -169,10 +169,10 @@
 
           <q-input
             type="number"
-            v-model.number="weights.inventorySize"
+            v-model.number="weights.ammoGeneration"
             filled
             dense
-            label="Reserves (PvE only)"
+            label="Ammo generation (PvE only)"
             :disable="weightMode === 'default' || gameMode === 'pvp'"
           />
 
@@ -201,29 +201,29 @@
   const gameStore = useGameStore()
 
   const PVE_STAT_MODIFIERS: WeaponStats = {
-    range: 3,
-    stability: 1,
-    handling: 1,
-    reloadSpeed: 3,
+    range: 4,
+    stability: 3,
+    handling: 5,
+    reloadSpeed: 6,
     zoom: 0,
     aimAssistance: 1,
     airborneEffectiveness: 1,
     recoilDirection: 2,
-    magazine: 4,
-    inventorySize: 5
+    magazine: 7,
+    ammoGeneration: 10
   }
 
   const PVP_STAT_MODIFIERS: WeaponStats = {
-    range: 6,
-    stability: 3,
-    handling: 2,
-    reloadSpeed: 1,
+    range: 10,
+    stability: 6,
+    handling: 7,
+    reloadSpeed: 3,
     zoom: 1,
-    aimAssistance: 4,
-    airborneEffectiveness: 2,
-    recoilDirection: 1,
-    magazine: 1,
-    inventorySize: 0
+    aimAssistance: 7,
+    airborneEffectiveness: 4,
+    recoilDirection: 5,
+    magazine: 3,
+    ammoGeneration: 0
   }
 
   const gameMode = ref<GameMode>('pvp')
@@ -298,6 +298,7 @@
   const dedupedWeapons = computed(() => dedupeWeapons(gameStore.weapons))
   const weapons = computed(() => dedupedWeapons.value.filter(weapon =>
     weapon.weaponType === weaponType.value &&
+    weapon.tiered &&
     (!damageType.value || weapon.damageType === damageType.value) &&
     (!slot.value || weapon.slot === slot.value)
   ))
@@ -328,7 +329,7 @@
       stats.airborneEffectiveness * modifier.airborneEffectiveness +
       judgeRecoilDirection(stats.recoilDirection) * modifier.recoilDirection +
       stats.magazine * modifier.magazine +
-      stats.inventorySize * modifier.inventorySize * Number(gameMode.value === 'pve')
+      stats.ammoGeneration * modifier.ammoGeneration * Number(gameMode.value === 'pve')
     )
   }
 </script>

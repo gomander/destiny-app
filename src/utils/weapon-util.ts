@@ -73,7 +73,7 @@ export function swapUniqueFrames(
   }
 }
 
-export function dedupeWeapons(weapons: Weapon[]) {
+export function dedupeWeapons(weapons: Weapon[]): Weapon[] {
   const map = new Map()
   for (const weapon of weapons) {
     weapon.name = addSourceToNameIfDuplicate(weapon.hash, weapon.name)

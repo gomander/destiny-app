@@ -90,7 +90,7 @@ export interface WeaponStats {
   airborneEffectiveness: number
   recoilDirection: number
   magazine: number
-  inventorySize: number
+  ammoGeneration: number
 }
 
 export interface WeaponFrame {

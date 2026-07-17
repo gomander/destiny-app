@@ -100,7 +100,7 @@ export async function useDefinitionFetcher() {
         airborneEffectiveness: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.airborneEffectiveness)?.value || 0,
         recoilDirection: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.recoilDirection)?.value || 0,
         magazine: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.magazine)?.value || 0,
-        inventorySize: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.inventorySize)?.value || 0,
+        ammoGeneration: item.investmentStats.find(entry => entry.statTypeHash === BungieWeaponStat.ammoGeneration)?.value || 0,
       }
     }
     return weapon
