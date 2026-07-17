@@ -1,6 +1,6 @@
 {
   "name": "@gomander/darci",
-  "version": "55.0.0",
+  "version": "56.0.0",
   "description": "A collection of tools and information for Destiny 2",
   "author": "Gunnar Omander <gunnar@gomander.dev> (https://gomander.dev)",
   "scripts": {
